@@ -2,7 +2,8 @@
 <!-- Navigation Above -->
 
 <div layout-xs="column">
-    <form ng-submit="aic.addItem(aic.item)">
+    <div>
+
         <div md-input-container>
             <label for="itemName">Item Name:</label><br>
             <input id="itemName" ng-model="aic.item.itemName" type="text">
@@ -23,7 +24,7 @@
             <input id="reminderQty" ng-model="aic.item.reminderQuantity" type="number">
         </div md-input-container>
         
-        <button id="addItemBtn" class="md-raised md-primary">Add Item</button>
+        <input type="submit" value="Add Item" ng-click="aic.addItem(aic.item)">
         
-    </form>
-</div layout-xs>
+    </div>
+</div>
