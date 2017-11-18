@@ -40,6 +40,16 @@ myApp.config(function($routeProvider, $locationProvider) {
         }
       }
     })
+    .when('/usersetup', {
+      templateUrl: '/views/templates/usersetup.html',
+      controller: 'UserSetupController as usc',
+      resolve: {
+        getuser: function(UserService) {
+          return UserService.getuser()
+        }
+      }
+    })
+
     .otherwise({
       redirectTo: 'home'
     });

@@ -3,6 +3,6 @@ myApp.controller('AddItemController', function (UserService, AddItemService) {
     var vm = this;
 
     vm.addItem = function (newItem) {
-        AddItemService.addItem();
+        AddItemService.addItem(newItem);
     }
 });

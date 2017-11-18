@@ -5,26 +5,37 @@
     <div>
 
         <div md-input-container>
-            <label for="itemName">Item Name:</label><br>
+            <label for="itemName">Item Name:</label>
+            <br>
             <input id="itemName" ng-model="aic.item.itemName" type="text">
         </div md-input-container>
 
         <div md-input-container>
-            <label for="itemQuantity">Quantity:</label><br>
+            <label for="itemQuantity">Quantity:</label>
+            <br>
             <input id="itemQuantity" ng-model="aic.item.itemQuantity" type="number">
         </div md-input-container>
-        
+
         <div md-input-container>
-            <label for="storePurchased">Should this item have a default store?</label><br>
-            <input id="storePurchased" ng-model="aic.item.storePurchased" type="text"><!-- Will be drop down of stores to select from -->
-        </div md-input-container>
-        
-        <div md-input-container>
-            <label for="reminderQty">Reminder Quantity:</label><br>
+            <label for="reminderQty">Reminder Quantity:</label>
+            <br>
             <input id="reminderQty" ng-model="aic.item.reminderQuantity" type="number">
         </div md-input-container>
-        
-        <input type="submit" value="Add Item" ng-click="aic.addItem(aic.item)">
-        
+
+        <div md-input-container>
+            <label for="storePurchased">Should this item have a default store?</label>
+            <br>
+            <input id="storePurchased" ng-model="aic.item.storePurchased" type="text">
+            <!-- Will be drop down of stores to select from -->
+        </div md-input-container>
+
+        <div md-input-container>
+            <label for="pantryLocation">Pantry:</label>
+            <br>
+            <input id="PantryLocation" ng-model="aic.item.pantryLocation" type="text">
+        </div md-input-container>
+
+        <md-button ng-click="aic.addItem(aic.item)">Add Item</md-button>
+
     </div>
 </div>
