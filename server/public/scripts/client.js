@@ -33,7 +33,7 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/additems', {
       templateUrl: '/views/templates/additems.html',
-      controller: 'AddItemController as AIC',
+      controller: 'AddItemController as aic',
       resolve: {
         getuser: function (UserService) {
           return UserService.getuser();

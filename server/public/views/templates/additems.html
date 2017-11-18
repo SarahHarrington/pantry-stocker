@@ -2,36 +2,28 @@
 <!-- Navigation Above -->
 
 <div layout-xs="column">
+    <form ng-submit="aic.addItem(aic.item)">
+        <div md-input-container>
+            <label for="itemName">Item Name:</label><br>
+            <input id="itemName" ng-model="aic.item.itemName" type="text">
+        </div md-input-container>
 
-    <div md-input-container>
-        <label for="itemName">Item Name:</label><br>
-        <input id="itemName" type="text">
-    </div md-input-container>
-
-    <div md-input-container>
-        <label for="itemQuantity">Quantity:</label><br>
-        <input id="itemQuantity" type="number">
-    </div md-input-container>
-    
-    <div md-input-container>
-        <label for="storePurchased">Store Purchased:</label><br>
-        <input id="storePurchased" type="text"><!-- Will be drop down of stores to select from -->
-    </div md-input-container>
-    
-    <div md-input-container>
-        <md-checkbox id="">Should this be the default store for this item?</md-checkbox>
-    </div>
-    
-    <div md-datepicker ng-model="ctrl.myDate" md-placeholder="Enter date" id="expirationDate">
-    </div md-datepicker>
-    
-    <div md-input-container>
-        <label for="reminderQty">Reminder Quantity:</label><br>
-        <input id="reminderQty" type="number">
-    </div md-input-container>
-    
-    <div md-input-container>
-        <md-button id="addItemBtn" class="md-raised md-primary">Add Item</md-button>
-    </div md-input-container>
-
+        <div md-input-container>
+            <label for="itemQuantity">Quantity:</label><br>
+            <input id="itemQuantity" ng-model="aic.item.itemQuantity" type="number">
+        </div md-input-container>
+        
+        <div md-input-container>
+            <label for="storePurchased">Should this item have a default store?</label><br>
+            <input id="storePurchased" ng-model="aic.item.storePurchased" type="text"><!-- Will be drop down of stores to select from -->
+        </div md-input-container>
+        
+        <div md-input-container>
+            <label for="reminderQty">Reminder Quantity:</label><br>
+            <input id="reminderQty" ng-model="aic.item.reminderQuantity" type="number">
+        </div md-input-container>
+        
+        <button id="addItemBtn" class="md-raised md-primary">Add Item</button>
+        
+    </form>
 </div layout-xs>

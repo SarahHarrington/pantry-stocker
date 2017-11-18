@@ -1,15 +1,10 @@
-myApp.controller('AddItemController', function (UserService) {
+myApp.controller('AddItemController', function (UserService, AddItemService) {
     console.log('AddItemController created');
     var vm = this;
-    vm.userService = UserService;
 
-    var item = {
-        itemName: '',
-        itemQuantity: '',
-        storePurchased: '',
-        defaultStore: '',
-        expirationDate: '',
-        reminderQty: ''
+    
+
+    vm.addItem = function (newItem) {
+        AddItemService.addItem(newItem);
     }
-
 });
