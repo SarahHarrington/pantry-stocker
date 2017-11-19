@@ -1,17 +1,33 @@
-<div class="container">
+<layout-xs="column">
   <h1 class="lead">Register User</h1>
   <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
+  
+  <layout-xs="column">
   <form ng-submit="lc.registerUser()">
-    <div>
+    
+    <md-input-container>
+      <label for="name">Name:</label>
+      <input type="name" ng-model="lc.user.name" />
+    </md-input-container>
+    
+    <md-input-container>
         <label for="username">Username:</label>
         <input type="text" ng-model="lc.user.username" />
-    </div>
-    <div>
+    </md-input-container>
+    
+    <md-input-container>
         <label for="password">Password:</label>
         <input type="password" ng-model="lc.user.password" />
-    </div>
+    </md-input-container>
+    
+    <md-input-container>
+      <label for="email">Email:</label>
+      <input type="email" ng-model="lc.user.email" />
+    </md-input-container>
+
     <input class="btn btn-default" type="submit" name="submit" value="Register" />
     <a href="#home">Cancel</a>
   </form>
+  </layout-xs="column">
 
 </div>

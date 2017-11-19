@@ -5,15 +5,15 @@ body, html {
   font-size: 14px;
 }
 
-.instructions .container h1 {
-  font-size: 32px;
-  font-weight: 600;
+.header .container h1 {
+  font-size: 24px;
 }
 
-.instructions {
-  background-color: #333333;
-  color: #DDDDDD;
-  padding: 15px;
+.header {
+  background-image: url('https://images.unsplash.com/photo-1509043183980-23be96ae4109?auto=format&fit=crop&w=1363&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 #entryForm {
@@ -37,7 +37,7 @@ body, html {
 }
 
 .message:nth-child(odd) {
-   background-color: #eeeeee;
+  background-color: #eeeeee;
 }
 
 .message:nth-child(even) {
