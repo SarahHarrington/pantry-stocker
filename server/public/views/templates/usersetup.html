@@ -1,3 +1,13 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
-<md-input></md-input>
+<md-input-container>
+    <label for="userStores">Stores</label>
+    <input id="userStores" ng-model="userStore" type="text">
+</md-input-contaienr>
+<button ng-click="usc.saveStore(userStore)">Save Store</button>
+
+<md-input-container>
+    <label for="userPantry">Pantries</label>
+    <input id="userPantry" ng-model="userPantry" type="text">
+</md-input-contaienr>
+<button ng-click="usc.savePantry(userPantry)">Save Pantry</button>
