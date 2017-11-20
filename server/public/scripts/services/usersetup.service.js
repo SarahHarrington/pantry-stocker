@@ -63,11 +63,21 @@ myApp.service('UserSetupService', function ($http) {
     }
 
     self.removeStore = function (storeId) {
-        console.log('storeId', storeId);
         var store_id = storeId.store_id;
         $http.delete('/stores/' + store_id)
             .then(function (response) {
                 self.getStores();
+            }).catch(function (error) {
+                console.log('error');
+            })
+    }
+
+    self.removePantry = function (pantryId) {
+        console.log('pantryId', pantryId);
+        var pantry_id = pantryId.pantry_id;
+        $http.delete('/pantries/' + pantry_id)
+            .then(function (response) {
+                self.getPantries();
             }).catch(function (error) {
                 console.log('error');
             })

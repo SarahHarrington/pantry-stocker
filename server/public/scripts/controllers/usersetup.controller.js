@@ -23,13 +23,16 @@ myApp.controller('UserSetupController', function (UserService, UserSetupService)
         UserSetupService.getPantries();
         vm.userPantryList = UserSetupService.pantries;
     }
+
     vm.getStores();
-    console.log('userStoreList', vm.userStoreList.allstores);
     vm.getPantries();
 
     vm.removeStore = function(storeId) {
-        // console.log('storeId', storeId);
         UserSetupService.removeStore(storeId);
+    }
+
+    vm.removePantry = function (pantryId) {
+        UserSetupService.removePantry(pantryId);
     }
 
 });

@@ -27,7 +27,8 @@
     <md-chips placeholder="Enter a new pantry" class="custom-chips" 
         ng-model="usc.userPantryList.allpantries" 
         md-transform-chip="usc.newPantry($chip)" 
-        md-on-add="usc.savePantry($chip)">
+        md-on-add="usc.savePantry($chip)"
+        md-on-remove="usc.removePantry($chip)">
         <md-chip-template>
             <span>
                 {{$chip.label}}
