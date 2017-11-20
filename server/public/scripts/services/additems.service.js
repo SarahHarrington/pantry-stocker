@@ -5,21 +5,23 @@ myApp.service('AddItemService', function($http) {
     self.item = {
         itemName: '',
         itemQuantity: '',
-        storePurchased: '',
-        defaultStore: '',
+        itemStore: '',
+        itemPantry: '',        
         reminderQty: ''
     }
 
     self.addItem = function (newItem) {
         console.log('add item button clicked');
-        $http.post('/additems', newItem)
+        return $http.post('/additems', newItem)
         .then(function(response){
             console.log('new item added');
-            
+            return response;
         }).catch(function(error){
             console.log('Failed to add item', error);
         })
     }
+
+    
 
 
 

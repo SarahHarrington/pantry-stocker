@@ -7,10 +7,14 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
 
     vm.addItem = function (newItem) {
         AddItemService.addItem(newItem);
+
     }
 
     vm.getStores = function () {
         UserSetupService.getStores();
+        // .then(function(response){
+        //     vm.showSimpleToast()
+        // })
         vm.userStoreList = UserSetupService.stores;
     }
 
@@ -18,6 +22,8 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         UserSetupService.getPantries();
         vm.userPantryList = UserSetupService.pantries;
     }
+
+
 
     vm.getStores();
     vm.getPantries();

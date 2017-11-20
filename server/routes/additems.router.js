@@ -20,15 +20,15 @@ router.post('/', function (req, res) {
                 res.sendStatus(500);
             }
             else {
-                db.query('INSERT INTO "Items" ("item_name", "user_id") VALUES ($1, $2) RETURNING "item_id";',
-                    [item.itemName, userInfo], function (errorMakingQuery, result) {
+                db.query('INSERT INTO "Items" ("item_name", "user_id", "default_store_id") VALUES ($1, $2, $3) RETURNING "item_id";',
+                    [item.itemName, userInfo, item.itemStore], function (errorMakingQuery, result) {
                         if (errorMakingQuery) {
                             console.log('Error Making Query - Add Item', errorMakingQuery);
                             res.sendStatus(500);
                         }//if query error for item insert in item table
                         else {                            
-                            db.query('INSERT INTO "stock" ("item_id", "quantity", "min_quantity") VALUES ($1, $2, $3);',
-                                [result.rows[0].item_id, item.itemQuantity, item.reminderQuantity], function (errorMakingQuery, result) {
+                            db.query('INSERT INTO "stock" ("item_id", "quantity", "min_quantity", "pantry_location") VALUES ($1, $2, $3, $4);',
+                                [result.rows[0].item_id, item.itemQuantity, item.reminderQuantity, item.itemPantry], function (errorMakingQuery, result) {
                                     done();
                                     if (errorMakingQuery) {
                                         console.log('Error Making Query - Add Item to Stock', errorMakingQuery);

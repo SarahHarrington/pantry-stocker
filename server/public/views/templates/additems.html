@@ -23,17 +23,17 @@
         <br>
         <md-input-container>
             <label for="itemStore">Store</label>
-            <md-select id="itemStore" ng-model="aic.item.store">
+            <md-select id="itemStore" ng-model="aic.item.itemStore">
                 <md-option>None</md-option>
-                <md-option ng-repeat="store in aic.userStoreList.allstores" ng-value="store.label">{{store.label}}</md-option>
+                <md-option ng-repeat="store in aic.userStoreList.allstores" ng-value="store.store_id">{{store.label}}</md-option>
             </md-select>
         </md-input-container>
 
         <md-input-container>
             <label for="itemPantry">Pantry</label>
-            <md-select id="itemPantry" ng-model="aic.item.pantryLocation" >
+            <md-select id="itemPantry" ng-model="aic.item.itemPantry" >
                 <md-option>None</md-option>
-                <md-option ng-repeat="pantry in aic.userPantryList.allpantries" ng-value="pantry.label">{{pantry.label}}</md-option>
+                <md-option ng-repeat="pantry in aic.userPantryList.allpantries" ng-value="pantry.pantry_id">{{pantry.label}}</md-option>
             </md-select>
         </md-input-container>
 
