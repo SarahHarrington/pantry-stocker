@@ -10,4 +10,14 @@ myApp.controller('UserSetupController', function (UserService, UserSetupService)
     vm.savePantry = function(pantry) {
         UserSetupService.savePantry(pantry);
     }
+
+    vm.getStores = function() {
+        UserSetupService.getStores();
+    }
+
+    vm.getPantries = function() {
+        UserSetupService.getPantries();
+    }
+    vm.getStores();
+    vm.getPantries();
 });

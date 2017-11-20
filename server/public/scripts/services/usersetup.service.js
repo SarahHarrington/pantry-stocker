@@ -2,13 +2,16 @@ myApp.service('UserSetupService', function ($http) {
     console.log('UserSetupService loaded');
     var self = this;
 
-    storeToSave = {
+    var storeToSave = {
         label: ''
     }
 
-    pantryToSave = {
+    var pantryToSave = {
         label: ''
     }
+
+    self.userStoreList = [];
+    self.userPantryList = [];
 
     self.saveStore = function(store) {
         storeToSave.label = store;
@@ -18,7 +21,7 @@ myApp.service('UserSetupService', function ($http) {
         }).catch(function(error){
             console.log('Failed to add store', error);
         })
-    }
+    }//end save store
 
     self.savePantry = function(pantry) {
         pantryToSave.label = pantry;
@@ -28,5 +31,25 @@ myApp.service('UserSetupService', function ($http) {
         }).catch(function(error){
             console.log('Failed to add pantry', error);
         })
+    }//end save pantry
+
+    self.getStores = function() {
+        $http.get('/stores/userstores')
+        .then(function(response) {
+            console.log('response data for stores', response.data);
+            self.userStoreList = response.data;
+        }).catch(function(error){
+            console.log('error');
+        })
+    }
+
+    self.getPantries = function () {
+        $http.get('/pantries/userpantries')
+            .then(function (response) {
+                console.log('response data for pantries', response.data);
+                self.userPantryList = response.data;
+            }).catch(function (error) {
+                console.log('error');
+            })
     }
 })

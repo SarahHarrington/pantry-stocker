@@ -37,4 +37,34 @@ router.post('/', function (req, res) {
     }
 });
 
+router.get('/userstores', function (req, res) {
+    if (req.isAuthenticated) {
+        console.log('Get for Stores');
+        console.log('userid', req.user.id);
+        var userId = req.user.id;
+        
+        pool.connect(function (errorConnectingToDb, db, done) {
+            if (errorConnectingToDb) {
+                console.log('Error connecting', errorConnectingToDb);
+                res.sendStatus(500);
+            } else {
+                var queryText = 'SELECT * FROM "stores" WHERE "user_id" = $1;';
+                db.query(queryText, [userId], function (errorMakingQuery, result) {
+                    done();
+                    if (errorMakingQuery) {
+                        console.log('Error making query', errorMakingQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                    }
+                }); // END QUERY
+            }
+        }); // END POOL
+    }
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }
+});
+
 module.exports = router;
