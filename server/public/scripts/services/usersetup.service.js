@@ -10,14 +10,18 @@ myApp.service('UserSetupService', function ($http) {
         label: ''
     }
 
-    self.userStoreList = [];
+    self.stores = {
+        allstores: []
+    }
     self.userPantryList = [];
 
     self.saveStore = function(store) {
         storeToSave.label = store;
-        $http.post('/stores', storeToSave)
+        return $http.post('/stores', storeToSave)
         .then(function(response) {
             console.log('new store added');
+            self.getStores();
+            return response;
         }).catch(function(error){
             console.log('Failed to add store', error);
         })
@@ -25,9 +29,10 @@ myApp.service('UserSetupService', function ($http) {
 
     self.savePantry = function(pantry) {
         pantryToSave.label = pantry;
-        $http.post('/pantries', pantryToSave)
+        return $http.post('/pantries', pantryToSave)
         .then(function(response){
             console.log('new pantry added');
+            return response;
         }).catch(function(error){
             console.log('Failed to add pantry', error);
         })
@@ -36,8 +41,8 @@ myApp.service('UserSetupService', function ($http) {
     self.getStores = function() {
         $http.get('/stores/userstores')
         .then(function(response) {
-            console.log('response data for stores', response.data);
-            self.userStoreList = response.data;
+            self.stores.allstores = response.data;
+            console.log('response data for stores', self.stores.allstores);
         }).catch(function(error){
             console.log('error');
         })
@@ -46,8 +51,8 @@ myApp.service('UserSetupService', function ($http) {
     self.getPantries = function () {
         $http.get('/pantries/userpantries')
             .then(function (response) {
-                console.log('response data for pantries', response.data);
                 self.userPantryList = response.data;
+                console.log('response data for pantries', self.userPantryList);
             }).catch(function (error) {
                 console.log('error');
             })

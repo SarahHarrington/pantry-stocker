@@ -1,11 +1,25 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
-<md-input-container>
+<!-- <md-input-container>
     <label for="userStores">Stores</label>
     <input id="userStores" ng-model="userStore" type="text">
-</md-input-contaienr>
-<button ng-click="usc.saveStore(userStore)">Save Store</button>
+</md-input-contaienr> -->
+<!-- <button ng-click="usc.saveStore(userStore)">Save Store</button> -->
 
+<div>
+<md-chips placeholder="Enter a new store" class="custom-chips" ng-model="usc.userStoreList.allstores" md-transform-chip = "usc.newStore($chip)">
+    <md-chip-template>
+        <span>
+            {{$chip.label}}
+        </span>
+    </md-chip-template>
+<!-- 
+    <button md-chip-remove class="md-primary-closeButton">
+        <md-icon md-sv-icon="md-close"></md-icon>
+    </button> -->
+
+</md-chips>
+</div>
 
 
 <md-input-container>
