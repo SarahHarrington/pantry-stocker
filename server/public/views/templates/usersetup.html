@@ -3,27 +3,42 @@
 <!-- <md-input-container>
     <label for="userStores">Stores</label>
     <input id="userStores" ng-model="userStore" type="text">
-</md-input-contaienr> -->
+</md-input-container> -->
 <!-- <button ng-click="usc.saveStore(userStore)">Save Store</button> -->
 
-<div>
-<md-chips placeholder="Enter a new store" class="custom-chips" ng-model="usc.userStoreList.allstores" md-transform-chip = "usc.newStore($chip)">
-    <md-chip-template>
-        <span>
-            {{$chip.label}}
-        </span>
-    </md-chip-template>
-<!-- 
-    <button md-chip-remove class="md-primary-closeButton">
-        <md-icon md-sv-icon="md-close"></md-icon>
-    </button> -->
-
-</md-chips>
+<div class="chipHolder"><!-- Stores Chip Holder -->
+    <p>My Stores:</p>
+    <md-chips placeholder="Enter a new store" class="custom-chips" 
+        ng-model="usc.userStoreList.allstores" 
+        md-transform-chip = "usc.newStore($chip)" 
+        md-on-add="usc.saveStore($chip)"
+        md-on-remove="usc.removeStore($chip)">
+        <md-chip-template>
+            <span>
+                {{$chip.label}}
+            </span>
+        </md-chip-template>
+    </md-chips>
 </div>
 
+<div class="chipHolder">
+    <!-- Stores Chip Holder -->
+    <p>My Pantries:</p>
+    <md-chips placeholder="Enter a new pantry" class="custom-chips" 
+        ng-model="usc.userPantryList.allpantries" 
+        md-transform-chip="usc.newPantry($chip)" 
+        md-on-add="usc.savePantry($chip)">
+        <md-chip-template>
+            <span>
+                {{$chip.label}}
+            </span>
+        </md-chip-template>
+    </md-chips>
+</div>
 
+<!-- 
 <md-input-container>
     <label for="userPantry">Pantries</label>
     <input id="userPantry" ng-model="userPantry" type="text">
 </md-input-contaienr>
-<button ng-click="usc.savePantry(userPantry)">Save Pantry</button>
+<button ng-click="usc.savePantry(userPantry)">Save Pantry</button> -->

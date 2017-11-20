@@ -13,7 +13,11 @@ myApp.service('UserSetupService', function ($http) {
     self.stores = {
         allstores: []
     }
-    self.userPantryList = [];
+
+    self.pantries = {
+        allpantries: []
+    }
+
 
     self.saveStore = function(store) {
         storeToSave.label = store;
@@ -42,7 +46,7 @@ myApp.service('UserSetupService', function ($http) {
         $http.get('/stores/userstores')
         .then(function(response) {
             self.stores.allstores = response.data;
-            console.log('response data for stores', self.stores.allstores);
+            // console.log('response data for stores', self.stores.allstores);
         }).catch(function(error){
             console.log('error');
         })
@@ -51,8 +55,19 @@ myApp.service('UserSetupService', function ($http) {
     self.getPantries = function () {
         $http.get('/pantries/userpantries')
             .then(function (response) {
-                self.userPantryList = response.data;
-                console.log('response data for pantries', self.userPantryList);
+                self.pantries.allpantries = response.data;
+                console.log('response data for pantries', self.pantries.allpantries);
+            }).catch(function (error) {
+                console.log('error');
+            })
+    }
+
+    self.removeStore = function (storeId) {
+        console.log('storeId', storeId);
+        var store_id = storeId.store_id;
+        $http.delete('/stores/' + store_id)
+            .then(function (response) {
+                self.getStores();
             }).catch(function (error) {
                 console.log('error');
             })

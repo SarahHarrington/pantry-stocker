@@ -67,4 +67,34 @@ router.get('/userstores', function (req, res) {
     }
 });
 
+router.delete('/:id', function(req, res){
+    console.log('req body', req.params.id);
+    var storeId = req.params.id;
+    if (req.isAuthenticated) {
+        console.log('delete store route');
+        pool.connect(function(errorConnectingToDb, db, done){
+            if (errorConnectingToDb) {
+                console.log('Error Connecting', errorConnectingToDb);
+                res.sendStatus(500);
+            }//end pool if
+            else {
+                var queryText = 'DELETE from "stores" WHERE "store_id" = $1;'
+                db.query(queryText, [storeId],function (errorMakingQuery, result){
+                    if (errorMakingQuery) {
+                        console.log('Error making query', errorMakingQuery);
+                        res.sendStatus(500);
+                    }//end query if
+                    else {
+                        res.sendStatus(201);
+                    }
+                })//end db.query
+            }//end pool else
+        })//end pool connect
+    }//end req authenticated
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }//end req else authenticated
+})//end router delete
+
 module.exports = router;

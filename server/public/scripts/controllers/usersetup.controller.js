@@ -3,10 +3,10 @@ myApp.controller('UserSetupController', function (UserService, UserSetupService)
     var vm = this;
 
     vm.userStoreList = UserSetupService.stores.data;
+    vm.userPantryList = UserSetupService.pantries.data;
 
     vm.saveStore = function(store) {
         UserSetupService.saveStore(store);
-        console.log('controller store', store);
         //add alert for showing store was added
     }
 
@@ -17,14 +17,19 @@ myApp.controller('UserSetupController', function (UserService, UserSetupService)
     vm.getStores = function() {
         UserSetupService.getStores();
         vm.userStoreList = UserSetupService.stores;
-        console.log('getstore', vm.userStoreList);
     }
 
     vm.getPantries = function() {
         UserSetupService.getPantries();
+        vm.userPantryList = UserSetupService.pantries;
     }
     vm.getStores();
     console.log('userStoreList', vm.userStoreList.allstores);
     vm.getPantries();
+
+    vm.removeStore = function(storeId) {
+        // console.log('storeId', storeId);
+        UserSetupService.removeStore(storeId);
+    }
 
 });
