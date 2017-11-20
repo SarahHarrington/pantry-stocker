@@ -3,37 +3,39 @@
 
 <div layout-xs="column">
     <div>
-
-        <div md-input-container>
+        <md-input-container>
             <label for="itemName">Item Name:</label>
             <br>
             <input id="itemName" ng-model="aic.item.itemName" type="text">
-        </div md-input-container>
+        </md-input-container>
 
-        <div md-input-container>
+        <md-input-container>
             <label for="itemQuantity">Quantity:</label>
             <br>
             <input id="itemQuantity" ng-model="aic.item.itemQuantity" type="number">
-        </div md-input-container>
+        </md-input-container>
 
-        <div md-input-container>
+        <md-input-container>
             <label for="reminderQty">Reminder Quantity:</label>
             <br>
             <input id="reminderQty" ng-model="aic.item.reminderQuantity" type="number">
-        </div md-input-container>
+        </md-input-container>
+        <br>
+        <md-input-container>
+            <label for="itemStore">Store</label>
+            <md-select id="itemStore" ng-model="aic.item.store">
+                <md-option>None</md-option>
+                <md-option ng-repeat="store in aic.userStoreList.allstores" ng-value="store.label">{{store.label}}</md-option>
+            </md-select>
+        </md-input-container>
 
-        <div md-input-container>
-            <label for="storePurchased">Should this item have a default store?</label>
-            <br>
-            <input id="storePurchased" ng-model="aic.item.storePurchased" type="text">
-            <!-- Will be drop down of stores to select from -->
-        </div md-input-container>
-
-        <div md-input-container>
-            <label for="pantryLocation">Pantry:</label>
-            <br>
-            <input id="PantryLocation" ng-model="aic.item.pantryLocation" type="text">
-        </div md-input-container>
+        <md-input-container>
+            <label for="itemPantry">Pantry</label>
+            <md-select id="itemPantry" ng-model="aic.item.pantryLocation" >
+                <md-option>None</md-option>
+                <md-option ng-repeat="pantry in aic.userPantryList.allpantries" ng-value="pantry.label">{{pantry.label}}</md-option>
+            </md-select>
+        </md-input-container>
 
         <md-button ng-click="aic.addItem(aic.item)">Add Item</md-button>
 

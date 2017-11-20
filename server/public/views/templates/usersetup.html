@@ -1,12 +1,7 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
-<!-- <md-input-container>
-    <label for="userStores">Stores</label>
-    <input id="userStores" ng-model="userStore" type="text">
-</md-input-container> -->
-<!-- <button ng-click="usc.saveStore(userStore)">Save Store</button> -->
 
-<div class="chipHolder"><!-- Stores Chip Holder -->
+<div class="chipHolder"
     <p>My Stores:</p>
     <md-chips placeholder="Enter a new store" class="custom-chips" 
         ng-model="usc.userStoreList.allstores" 
@@ -22,7 +17,6 @@
 </div>
 
 <div class="chipHolder">
-    <!-- Stores Chip Holder -->
     <p>My Pantries:</p>
     <md-chips placeholder="Enter a new pantry" class="custom-chips" 
         ng-model="usc.userPantryList.allpantries" 
@@ -36,10 +30,3 @@
         </md-chip-template>
     </md-chips>
 </div>
-
-<!-- 
-<md-input-container>
-    <label for="userPantry">Pantries</label>
-    <input id="userPantry" ng-model="userPantry" type="text">
-</md-input-contaienr>
-<button ng-click="usc.savePantry(userPantry)">Save Pantry</button> -->

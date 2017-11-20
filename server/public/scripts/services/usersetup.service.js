@@ -36,6 +36,7 @@ myApp.service('UserSetupService', function ($http) {
         return $http.post('/pantries', pantryToSave)
         .then(function(response){
             console.log('new pantry added');
+            self.getPantries();
             return response;
         }).catch(function(error){
             console.log('Failed to add pantry', error);
@@ -56,7 +57,7 @@ myApp.service('UserSetupService', function ($http) {
         $http.get('/pantries/userpantries')
             .then(function (response) {
                 self.pantries.allpantries = response.data;
-                console.log('response data for pantries', self.pantries.allpantries);
+                // console.log('response data for pantries', self.pantries.allpantries);
             }).catch(function (error) {
                 console.log('error');
             })
