@@ -2,7 +2,7 @@
 <!-- Navigation Above -->
 <div>
     <div layout="column" ng-repeat="pantry in usc.userPantryList.allpantries">
-        <md-button class="md-raised" ng-click="usc.getPantryItems(pantry.pantry_id)">{{pantry.label}}</md-button>
+        <md-button class="md-raised" ng-click="usc.getPantryItems(pantry)">{{pantry.label}}</md-button>
             <div layout="row" ng-repeat="eachItem in usc.userPantryItems.allitems">
                 <p>{{eachItem.item_name}}</p>
                 <md-button class="md-icon-button md-primary" aria-label="Settings">

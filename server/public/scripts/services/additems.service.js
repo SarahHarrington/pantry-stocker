@@ -11,7 +11,6 @@ myApp.service('AddItemService', function($http) {
     }
 
     self.userPantryItems = {
-        pantryId: '',
         allitems: []
     }
 
@@ -26,9 +25,11 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
-    self.getPantryItems = function (pantryId) {
-        var pantry_id = 
-        self.userPantryItems.pantryId = pantryId;
+    self.getPantryItems = function (pantry) {
+        console.log('pantry', pantry.pantry_id);
+        var pantryId = pantry.pantry_id;
+        console.log('pantryId', pantryId);
+        
         $http.get('/items/mypantries/' + pantryId)
         .then(function(response){
             self.userPantryItems.allitems = response.data;

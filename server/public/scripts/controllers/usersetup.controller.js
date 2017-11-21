@@ -38,10 +38,8 @@ myApp.controller('UserSetupController', function (UserService, UserSetupService,
 
     vm.getPantryItems = function (pantryId) {
         console.log('get items clicked');
-        console.log('pantryId', pantryId);
         AddItemService.getPantryItems(pantryId);
         vm.userPantryItems = AddItemService.userPantryItems;
         console.log('vm.userItems', vm.userPantryItems);
     }
-
 });
