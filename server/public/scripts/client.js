@@ -51,15 +51,13 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/mypantries', {
       templateUrl: '/views/templates/pantryview.html',
-      controller: 'UserSetupController as usc',
+      controller: 'PantryViewController as pvc',
       resolve: {
         getuser: function (UserService) {
           return UserService.getuser()
         }
       }
     })
-
-
     .otherwise({
       redirectTo: 'home'
     });

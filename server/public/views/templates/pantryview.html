@@ -1,22 +1,22 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
 <div>
-    <div layout="column" ng-repeat="pantry in usc.userPantryList.allpantries track by $index">
-        <md-button class="md-raised" ng-click="usc.getPantryItems(pantry)">{{pantry.label}}</md-button>
-        <div layout="row" ng-repeat="eachItem in usc.userPantryItems.allitems track by $index" ng-if="pantry.pantry_id == eachItem.pantry_location">
+    <div layout="column" ng-repeat="pantry in pvc.userPantryList.allpantries track by $index">
+        <md-button class="md-raised" ng-click="pvc.getPantryItems(pantry)">{{pantry.label}}</md-button>
+        <div layout="row" ng-repeat="eachItem in pvc.userPantryItems.allitems track by $index" ng-if="pantry.pantry_id == eachItem.pantry_location">
             <div layout="row">
                 <md-button class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="../images/edit.svg"></md-icon>
                 </md-button>
                 <p>{{eachItem.item_name}}</p>
-                <md-button ng-click="reduceItem(eachItem)" class="md-icon-button md-primary" aria-label="Settings">
+                <md-button class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="../images/remove_circle.svg"></md-icon>
                 </md-button>
                 <p>{{eachItem.quantity}}</p>
                 <md-button class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="../images/add_circle.svg"></md-icon>
                 </md-button>
-                <md-button class="md-icon-button md-primary" aria-label="Settings">
+                <md-button ng-click="deleteItemFromPantry(eachItem)" class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="../images/delete.svg"></md-icon>
                 </md-button>
             </div>

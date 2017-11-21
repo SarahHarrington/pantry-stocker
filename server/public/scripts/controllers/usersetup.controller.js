@@ -4,7 +4,6 @@ myApp.controller('UserSetupController', function (UserService, UserSetupService,
 
     vm.userStoreList = UserSetupService.stores.data;
     vm.userPantryList = UserSetupService.pantries.data;
-    vm.userPantryItems = AddItemService.userPantryItems.allitems;
 
     vm.saveStore = function(store) {
         UserSetupService.saveStore(store);
@@ -34,11 +33,5 @@ myApp.controller('UserSetupController', function (UserService, UserSetupService,
 
     vm.removePantry = function (pantryId) {
         UserSetupService.removePantry(pantryId);
-    }
-
-    vm.getPantryItems = function (pantryId) {
-        console.log('get items clicked');
-        AddItemService.getPantryItems(pantryId);
-        vm.userPantryItems = AddItemService.userPantryItems;
     }
 });
