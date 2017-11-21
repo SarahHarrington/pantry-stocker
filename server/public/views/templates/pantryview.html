@@ -2,8 +2,21 @@
 <!-- Navigation Above -->
 <div>
     <div layout="column" ng-repeat="pantry in usc.userPantryList.allpantries">
-        <md-button class="md-raised" ng-click="usc.getItems(pantry.pantry_id)">{{pantry.label}}</md-button>
-        <!-- <div ng-repeat="eachItem in usc.userItems.allitems | filter:{pantry_location:pantry.pantry_location}"></div> -->
+        <md-button class="md-raised" ng-click="usc.getPantryItems(pantry.pantry_id)">{{pantry.label}}</md-button>
+            <div layout="row" ng-repeat="eachItem in usc.userPantryItems.allitems">
+                <p>{{eachItem.item_name}}</p>
+                <md-button class="md-icon-button md-primary" aria-label="Settings">
+                    <md-icon md-svg-icon="../images/remove_circle.svg"></md-icon>
+                </md-button>
+                <p>{{eachItem.quantity}}</p>
+                <md-button class="md-icon-button md-primary" aria-label="Settings">
+                    <md-icon md-svg-icon="../images/add_circle.svg"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button md-primary" aria-label="Settings">
+                    <md-icon md-svg-icon="../images/delete.svg"></md-icon>
+                </md-button>
+            </div>
+        <!-- <div ng-repeat="eachItem in usc.userItems.allitems  usc.userPantryItems.allitems"></div> -->
         <!-- pantry.pantry_id -->
     </div>
 </div>

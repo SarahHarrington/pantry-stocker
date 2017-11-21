@@ -10,7 +10,8 @@ myApp.service('AddItemService', function($http) {
         reminderQty: ''
     }
 
-    self.userItems = {
+    self.userPantryItems = {
+        pantryId: '',
         allitems: []
     }
 
@@ -25,13 +26,13 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
-    self.getItems = function () {
-        console.log('get items running');
-        $http.get('/items/mypantries')
+    self.getPantryItems = function (pantryId) {
+        var pantry_id = 
+        self.userPantryItems.pantryId = pantryId;
+        $http.get('/items/mypantries/' + pantryId)
         .then(function(response){
-            self.userItems.allitems = response.data;
-            console.log('self.userItems.allitems', self.userItems.allitems);
-            
+            self.userPantryItems.allitems = response.data;
+            console.log('self.userPantryItems.allitems', self.userPantryItems.allitems);
         }).catch(function(error){
             console.log('error');
             

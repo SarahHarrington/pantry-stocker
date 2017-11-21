@@ -50,11 +50,12 @@ router.post('/additems', function (req, res) {
 });//router.post for add item
 
 
-router.get('/mypantries', function(req, res){
+router.get('/mypantries:id', function(req, res){
     if(req.isAuthenticated) {
-        var userId = req.user.id;
-        var pantry_id = req.body;
-        
+        // var userId = req.user.id;
+        console.log('my pantries', req.body);
+        console.log('req params', req.params.id);
+                
         pool.connect(function(errorConnectingtoDB, db, done){
             var queryText = 
             'SELECT "Items"."item_name", "Items"."default_store_id", "stock"."quantity", "stock"."min_quantity", "stock"."pantry_location"' +
@@ -79,5 +80,35 @@ router.get('/mypantries', function(req, res){
         res.send(false);
     }
 })
+
+// router.get('/allitems', function (req, res) {
+//     if (req.isAuthenticated) {
+//         var userId = req.user.id;
+//         var pantry_id = req.body;
+
+//         pool.connect(function (errorConnectingtoDB, db, done) {
+//             var queryText =
+//                 'SELECT "Items"."item_name", "Items"."default_store_id", "stock"."quantity", "stock"."min_quantity", "stock"."pantry_location"' +
+//                 'FROM "stock" JOIN "Items"' +
+//                 'ON "Items"."item_id" = "stock"."item_id"' +
+//                 'WHERE "Items"."user_id" = $1'
+//             db.query(queryText, [userId], function (errorMakingQuery, result) {
+//                 done();
+//                 if (errorMakingQuery) {
+//                     console.log('Error making query', errorMakingQuery);
+//                     res.sendStatus(500);
+//                 } else {
+//                     res.send(result.rows);
+//                     console.log(result.rows);
+
+//                 }
+//             })
+//         })
+//     }
+//     else {
+//         console.log('User is not logged in');
+//         res.send(false);
+//     }
+// })
 
 module.exports = router;
