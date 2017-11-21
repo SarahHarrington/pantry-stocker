@@ -40,6 +40,5 @@ myApp.controller('UserSetupController', function (UserService, UserSetupService,
         console.log('get items clicked');
         AddItemService.getPantryItems(pantryId);
         vm.userPantryItems = AddItemService.userPantryItems;
-        console.log('vm.userItems', vm.userPantryItems);
     }
 });

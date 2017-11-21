@@ -1,9 +1,10 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
 <div>
-    <div layout="column" ng-repeat="pantry in usc.userPantryList.allpantries">
+    <div layout="column" ng-repeat="pantry in usc.userPantryList.allpantries track by $index">
         <md-button class="md-raised" ng-click="usc.getPantryItems(pantry)">{{pantry.label}}</md-button>
-            <div layout="row" ng-repeat="eachItem in usc.userPantryItems.allitems">
+        <div layout="row" ng-repeat="eachItem in usc.userPantryItems.allitems" ng-if="pantry.pantry_id == eachItem.pantry_location">
+            <div layout="row">
                 <p>{{eachItem.item_name}}</p>
                 <md-button class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="../images/remove_circle.svg"></md-icon>
@@ -16,7 +17,7 @@
                     <md-icon md-svg-icon="../images/delete.svg"></md-icon>
                 </md-button>
             </div>
-        <!-- <div ng-repeat="eachItem in usc.userItems.allitems  usc.userPantryItems.allitems"></div> -->
-        <!-- pantry.pantry_id -->
+        </div>
     </div>
 </div>
+<!-- pantry.pantry_id   eachItem.pantry_location -->
