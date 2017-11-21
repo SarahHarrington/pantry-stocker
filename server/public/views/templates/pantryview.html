@@ -6,7 +6,7 @@
     <div ng-repeat="pantry in usc.userPantryList.allpantries">
         <div>
             <p>{{pantry.label}}</p>
-            <div ng-repeat="eachItem in usc.userItems.allitems | filter:{pantry_location:pantry.pantry_id}"></div>
+            <div ng-repeat="eachItem in usc.userItems.allitems | filter:{pantry_location:pantry.pantry_location}"></div>
             <!-- pantry.pantry_id -->
         </div>
     </div>
