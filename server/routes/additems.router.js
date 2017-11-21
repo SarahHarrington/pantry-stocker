@@ -53,10 +53,12 @@ router.post('/additems', function (req, res) {
 router.get('/mypantries', function(req, res){
     if(req.isAuthenticated) {
         var userId = req.user.id;
+        var pantry_id = req.body;
+        
         pool.connect(function(errorConnectingtoDB, db, done){
             var queryText = 
             'SELECT "Items"."item_name", "Items"."default_store_id", "stock"."quantity", "stock"."min_quantity", "stock"."pantry_location"' +
-            'FROM "Items" JOIN "stock"' +
+            'FROM "stock" JOIN "Items"' +
             'ON "Items"."item_id" = "stock"."item_id"' +
             'WHERE "Items"."user_id" = $1'
             db.query(queryText, [userId], function (errorMakingQuery, result) {

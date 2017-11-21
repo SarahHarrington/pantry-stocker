@@ -36,7 +36,11 @@ myApp.controller('UserSetupController', function (UserService, UserSetupService,
         UserSetupService.removePantry(pantryId);
     }
 
-    vm.getItems = function () {
+    vm.getItems = function (pantryId) {
+        console.log('get items clicked');
+        
+        console.log('pantryId', pantryId);
+        
         AddItemService.getItems();
         vm.userItems = AddItemService.userItems;
         console.log('vm.userItems', vm.userItems);

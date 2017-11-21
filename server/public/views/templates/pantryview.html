@@ -1,13 +1,9 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
 <div>
-    {{usc.userItems.allitems}}
-
-    <div ng-repeat="pantry in usc.userPantryList.allpantries">
-        <div>
-            <p>{{pantry.label}}</p>
-            <div ng-repeat="eachItem in usc.userItems.allitems | filter:{pantry_location:pantry.pantry_location}"></div>
-            <!-- pantry.pantry_id -->
-        </div>
+    <div layout="column" ng-repeat="pantry in usc.userPantryList.allpantries">
+        <md-button class="md-raised" ng-click="usc.getItems(pantry.pantry_id)">{{pantry.label}}</md-button>
+        <!-- <div ng-repeat="eachItem in usc.userItems.allitems | filter:{pantry_location:pantry.pantry_location}"></div> -->
+        <!-- pantry.pantry_id -->
     </div>
 </div>
