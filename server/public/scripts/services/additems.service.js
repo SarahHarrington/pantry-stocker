@@ -10,9 +10,13 @@ myApp.service('AddItemService', function($http) {
         reminderQty: ''
     }
 
+    self.userItems = {
+        allitems: []
+    }
+
     self.addItem = function (newItem) {
         console.log('add item button clicked');
-        return $http.post('/additems', newItem)
+        return $http.post('/items/additems', newItem)
         .then(function(response){
             console.log('new item added');
             return response;
@@ -21,9 +25,16 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
-    
-
-
-
-
+    self.getItems = function () {
+        console.log('get items running');
+        $http.get('/items/mypantries')
+        .then(function(response){
+            self.userItems.allitems = response.data;
+            console.log('self.userItems.allitems', self.userItems.allitems);
+            
+        }).catch(function(error){
+            console.log('error');
+            
+        })
+    }
 })

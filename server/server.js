@@ -32,7 +32,7 @@ app.use(passport.session());
 // Routes
 app.use('/register', registerRouter);
 app.use('/user', userRouter);
-app.use('/additems', addItemsRouter);
+app.use('/items', addItemsRouter);
 app.use('/stores', storesRouter);
 app.use('/pantries', pantriesRouter);
 

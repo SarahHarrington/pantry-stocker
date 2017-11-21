@@ -2,25 +2,10 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     console.log('AddItemController created');
     var vm = this;
 
-    vm.userStoreList = UserSetupService.stores.data;
-    vm.userPantryList = UserSetupService.pantries.data;
+    // vm.userItems = AddItemService.userItems.allitems;
 
     vm.addItem = function (item) {
         AddItemService.addItem(item);
         vm.item = {};
     }
-
-
-    vm.getStores = function () {
-        UserSetupService.getStores();
-        vm.userStoreList = UserSetupService.stores;
-    }
-
-    vm.getPantries = function () {
-        UserSetupService.getPantries();
-        vm.userPantryList = UserSetupService.pantries;
-    }
-
-    vm.getStores();
-    vm.getPantries();
 });

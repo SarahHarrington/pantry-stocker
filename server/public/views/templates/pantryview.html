@@ -1,12 +1,13 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
 <div>
-<div ng-repeat="pantry in usc.userPantryList.allpantries">
-    <div>
-        <p>{{pantry.label}}</p>
-        
-        
-        <!-- pantry.pantry_id -->
+    {{usc.userItems.allitems}}
+
+    <div ng-repeat="pantry in usc.userPantryList.allpantries">
+        <div>
+            <p>{{pantry.label}}</p>
+            <div ng-repeat="eachItem in usc.userItems.allitems | filter:{pantry_location:pantry.pantry_id}"></div>
+            <!-- pantry.pantry_id -->
+        </div>
     </div>
-</div>
 </div>
