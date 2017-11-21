@@ -50,4 +50,23 @@ router.post('/', function (req, res) {
 });//router.post for add item
 
 
+router.get('/', function(req, res){
+    if(req.isAuthenticated) {
+        var userInfo = req.user.id;
+        pool.connect(function(errorConnectingtoDB, db, done){
+            if(errorConnectingtoDB) {
+                console.log('Error Making Query - Get Items', errorMakingQuery);
+                res.sendStatus(500);
+            }
+            else {
+                db.query('')
+            }
+        })
+    }
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }
+})
+
 module.exports = router;
