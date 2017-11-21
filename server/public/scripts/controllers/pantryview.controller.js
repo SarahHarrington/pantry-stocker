@@ -18,4 +18,9 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         vm.userPantryItems = AddItemService.userPantryItems;
     }
 
+    vm.deleteItemFromPantry = function(item) {
+        console.log('delete item from pantry clicked');
+        AddItemService.deleteItemFromPantry(item);
+    }
+
 });
