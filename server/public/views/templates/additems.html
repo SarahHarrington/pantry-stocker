@@ -17,7 +17,7 @@
             </md-item-template>
             <md-not-found>
                 No "{{aic.searchText}}" were found.
-                <a ng-click="aic.addNewItem(aic.searchText)">Create a new one!</a>
+                <span ng-click="aic.addNewItem(aic.searchText)">Create a new one!</span>
             </md-not-found>
         </md-autocomplete>
 
@@ -37,9 +37,10 @@
         </md-input-container>
 
         <div>
-            <label>Select pantries:</label>
+            <label>Pantries:</label>
+            <!-- ADD AN NG-MODEL FOR THE DATA TO BIND TO AND HAVE THE FUNCTION IN THE CONTROLLER SET THAT VALUE WHEN IT RUNS THE FUNCTION -->
             <div ng-repeat="pantry in aic.userPantryList.allpantries">
-                <md-checkbox aria-label="none">{{pantry.label}}</md-checkbox>
+                <md-checkbox value="pantry.pantry_id" ng-checked="aic.checkPantryBox" aria-label="none">{{pantry.label}}</md-checkbox>
             </div>
         </div>
 

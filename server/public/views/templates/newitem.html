@@ -1,0 +1,26 @@
+<div>
+    <md-input-container>
+        <label for="itemStore">Store</label>
+        <md-select id="itemStore" ng-model="aic.item.itemStore">
+            <md-option>None</md-option>
+            <md-option ng-repeat="store in aic.userStoreList.allstores" ng-value="store.store_id">{{store.label}}</md-option>
+        </md-select>
+    </md-input-container>
+
+    <div>
+        <label>Pantries:</label>
+        <div ng-repeat="pantry in aic.userPantryList.allpantries">
+            <md-checkbox ng-checked="aic.checkIfInPantry()" aria-label="none">{{pantry.label}}</md-checkbox>
+        </div>
+    </div>
+</div>
+
+<md-input-container>
+    <label for="reminderQty">Reminder Quantity:</label>
+    <br>
+    <input id="reminderQty" ng-model="aic.item.reminderQuantity" type="number">
+</md-input-container>
+
+<md-button ng-click="aic.addItem(aic.item)">Add Item</md-button>
+</div>
+</div>

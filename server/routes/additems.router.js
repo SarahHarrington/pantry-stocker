@@ -50,6 +50,7 @@ router.post('/additems', function (req, res) {
 });//router.post for add item
 
 
+//route for getting pantries by logged in user
 router.get('/mypantries/:id', function(req, res){
     console.log('req params', req.params.id);
     if(req.isAuthenticated) {
@@ -80,6 +81,7 @@ router.get('/mypantries/:id', function(req, res){
     }
 })
 
+//route for getting all items for the logged in user
 router.get('/allitems', function (req, res) {
     if (req.isAuthenticated) {
         var userId = req.user.id;
@@ -106,6 +108,7 @@ router.get('/allitems', function (req, res) {
     }
 })
 
+//route to delete an item
 router.delete('/removeitem/:id', function(req, res){
     console.log('req params', req.params.id);
     if (req.isAuthenticated) {
@@ -137,5 +140,37 @@ router.delete('/removeitem/:id', function(req, res){
         res.send(false);
     }//end authenticated else
 })
+
+//route to get stock totals
+router.get('/itemstock/:id', function (req, res) {
+    console.log('req params', req.params.id);
+    if (req.isAuthenticated) {
+        var itemId = req.params.id;
+        pool.connect(function (errorConnectingtoDB, db, done) {
+            var queryText =
+                'SELECT "stock"."item_id", "stock"."quantity", "stock"."min_quantity", "stock"."pantry_location", "pantry"."label"' +
+                'FROM "stock" JOIN "pantry"' +
+                'ON "stock"."pantry_location" = "pantry"."pantry_id"' +
+                'WHERE "stock"."item_id" = $1;';
+            db.query(queryText, [itemId], function (errorMakingQuery, result) {
+                done();
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                    console.log(result.rows);
+
+                }
+            })
+        })
+    }
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }
+})
+
+
 
 module.exports = router;

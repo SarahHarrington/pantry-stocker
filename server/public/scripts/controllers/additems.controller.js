@@ -1,4 +1,4 @@
-myApp.controller('AddItemController', function (UserService, AddItemService, UserSetupService, $q, $log, $timeout) {
+myApp.controller('AddItemController', function (UserService, AddItemService, UserSetupService, $log) {
     console.log('AddItemController created');
     var vm = this;
 
@@ -7,6 +7,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     vm.userStoreList = UserSetupService.stores.data;
     vm.userPantryList = UserSetupService.pantries.data;
     vm.userAllItems = AddItemService.allUserItems;
+    vm.allItemStock = [];
 
     vm.addItem = function (item) {
         //need to append the search text here?
@@ -42,15 +43,9 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
 
     vm.selectedItemChange = function (item) {
-        $log.info('Item changed to ' + JSON.stringify(item));
-        console.log(item);
-        // vm.item = {
-        //     itemName: item.item_name,
-        //     itemQuantity: item.,
-        //     itemStore: '',
-        //     itemPantry: '',
-        //     reminderQty: ''
-        // }
+        console.log('selected change item', item);
+        var itemToGetStock = item.item_id;
+        vm.getItemStockTotal(itemToGetStock);
     }
 
     vm.createFilterFor = function (query) {
@@ -61,7 +56,26 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         );
     }
 
-    vm.addNewItem = function() {
+    vm.getItemStockTotal = function (item) {
+        vm.getItemStockTotal = AddItemService.getItemStockTotal(item)
+            .then(function (response) {
+                vm.allItemStock = response;
+                var pantryId = vm.allItemStock.pantry_location;
+                vm.checkIfChecked(pantryId);
+            })
+    }
 
+    vm.checkPantryBox = false;
+    vm.checkIfChecked = function () {
+
+        for (var i = 0; i < vm.allItemStock.length; i++) {
+            console.log('vm.allitemstock.pantry_location', vm.allItemStock.pantry_location);
+            
+            if (vm.allItemStock[i].pantry_location === pantry_id) {
+                vm.checkPantryBox = true;
+            } else {
+                vm.checkPantryBox = false;
+            }
+        }
     }
 });
