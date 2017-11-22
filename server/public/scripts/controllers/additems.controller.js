@@ -9,6 +9,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     vm.userAllItems = AddItemService.allUserItems;
 
     vm.addItem = function (item) {
+        //need to append the search text here?
         AddItemService.addItem(item);
         vm.item = {};
     }
@@ -42,19 +43,25 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
 
     vm.selectedItemChange = function (item) {
         $log.info('Item changed to ' + JSON.stringify(item));
+        console.log(item);
+        // vm.item = {
+        //     itemName: item.item_name,
+        //     itemQuantity: item.,
+        //     itemStore: '',
+        //     itemPantry: '',
+        //     reminderQty: ''
+        // }
     }
 
     vm.createFilterFor = function (query) {
-        // var lowercaseQuery = angular.lowercase(query);
-
-        // return function filterFn(item) {
-        //     console.log('item in the filter function', item.item_name);
-
-        //     return(item.item_name.indexOf(lowercaseQuery) === 0);
         return vm.userAllItems.items.filter(
             function (item) {
                 return item.item_name.toLowerCase().indexOf(query.toLowerCase()) > -1;
             }
         );
+    }
+
+    vm.addNewItem = function() {
+
     }
 });

@@ -11,17 +11,15 @@
             md-selected-item-change="aic.selectedItemChange(item)"
             placeholder="Search by Item Name"
             md-match-case-insensitive=true
-            md-min-length="2">
+            md-min-length="1">
             <md-item-template>
                 <span md-highlight-text="searchText">{{item.item_name}}</span>
-            </md-item-template>    
+            </md-item-template>
+            <md-not-found>
+                No "{{aic.searchText}}" were found.
+                <a ng-click="aic.addNewItem(aic.searchText)">Create a new one!</a>
+            </md-not-found>
         </md-autocomplete>
-
-        <md-input-container>
-            <label for="itemName">Item Name:</label>
-            <br>
-            <input id="itemName" ng-model="aic.item.itemName" type="text">
-        </md-input-container>
 
         <md-input-container>
             <label for="itemQuantity">Quantity:</label>
@@ -29,12 +27,22 @@
             <input id="itemQuantity" ng-model="aic.item.itemQuantity" type="number">
         </md-input-container>
 
+        
         <md-input-container>
-            <label for="reminderQty">Reminder Quantity:</label>
-            <br>
-            <input id="reminderQty" ng-model="aic.item.reminderQuantity" type="number">
+            <label for="itemStore">Store</label>
+            <md-select id="itemStore" ng-model="aic.item.itemStore">
+                <md-option>None</md-option>
+                <md-option ng-repeat="store in aic.userStoreList.allstores" ng-value="store.store_id">{{store.label}}</md-option>
+            </md-select>
         </md-input-container>
-        <br>
+
+        <div>
+            <label>Select pantries:</label>
+            <div ng-repeat="pantry in aic.userPantryList.allpantries">
+                <md-checkbox aria-label="none">{{pantry.label}}</md-checkbox>
+            </div>
+        </div>
+
         <md-input-container>
             <label for="itemStore">Store</label>
             <md-select id="itemStore" ng-model="aic.item.itemStore">
@@ -44,11 +52,9 @@
         </md-input-container>
 
         <md-input-container>
-            <label for="itemPantry">Pantry</label>
-            <md-select id="itemPantry" ng-model="aic.item.itemPantry" >
-                <md-option>None</md-option>
-                <md-option ng-repeat="pantry in aic.userPantryList.allpantries" ng-value="pantry.pantry_id">{{pantry.label}}</md-option>
-            </md-select>
+            <label for="reminderQty">Reminder Quantity:</label>
+            <br>
+            <input id="reminderQty" ng-model="aic.item.reminderQuantity" type="number">
         </md-input-container>
 
         <md-button ng-click="aic.addItem(aic.item)">Add Item</md-button>

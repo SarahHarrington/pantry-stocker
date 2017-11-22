@@ -86,9 +86,7 @@ router.get('/allitems', function (req, res) {
 
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
-                'SELECT "Items"."item_name", "Items"."default_store_id", "stock"."quantity", "stock"."min_quantity", "stock"."pantry_location"' +
-                'FROM "stock" JOIN "Items"' +
-                'ON "Items"."item_id" = "stock"."item_id";';
+                'SELECT "Items"."item_id", "Items"."item_name", "Items"."default_store_id" FROM "Items";';
             db.query(queryText, function (errorMakingQuery, result) {
                 done();
                 if (errorMakingQuery) {
