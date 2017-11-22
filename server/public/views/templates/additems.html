@@ -8,7 +8,7 @@
             md-search-text="aic.searchText" 
             md-items="item in aic.querySearch(aic.searchText)"
             md-item-text="item.item_name"
-            md-selected-item-change="ctrl.selectedItemChange(item)"
+            md-selected-item-change="aic.selectedItemChange(item)"
             placeholder="Search by Item Name"
             md-match-case-insensitive=true
             md-min-length="2">
