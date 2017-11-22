@@ -1,4 +1,4 @@
-myApp.controller('AddItemController', function (UserService, AddItemService, UserSetupService) {
+myApp.controller('AddItemController', function (UserService, AddItemService, UserSetupService, $q, $log, $timeout) {
     console.log('AddItemController created');
     var vm = this;
 
@@ -6,6 +6,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
 
     vm.userStoreList = UserSetupService.stores.data;
     vm.userPantryList = UserSetupService.pantries.data;
+    vm.userAllItems = AddItemService.allUserItems;
 
     vm.addItem = function (item) {
         AddItemService.addItem(item);
@@ -22,6 +23,36 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         vm.userPantryList = UserSetupService.pantries;
     }
 
+    vm.getAllItems = function() {
+        AddItemService.getAllItems();
+        console.log('vm.userAllItems', vm.userAllItems);
+    }
+
     vm.getStores();
     vm.getPantries();
+    vm.allItems = vm.getAllItems();
+    // vm.querySearch = querySearch();
+
+    vm.querySearch = function(query) {
+        console.log('in query search function', vm.userAllItems.items);
+        var results 
+        results = query ? vm.userAllItems.items.filter( vm.createFilterFor(query) ) : vm.allItems;
+    }
+
+    vm.selectedItemChange = function(item) {
+        $log.info('Item changed to ' + JSON.stringify(item));
+    }
+
+    vm.createFilterFor = function(query) {
+        var lowercaseQuery = angular.lowercase(query);
+
+        return function filterFn(item) {
+            console.log('item in the filter function', item.item_name);
+            
+            return(item.item_name.indexOf(lowercaseQuery) === 0);
+        }
+    }
+
+
+
 });

@@ -14,6 +14,10 @@ myApp.service('AddItemService', function($http) {
         allitems: []
     }
 
+    self.allUserItems = {
+        items: []
+    }
+
     self.addItem = function (newItem) {
         console.log('add item button clicked');
         return $http.post('/items/additems', newItem)
@@ -22,6 +26,16 @@ myApp.service('AddItemService', function($http) {
             return response;
         }).catch(function(error){
             console.log('Failed to add item', error);
+        })
+    }
+
+    self.getAllItems = function() {
+        $http.get('/items/allitems')
+        .then(function(response){
+            self.allUserItems.items = response.data;
+            console.log('self.allUserItems.items', self.allUserItems.items);
+        }).catch(function(error){
+            console.log('error');
         })
     }
 
@@ -50,4 +64,6 @@ myApp.service('AddItemService', function($http) {
             console.log('error');
         })
     }
+
+    
 })
