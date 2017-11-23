@@ -55,26 +55,29 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             }
         );
     }
-
+    vm.pantryId;
     vm.getItemStockTotal = function (item) {
         vm.getItemStockTotal = AddItemService.getItemStockTotal(item)
             .then(function (response) {
                 vm.allItemStock = response;
-                var pantryId = vm.allItemStock.pantry_location;
+                console.log('vm.allItemStock', vm.allItemStock);
+                pantryId = vm.allItemStock.pantry_location;
                 vm.checkIfChecked(pantryId);
             })
     }
 
     vm.checkPantryBox = false;
-    vm.checkIfChecked = function () {
 
+    vm.checkIfChecked = function () {
         for (var i = 0; i < vm.allItemStock.length; i++) {
-            console.log('vm.allitemstock.pantry_location', vm.allItemStock.pantry_location);
-            
-            if (vm.allItemStock[i].pantry_location === pantry_id) {
-                vm.checkPantryBox = true;
-            } else {
-                vm.checkPantryBox = false;
+
+            for (var j = 0; j < vm.userPantryList.length; j++) {
+                
+                if (vm.allItemStock[i].pantry_id === vm.userPantryList[j].pantry_id) {
+                    vm.checkPantryBox = true;
+                } else {
+                    vm.checkPantryBox = false;
+                }
             }
         }
     }

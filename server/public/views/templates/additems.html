@@ -40,7 +40,8 @@
             <label>Pantries:</label>
             <!-- ADD AN NG-MODEL FOR THE DATA TO BIND TO AND HAVE THE FUNCTION IN THE CONTROLLER SET THAT VALUE WHEN IT RUNS THE FUNCTION -->
             <div ng-repeat="pantry in aic.userPantryList.allpantries">
-                <md-checkbox value="pantry.pantry_id" ng-checked="aic.checkPantryBox" aria-label="none">{{pantry.label}}</md-checkbox>
+                {{pantry.pantry_id}}
+                <md-checkbox ng-model="aic.pantry.pantry_id" ng-checked="aic.checkPantryBox" aria-label="none">{{pantry.label}}</md-checkbox>
             </div>
         </div>
 
