@@ -20,41 +20,32 @@
                 <span ng-click="aic.addNewItem(aic.searchText)">Create a new one!</span>
             </md-not-found>
         </md-autocomplete>
-        
-        <!-- <md-input-container>
-            <label for="itemStore">Store</label>
-            <md-select id="itemStore" ng-model="aic.item.itemStore">
-                <md-option>None</md-option>
-                <md-option ng-repeat="store in aic.userStoreList.allstores" ng-value="store.store_id">{{store.label}}</md-option>
-            </md-select>
-        </md-input-container> -->
 
+        <!-- Pantries loaded as checkboxes with quantities when item is selected above -->
         <div>
             <label>Pantries:</label>
-            <!-- ADD AN NG-MODEL FOR THE DATA TO BIND TO AND HAVE THE FUNCTION IN THE CONTROLLER SET THAT VALUE WHEN IT RUNS THE FUNCTION -->
-            <div ng-repeat="pantry in aic.itemStock.totals track by $index">
+            <div layout="row" ng-repeat="pantry in aic.itemStock.totals track by $index">
                 <md-checkbox ng-model="pantry.pantry_id" ng-checked="pantry.quantity" aria-label="none">{{pantry.label}}</md-checkbox>
             <md-input-container>
                 <label for="pantryQty">Quantity:</label>
-                <input id="pantryQty" ng-model="aic.pantry.quantity" ng-init="pantry.quantity" type="number">
+                <input id="pantryQty" ng-model="pantry.quantity" type="number">
             </md-input-container>
             </div>
         </div>
 
-        <md-input-container>
+        <div>   
             <label for="itemStore">Store</label>
-            <md-select id="itemStore" ng-model="aic.item.itemStore">
-                <md-option>None</md-option>
-                <md-option ng-repeat="store in aic.userStoreList.allstores" ng-value="store.store_id">{{store.label}}</md-option>
-            </md-select>
-        </md-input-container>
+            <div ng-repeat="store in aic.userStoreList.allstores">
+                <md-checkbox aria-label="none">{{store.label}}</md-checkbox>
+            </div>
+        </div>
 
         <md-input-container>
             <label for="reminderQty">Reminder Quantity:</label>
             <br>
-            <input id="reminderQty" ng-model="aic.item.reminderQuantity" type="number">
+            <input id="reminderQty" ng-model="aic.reminderQuantity" type="number">
         </md-input-container>
 
-        <md-button ng-click="aic.addItem(aic.item)">Add Item</md-button>
+        <md-button ng-click="aic.addItem(aic.item)">Update Item</md-button>
     </div>
 </div>

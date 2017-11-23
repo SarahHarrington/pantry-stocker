@@ -47,7 +47,7 @@ myApp.service('UserSetupService', function ($http) {
         $http.get('/stores/userstores')
         .then(function(response) {
             self.stores.allstores = response.data;
-            // console.log('response data for stores', self.stores.allstores);
+            console.log('response data for stores', self.stores.allstores);
         }).catch(function(error){
             console.log('error');
         })

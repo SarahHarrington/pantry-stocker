@@ -88,8 +88,11 @@ router.get('/allitems', function (req, res) {
 
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
-                'SELECT "Items"."item_id", "Items"."item_name", "Items"."default_store_id" FROM "Items";';
-            db.query(queryText, function (errorMakingQuery, result) {
+                'SELECT "Items"."item_id", "Items"."item_name", "Items"."default_store_id", "stores"."store_id", "stores"."label"' +
+                'FROM "Items" LEFT OUTER JOIN "stores"' +
+                'ON("Items"."default_store_id" = "stores"."store_id")' +
+                'WHERE "Items"."user_id" = $1;';
+            db.query(queryText, [userId], function (errorMakingQuery, result) {
                 done();
                 if (errorMakingQuery) {
                     console.log('Error making query', errorMakingQuery);

@@ -11,21 +11,21 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         totals: []
     }
 
-    vm.addItem = function (item) {
-        //need to append the search text here?
-        AddItemService.addItem(item);
-        vm.item = {};
-    }
+    // vm.addItem = function (item) {
+    //     //need to append the search text here?
+    //     AddItemService.addItem(item);
+    //     vm.item = {};
+    // }
 
     vm.getStores = function () {
         UserSetupService.getStores();
         vm.userStoreList = UserSetupService.stores;
     }
 
-    vm.getPantries = function () {
-        UserSetupService.getPantries();
-        vm.userPantryList = UserSetupService.pantries;
-    }
+    // vm.getPantries = function () {
+    //     UserSetupService.getPantries();
+    //     vm.userPantryList = UserSetupService.pantries;
+    // }
 
     vm.getAllItems = function () {
         AddItemService.getAllItems();
@@ -33,10 +33,11 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
 
     vm.getStores();
-    vm.getPantries();
+    // vm.getPantries();
     vm.getAllItems();
     // vm.querySearch = querySearch();
 
+    vm.pantryLabel = '';
     vm.querySearch = function (query) {
         console.log('in query search function', vm.userAllItems.items);
         var results
@@ -44,9 +45,12 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         return results;
     }
 
+    vm.pantryLabel = '';
+    vm.minimumQty = '';
     vm.selectedItemChange = function (item) {
         console.log('selected change item', item);
         var itemToGetStock = item.item_id;
+        vm.pantryLabel = item.label;
         vm.getItemStockTotal(itemToGetStock);
     }
 
@@ -57,22 +61,30 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             }
         );
     }
-    // vm.pantryId;
+    vm.itemMinQty = '';
     vm.getItemStockTotal = function (item) {
         vm.getItemStockTotal = AddItemService.getItemStockTotal(item).then(function(response){
             vm.itemStock.totals = response;
-            console.log('response in getitemstocktotal', vm.itemStock.totals);
+            console.log('response in getitemstocktotal', vm.itemStock.totals);            
+        }).then(function(response){
+            vm.verifyItemStock();
         }) 
     }
-    // vm.itemCheckboxValue = false;
-    // vm.itemCheckbox = function (pantry) {
-    //     console.log('quantity', pantry);
-        
-    //         if (pantry.quantity === null) {
-    //             return false;
-    //         } else {
-    //             return true;
-    //         }
-    //     }
+
+    vm.reminderQuantity = '';
+    vm.totalItemQuantity = '';
+    vm.verifyItemStock = function() {
+        var quantityCalcArray = vm.itemStock.totals;
+        var itemTotal = 0;
+        var itemMinQuantityTotal = 0;
+        for (var i = 0; i < quantityCalcArray.length; i++) {
+            itemTotal = itemTotal + quantityCalcArray[i].quantity;
+            itemMinQuantityTotal = itemMinQuantityTotal + quantityCalcArray[i].min_quantity;
+        }
+        vm.reminderQuantity = itemMinQuantityTotal;
+        vm.totalItemQuantity = itemTotal;
+        console.log('itemTotal', vm.totalItemQuantity);
+        console.log('itemMinQuantityTotal', vm.reminderQuantity);
+    }
     
 });
