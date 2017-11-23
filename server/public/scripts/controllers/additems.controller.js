@@ -7,7 +7,9 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     vm.userStoreList = UserSetupService.stores.data;
     vm.userPantryList = UserSetupService.pantries.data;
     vm.userAllItems = AddItemService.allUserItems;
-    vm.allItemStock = AddItemService.itemStock.totals;
+    vm.itemStock = {
+        totals: []
+    }
 
     vm.addItem = function (item) {
         //need to append the search text here?
@@ -57,22 +59,23 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
     // vm.pantryId;
     vm.getItemStockTotal = function (item) {
-        vm.getItemStockTotal = AddItemService.getItemStockTotal(item);
-        // console.log('allItemStock', vm.allItemStock);
-        
+        vm.getItemStockTotal = AddItemService.getItemStockTotal(item).then(function(response){
+            vm.itemStock.totals = response;
+            console.log('response in getitemstocktotal', vm.itemStock.totals);
+        }) 
     }
-
-    //vm.checkPantryBox = false;
-
-    // vm.checkIfChecked = function () {
-    //     for (var i = 0; i < vm.allItemStock.length; i++) {
-    //         for (var j = 0; j < vm.userPantryList.length; j++) {
-    //             if (i === j) {
-    //                 vm.checkPantryBox = true;
-    //             } else {
-    //                 vm.checkPantryBox = false;
-    //             }
-    //         }
-    //     }
-    // }
+    vm.itemCheckboxValue = false;
+    vm.itemCheckbox = function (quantity) {
+        console.log('pantry in itemcheckbox', quantity);
+        for (var i = 0; i < vm.itemStock.totals; i++) {
+            var element = vm.itemStock.totals[i].quantity;
+            console.log('element', element);
+            
+            if(element === null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
 });

@@ -20,28 +20,24 @@
                 <span ng-click="aic.addNewItem(aic.searchText)">Create a new one!</span>
             </md-not-found>
         </md-autocomplete>
-
-        <md-input-container>
-            <label for="itemQuantity">Quantity:</label>
-            <br>
-            <input id="itemQuantity" ng-model="aic.item.itemQuantity" type="number">
-        </md-input-container>
-
         
-        <md-input-container>
+        <!-- <md-input-container>
             <label for="itemStore">Store</label>
             <md-select id="itemStore" ng-model="aic.item.itemStore">
                 <md-option>None</md-option>
                 <md-option ng-repeat="store in aic.userStoreList.allstores" ng-value="store.store_id">{{store.label}}</md-option>
             </md-select>
-        </md-input-container>
+        </md-input-container> -->
 
         <div>
             <label>Pantries:</label>
             <!-- ADD AN NG-MODEL FOR THE DATA TO BIND TO AND HAVE THE FUNCTION IN THE CONTROLLER SET THAT VALUE WHEN IT RUNS THE FUNCTION -->
-            <!-- <div ng-repeat="pantry in aic.userPantryList.allpantries">Update this -->
-                <!-- {{pantry.pantry_id}} -->
-                <!-- <md-checkbox ng-model="aic.pantry.pantry_id" ng-checked="aic.checkPantryBox" aria-label="none">{{pantry.label}}</md-checkbox> -->
+            <div ng-repeat="pantry in aic.itemStock.totals track by $index">
+                <md-checkbox ng-model="aic.itemCheckboxValue" ng-checked="aic.itemCheckbox(pantry[i])" aria-label="none">{{pantry.label}}</md-checkbox>
+            <md-input-container>
+                <label for="pantryQty">Quantity:</label>
+                <input id="pantryQty" ng-model="aic.pantry.quantity" ng-init="aic.pantry.quantity" type="number">
+            </md-input-container>
             </div>
         </div>
 

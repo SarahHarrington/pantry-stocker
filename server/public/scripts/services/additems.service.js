@@ -72,10 +72,9 @@ myApp.service('AddItemService', function($http) {
     self.getItemStockTotal = function (item) {
         console.log('item', item); 
         var itemId = item;
-        $http.get('/items/itemstock/' + itemId)
+        return $http.get('/items/itemstock/' + itemId)
         .then(function(response){
-            self.itemStock.totals = response.data;
-            console.log('self.itemStock', self.itemStock.totals);
+            return response.data;
         }).catch(function(error){
             console.log('error');
         })
