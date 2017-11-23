@@ -33,10 +33,10 @@
             <label>Pantries:</label>
             <!-- ADD AN NG-MODEL FOR THE DATA TO BIND TO AND HAVE THE FUNCTION IN THE CONTROLLER SET THAT VALUE WHEN IT RUNS THE FUNCTION -->
             <div ng-repeat="pantry in aic.itemStock.totals track by $index">
-                <md-checkbox ng-model="aic.itemCheckboxValue" ng-checked="aic.itemCheckbox(pantry[i])" aria-label="none">{{pantry.label}}</md-checkbox>
+                <md-checkbox ng-model="pantry.pantry_id" ng-checked="pantry.quantity" aria-label="none">{{pantry.label}}</md-checkbox>
             <md-input-container>
                 <label for="pantryQty">Quantity:</label>
-                <input id="pantryQty" ng-model="aic.pantry.quantity" ng-init="aic.pantry.quantity" type="number">
+                <input id="pantryQty" ng-model="aic.pantry.quantity" ng-init="pantry.quantity" type="number">
             </md-input-container>
             </div>
         </div>

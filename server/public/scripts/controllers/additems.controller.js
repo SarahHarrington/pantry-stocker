@@ -64,18 +64,15 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             console.log('response in getitemstocktotal', vm.itemStock.totals);
         }) 
     }
-    vm.itemCheckboxValue = false;
-    vm.itemCheckbox = function (quantity) {
-        console.log('pantry in itemcheckbox', quantity);
-        for (var i = 0; i < vm.itemStock.totals; i++) {
-            var element = vm.itemStock.totals[i].quantity;
-            console.log('element', element);
-            
-            if(element === null) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-    }
+    // vm.itemCheckboxValue = false;
+    // vm.itemCheckbox = function (pantry) {
+    //     console.log('quantity', pantry);
+        
+    //         if (pantry.quantity === null) {
+    //             return false;
+    //         } else {
+    //             return true;
+    //         }
+    //     }
+    
 });
