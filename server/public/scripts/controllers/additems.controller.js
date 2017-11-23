@@ -55,30 +55,22 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             }
         );
     }
-    vm.pantryId;
+    // vm.pantryId;
     vm.getItemStockTotal = function (item) {
-        vm.getItemStockTotal = AddItemService.getItemStockTotal(item)
-            .then(function (response) {
-                vm.allItemStock = response;
-                console.log('vm.allItemStock', vm.allItemStock);
-                pantryId = vm.allItemStock.pantry_location;
-                vm.checkIfChecked(pantryId);
-            })
+        vm.getItemStockTotal = AddItemService.getItemStockTotal(item);
     }
 
-    vm.checkPantryBox = false;
+    //vm.checkPantryBox = false;
 
-    vm.checkIfChecked = function () {
-        for (var i = 0; i < vm.allItemStock.length; i++) {
-
-            for (var j = 0; j < vm.userPantryList.length; j++) {
-                
-                if (vm.allItemStock[i].pantry_id === vm.userPantryList[j].pantry_id) {
-                    vm.checkPantryBox = true;
-                } else {
-                    vm.checkPantryBox = false;
-                }
-            }
-        }
-    }
+    // vm.checkIfChecked = function () {
+    //     for (var i = 0; i < vm.allItemStock.length; i++) {
+    //         for (var j = 0; j < vm.userPantryList.length; j++) {
+    //             if (i === j) {
+    //                 vm.checkPantryBox = true;
+    //             } else {
+    //                 vm.checkPantryBox = false;
+    //             }
+    //         }
+    //     }
+    // }
 });

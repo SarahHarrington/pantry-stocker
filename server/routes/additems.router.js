@@ -148,10 +148,9 @@ router.get('/itemstock/:id', function (req, res) {
         var itemId = req.params.id;
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
-                'SELECT "stock"."item_id", "stock"."quantity", "stock"."min_quantity", "stock"."pantry_location", "pantry"."label"' +
-                'FROM "stock" JOIN "pantry"' +
-                'ON "stock"."pantry_location" = "pantry"."pantry_id"' +
-                'WHERE "stock"."item_id" = $1;';
+                'SELECT "pantry"."pantry_id", "pantry"."label", "stock"."quantity", "stock"."min_quantity"' + 
+                'FROM "pantry" LEFT OUTER JOIN "stock"' + 
+                'ON("stock"."pantry_location" = "pantry"."pantry_id" and "stock"."item_id"= $1;';
             db.query(queryText, [itemId], function (errorMakingQuery, result) {
                 done();
                 if (errorMakingQuery) {
