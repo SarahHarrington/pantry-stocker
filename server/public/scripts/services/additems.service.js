@@ -18,9 +18,9 @@ myApp.service('AddItemService', function($http) {
         items: []
     }
 
-    // self.itemStock = {
-    //     totals: []
-    // }
+    self.itemStock = {
+        totals: []
+    }
 
     self.addItem = function (newItem) {
         console.log('add item button clicked');
@@ -72,10 +72,10 @@ myApp.service('AddItemService', function($http) {
     self.getItemStockTotal = function (item) {
         console.log('item', item); 
         var itemId = item;
-        return $http.get('/items/itemstock/' + itemId)
+        $http.get('/items/itemstock/' + itemId)
         .then(function(response){
-            return response.data;
-            //console.log('self.itemStock', self.itemStock);
+            self.itemStock.totals = response.data;
+            console.log('self.itemStock', self.itemStock.totals);
         }).catch(function(error){
             console.log('error');
         })

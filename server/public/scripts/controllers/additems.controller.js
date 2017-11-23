@@ -7,7 +7,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     vm.userStoreList = UserSetupService.stores.data;
     vm.userPantryList = UserSetupService.pantries.data;
     vm.userAllItems = AddItemService.allUserItems;
-    vm.allItemStock = [];
+    vm.allItemStock = AddItemService.itemStock.totals;
 
     vm.addItem = function (item) {
         //need to append the search text here?
@@ -58,6 +58,8 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     // vm.pantryId;
     vm.getItemStockTotal = function (item) {
         vm.getItemStockTotal = AddItemService.getItemStockTotal(item);
+        // console.log('allItemStock', vm.allItemStock);
+        
     }
 
     //vm.checkPantryBox = false;
