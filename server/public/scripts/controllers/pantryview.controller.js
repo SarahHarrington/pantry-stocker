@@ -19,9 +19,12 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
     }
 
     vm.deleteItemFromPantry = function(item) {
+        //update this to delete from the stock table only
         console.log('delete item from pantry clicked');
+        console.log('item in delete pantry', item);
         
         AddItemService.deleteItemFromPantry(item);
+        // vm.getPantryItems();
     }
 
 });

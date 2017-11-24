@@ -59,7 +59,13 @@ myApp.service('AddItemService', function($http) {
     }
 
     self.deleteItemFromPantry = function (item) {
-        var itemToDelete = item.item_id;
+        console.log('item in delete', item);
+        
+        var itemToDelete = {
+            id: item.item_id,
+            pantry: item.pantry_location
+        }
+        // var itemPantry= item.pantry_location;
         return $http.delete('/items/removeitem/' + itemToDelete)
         .then(function(response){
             console.log('item delete success');

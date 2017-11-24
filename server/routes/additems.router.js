@@ -113,27 +113,28 @@ router.get('/allitems', function (req, res) {
 
 //route to delete an item
 router.delete('/removeitem/:id', function(req, res){
-    console.log('req params', req.params.id);
+    console.log('req params', req.params);
     if (req.isAuthenticated) {
         var itemToDelete = req.params.id;
+        var itemPantry = req.params.pantry;
         pool.connect(function (errorConnectingtoDB, db, done) {
-            var queryText = 'DELETE FROM "stock" WHERE "item_id" = $1;';
-            db.query(queryText, [itemToDelete], function (errorMakingQuery, result) {
+            var queryText = 'DELETE FROM "stock" WHERE "item_id" = $1 AND "pantry_location" = $2;';
+            db.query(queryText, [itemToDelete, itemPantry], function (errorMakingQuery, result) {
                 if (errorMakingQuery) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);
                 } else {
-                    var queryText = 'DELETE FROM "Items" WHERE "item_id" = $1;';
-                    db.query(queryText, [itemToDelete], function(errorMakingQuery, result){
-                        done();
-                        if(errorMakingQuery) {
-                            console.log('Error making query', errorMakingQuery);
-                            res.sendStatus(500);
-                        }
-                        else {
+                    // var queryText = 'DELETE FROM "Items" WHERE "item_id" = $1;';
+                    // db.query(queryText, [itemToDelete], function(errorMakingQuery, result){
+                    //     done();
+                    //     if(errorMakingQuery) {
+                    //         console.log('Error making query', errorMakingQuery);
+                    //         res.sendStatus(500);
+                    //     }
+                    //     else {
                             res.sendStatus(200);
-                        }//end second query else
-                    })//end Items table db.query
+                        // }//end second query else
+                    // })//end Items table db.query
                 }//end else for second query
             })//end db.query for stock table
         })//end pool connect
