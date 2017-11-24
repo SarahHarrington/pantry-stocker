@@ -3,15 +3,17 @@
 
 <div layout-xs="column">
     <div>
-        <md-autocomplete 
+        <md-autocomplete
+            md-floating-label="Search for Items"  
             md-selected-item="aic.selectedItem" 
             md-search-text="aic.searchText" 
             md-items="item in aic.querySearch(aic.searchText)"
             md-item-text="item.item_name"
             md-selected-item-change="aic.selectedItemChange(item)"
-            placeholder="Search by Item Name"
+            placeholder="Search for Items"
             md-match-case-insensitive=true
-            md-min-length="1">
+            md-min-length="1"
+            md-clear-button="true"
             <md-item-template>
                 <span md-highlight-text="searchText">{{item.item_name}}</span>
             </md-item-template>
@@ -20,6 +22,7 @@
                 <span ng-click="aic.addNewItem(aic.searchText)">Create a new one!</span>
             </md-not-found>
         </md-autocomplete>
+        <!-- <md-button ng-click="aic.clearSearch()">clear</md-button> -->
 
         <!-- Pantries loaded as checkboxes with quantities when item is selected above -->
         <div>
@@ -30,13 +33,6 @@
                 <label for="pantryQty">Quantity:</label>
                 <input id="pantryQty" ng-model="pantry.quantity" type="number">
             </md-input-container>
-            </div>
-        </div>
-
-        <div>   
-            <label for="itemStore">Store</label>
-            <div ng-repeat="store in aic.userStoreList.allstores">
-                <md-checkbox aria-label="none">{{store.label}}</md-checkbox>
             </div>
         </div>
 

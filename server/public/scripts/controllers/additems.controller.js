@@ -48,10 +48,18 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     vm.pantryLabel = '';
     vm.minimumQty = '';
     vm.selectedItemChange = function (item) {
-        console.log('selected change item', item);
+        if (!item) {
+            return
+        }
+        console.log('selected change item', item, vm);
         var itemToGetStock = item.item_id;
         vm.pantryLabel = item.label;
         vm.getItemStockTotal(itemToGetStock);
+    }
+
+    vm.clearSearch = function () {
+        vm.selectedItem = null;
+        vm.searchText = "";
     }
 
     vm.createFilterFor = function (query) {
@@ -63,7 +71,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
     vm.itemMinQty = '';
     vm.getItemStockTotal = function (item) {
-        vm.getItemStockTotal = AddItemService.getItemStockTotal(item).then(function(response){
+        AddItemService.getItemStockTotal(item).then(function(response){
             vm.itemStock.totals = response;
             console.log('response in getitemstocktotal', vm.itemStock.totals);            
         }).then(function(response){
