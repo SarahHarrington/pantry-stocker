@@ -30,7 +30,7 @@ myApp.service('UserSetupService', function ($http) {
             console.log('Failed to add store', error);
         })
     }//end save store
-
+    
     self.savePantry = function(pantry) {
         pantryToSave.label = pantry;
         return $http.post('/pantries', pantryToSave)

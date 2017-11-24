@@ -74,7 +74,9 @@ myApp.service('AddItemService', function($http) {
         var itemId = item;
         return $http.get('/items/itemstock/' + itemId)
         .then(function(response){
+            console.log('response from get itemstock total service', response.data);
             return response.data;
+
         }).catch(function(error){
             console.log('error');
         })

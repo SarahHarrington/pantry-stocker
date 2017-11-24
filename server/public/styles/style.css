@@ -82,3 +82,7 @@ li a:hover {
 md-select {
   width: 75%;
 }
+
+.ng-hide {
+  display: none !important
+}

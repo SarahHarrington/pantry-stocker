@@ -3,45 +3,38 @@
 
 <div layout-xs="column">
     <div>
-        <md-autocomplete
-            md-floating-label="Search for Items"  
-            md-selected-item="aic.selectedItem" 
-            md-search-text="aic.searchText" 
-            md-items="item in aic.querySearch(aic.searchText)"
-            md-item-text="item.item_name"
-            md-selected-item-change="aic.selectedItemChange(item)"
-            placeholder="Search for Items"
-            md-match-case-insensitive=true
-            md-min-length="1"
-            md-clear-button="true"
+        <md-autocomplete md-floating-label="Search for Items" md-selected-item="aic.selectedItem" md-search-text="aic.searchText"
+            md-items="item in aic.querySearch(aic.searchText)" md-item-text="item.item_name" md-selected-item-change="aic.selectedItemChange(item)"
+            placeholder="Search for Items" md-match-case-insensitive=true md-min-length="1" md-clear-button="false">
             <md-item-template>
                 <span md-highlight-text="searchText">{{item.item_name}}</span>
             </md-item-template>
             <md-not-found>
-                No "{{aic.searchText}}" were found.
-                <span ng-click="aic.addNewItem(aic.searchText)">Create a new one!</span>
+                "{{aic.searchText}}" not found.
+                <span ng-click="aic.addItem(aic.searchText)">Add to my pantries!</span>
             </md-not-found>
         </md-autocomplete>
-        <!-- <md-button ng-click="aic.clearSearch()">clear</md-button> -->
-
+        <md-button ng-click="aic.clearSearch()">clear</md-button>
         <!-- Pantries loaded as checkboxes with quantities when item is selected above -->
-        <div>
-            <label>Pantries:</label>
-            <div layout="row" ng-repeat="pantry in aic.itemStock.totals track by $index">
-                <md-checkbox ng-model="pantry.pantry_id" ng-checked="pantry.quantity" aria-label="none">{{pantry.label}}</md-checkbox>
+        <div ng-hide="aic.addEditItem" class="ng-hide">
+        <div layout="row" ng-repeat="pantry in aic.itemStock.totals track by $index">
+            <p>{{pantry.label}}</p>
             <md-input-container>
                 <label for="pantryQty">Quantity:</label>
-                <input id="pantryQty" ng-model="pantry.quantity" type="number">
+                <input id="pantryQty" ng-blur="aic.updatePantryQty(pantry, aic.selectedItem)" ng-model="pantry.quantity" type="number">
             </md-input-container>
-            </div>
         </div>
-
-        <md-input-container>
+        <!-- add a hide show here for when the stock totals run -->
+        <md-input-container ng-hide="aic.addEditItem">
             <label for="reminderQty">Reminder Quantity:</label>
             <br>
             <input id="reminderQty" ng-model="aic.reminderQuantity" type="number">
         </md-input-container>
 
-        <md-button ng-click="aic.addItem(aic.item)">Update Item</md-button>
+        <md-button ng-hide="aic.addEditItem" ng-click="aic.addItem(aic.selectedItem, aic.reminderQuantity)">Update Item</md-button>
+
+    </div>
     </div>
 </div>
+
+<!-- ADD ITEM FORM PART WILL GO DOWN HERE -->

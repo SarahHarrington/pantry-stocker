@@ -3,7 +3,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     var vm = this;
 
     // vm.userItems = AddItemService.userItems.allitems;
-
+    vm.editAddItem = true;
     vm.userStoreList = UserSetupService.stores.data;
     vm.userPantryList = UserSetupService.pantries.data;
     vm.userAllItems = AddItemService.allUserItems;
@@ -11,21 +11,15 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         totals: []
     }
 
-    // vm.addItem = function (item) {
-    //     //need to append the search text here?
-    //     AddItemService.addItem(item);
-    //     vm.item = {};
-    // }
-
     vm.getStores = function () {
         UserSetupService.getStores();
         vm.userStoreList = UserSetupService.stores;
     }
 
-    // vm.getPantries = function () {
-    //     UserSetupService.getPantries();
-    //     vm.userPantryList = UserSetupService.pantries;
-    // }
+    vm.getPantries = function () {
+        UserSetupService.getPantries();
+        vm.userPantryList = UserSetupService.pantries;
+    }
 
     vm.getAllItems = function () {
         AddItemService.getAllItems();
@@ -33,11 +27,10 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
 
     vm.getStores();
-    // vm.getPantries();
+    vm.getPantries();
     vm.getAllItems();
     // vm.querySearch = querySearch();
 
-    vm.pantryLabel = '';
     vm.querySearch = function (query) {
         console.log('in query search function', vm.userAllItems.items);
         var results
@@ -57,11 +50,16 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         vm.getItemStockTotal(itemToGetStock);
     }
 
+    //clears the search for items
     vm.clearSearch = function () {
         vm.selectedItem = null;
         vm.searchText = "";
+        vm.itemStock.totals = [];
+        vm.reminderQuantity = '';
+        vm.totalItemQuantity = '';
     }
 
+    //filters the item query to lower case
     vm.createFilterFor = function (query) {
         return vm.userAllItems.items.filter(
             function (item) {
@@ -71,11 +69,15 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
     vm.itemMinQty = '';
     vm.getItemStockTotal = function (item) {
-        AddItemService.getItemStockTotal(item).then(function(response){
+        AddItemService.getItemStockTotal(item)
+        .then(function(response){
             vm.itemStock.totals = response;
+            vm.editAddItem = false;
+            console.log(vm.editAddItem);
+            
             console.log('response in getitemstocktotal', vm.itemStock.totals);            
         }).then(function(response){
-            vm.verifyItemStock();
+            //vm.verifyItemStock();
         }) 
     }
 
@@ -94,5 +96,23 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         console.log('itemTotal', vm.totalItemQuantity);
         console.log('itemMinQuantityTotal', vm.reminderQuantity);
     }
+
+    vm.addItem = function(item, reminderQty) {
+        console.log('click add item button');
+        console.log('item', item);
+        console.log('reminderQty', reminderQty);
+    }
+
+    vm.updatePantryQty = function(pantry, item) {
+        console.log('updatepantryqty function fired');
+        console.log('pantry', pantry);
+        console.log('item', item);
+        //item stock will be updating every time the field loses focus, clear the form here for the user
+        
+        
+    }
+
+    //write function to fire what ng-include shows when the item is selected
+    //ng-include="THIS WOULD BE A VARIABLE THAT WOULD BE ASSIGNED BASED ON THE FUNCTION"
     
 });
