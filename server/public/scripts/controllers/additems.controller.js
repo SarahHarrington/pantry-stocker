@@ -3,6 +3,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     var vm = this;
 
     // vm.userItems = AddItemService.userItems.allitems;
+    vm.addItemForm = false;
     vm.editAddItem = true;
     vm.userStoreList = UserSetupService.stores.data;
     vm.userPantryList = UserSetupService.pantries.data;
@@ -59,6 +60,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         vm.reminderQuantity = '';
         vm.totalItemQuantity = '';
         vm.editAddItem = true;
+        vm.addItemForm = false;
         vm.getAllItems();
     }
 
@@ -93,10 +95,9 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         console.log('itemTotal', vm.totalItemQuantity);
     }
 
-    vm.addItem = function(item, reminderQty) {
-        console.log('click add item button');
-        console.log('item', item);
-        console.log('reminderQty', reminderQty);
+    vm.addItem = function() {
+        vm.addItemForm = true;
+
     }
 
     vm.updatePantryQty = function(pantry, item) {

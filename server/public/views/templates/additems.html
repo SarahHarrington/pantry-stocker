@@ -24,6 +24,7 @@
         </md-autocomplete>
         <md-button ng-click="aic.clearSearch()">clear</md-button>
         <!-- Pantries loaded with quantities when item is selected above -->
+        
         <div ng-hide="aic.editAddItem" class="ng-hide">
             <div layout="row" ng-repeat="pantry in aic.itemStock.totals track by $index">
                 <p>{{pantry.label}}</p>
@@ -44,3 +45,24 @@
 </div>
 
 <!-- ADD ITEM FORM PART WILL GO DOWN HERE -->
+
+
+<div ng-show="aic.addItemForm"> 
+        <div layout="row" ng-repeat="pantry in aic.userPantryList.allpantries track by $index">
+            <p>{{pantry.label}}</p>
+            <md-input-container>
+                <label for="pantryQty">Quantity:</label>
+                <input id="pantryQty" ng-model="pantry.quantity" type="number">
+            </md-input-container>
+        </div>
+        <!-- add a hide show here for when the stock totals run -->
+        <md-input-container>
+            <label for="reminderQty">Reminder Quantity:</label>
+            <br>
+            <input id="reminderQty" ng-model="aic.minimumQty" type="number">
+        </md-input-container>
+
+        <md-button>Add Item to Pantry</md-button>
+    
+    
+</div>
