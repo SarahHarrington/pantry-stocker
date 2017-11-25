@@ -57,6 +57,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         vm.itemStock.totals = [];
         vm.reminderQuantity = '';
         vm.totalItemQuantity = '';
+        vm.editAddItem = true;
     }
 
     //filters the item query to lower case
@@ -107,6 +108,14 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         console.log('updatepantryqty function fired');
         console.log('pantry', pantry);
         console.log('item', item);
+
+        var pantryId = pantry.pantry_id;
+        var pantryToUpdatete = {
+            pantryQty: pantry.quantity,
+            itemId: item.item_id
+        }
+
+        AddItemService.pantryUpdate(pantryId, pantryToUpdatete);
         //item stock will be updating every time the field loses focus, clear the form here for the user
         
         

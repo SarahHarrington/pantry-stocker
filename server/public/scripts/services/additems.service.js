@@ -85,4 +85,17 @@ myApp.service('AddItemService', function($http) {
             console.log('error');
         })
     }
+
+    self.pantryUpdate = function (pantryId, pantryToUpdate) {
+        console.log('in pantryUpdate', pantryId, pantryToUpdate);
+        return $http.put('/pantries/' + pantryId, pantryToUpdate)
+        .then(function(response){
+            console.log('response');
+            return response;
+            //need to add a resposne return here for a notification
+        }).catch(function(error){
+            console.log('error');
+            
+        })
+    }
 })

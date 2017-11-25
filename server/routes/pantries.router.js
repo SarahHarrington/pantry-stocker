@@ -97,4 +97,41 @@ router.delete('/:id', function (req, res) {
     }//end req else authenticated
 })//end router delete
 
+router.put('/:id', function (req, res) {
+    console.log('update pantry quantity');
+    console.log('userid', req.params.id);
+    console.log('pantry', req.body);
+    if (req.isAuthenticated) {
+
+        var pantryId = req.params.id;
+        var pantryQty = req.body.pantryQty;
+        var itemId = req.body.itemId;
+
+        pool.connect(function (errorConnectingToDb, db, done) {
+            if (errorConnectingToDb) {
+                console.log('Error connecting', errorConnectingToDb);
+                res.sendStatus(500);
+            } else {
+                var queryText = 
+                    'INSERT INTO "stock" ("item_id", "pantry_location", "quantity") VALUES ($1, $2, $3)' +
+                    'ON CONFLICT ("item_id", "pantry_location")' +
+                    'DO UPDATE SET "quantity" = "stock"."quantity" + EXCLUDED.quantity;';
+                db.query(queryText, [itemId, pantryId, pantryQty], function (errorMakingQuery, result) {
+                    done();
+                    if (errorMakingQuery) {
+                        console.log('Error making query', errorMakingQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.sendStatus(201);
+                    }//END if else
+                }); // END QUERY
+            }//END ELSE
+        }); // END POOL
+    }//end of authentication if
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }//end of authenication else
+});//end of post for pantries
+
 module.exports = router;

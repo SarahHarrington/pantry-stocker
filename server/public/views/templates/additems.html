@@ -15,25 +15,25 @@
             </md-not-found>
         </md-autocomplete>
         <md-button ng-click="aic.clearSearch()">clear</md-button>
-        <!-- Pantries loaded as checkboxes with quantities when item is selected above -->
-        <div ng-hide="aic.addEditItem" class="ng-hide">
-        <div layout="row" ng-repeat="pantry in aic.itemStock.totals track by $index">
-            <p>{{pantry.label}}</p>
-            <md-input-container>
-                <label for="pantryQty">Quantity:</label>
-                <input id="pantryQty" ng-blur="aic.updatePantryQty(pantry, aic.selectedItem)" ng-model="pantry.quantity" type="number">
+        <!-- Pantries loaded with quantities when item is selected above -->
+        <div ng-hide="aic.editAddItem" class="ng-hide">
+            <div layout="row" ng-repeat="pantry in aic.itemStock.totals track by $index">
+                <p>{{pantry.label}}</p>
+                <md-input-container>
+                    <label for="pantryQty">Quantity:</label>
+                    <input id="pantryQty" ng-blur="aic.updatePantryQty(pantry, aic.selectedItem)" ng-model="pantry.quantity" type="number">
+                </md-input-container>
+            </div>
+            <!-- add a hide show here for when the stock totals run -->
+            <md-input-container ng-hide="aic.addEditItem">
+                <label for="reminderQty">Reminder Quantity:</label>
+                <br>
+                <input id="reminderQty" ng-model="aic.reminderQuantity" type="number">
             </md-input-container>
+
+            <md-button ng-hide="aic.addEditItem" ng-click="aic.addItem(aic.selectedItem, aic.reminderQuantity)">Update Item</md-button>
+
         </div>
-        <!-- add a hide show here for when the stock totals run -->
-        <md-input-container ng-hide="aic.addEditItem">
-            <label for="reminderQty">Reminder Quantity:</label>
-            <br>
-            <input id="reminderQty" ng-model="aic.reminderQuantity" type="number">
-        </md-input-container>
-
-        <md-button ng-hide="aic.addEditItem" ng-click="aic.addItem(aic.selectedItem, aic.reminderQuantity)">Update Item</md-button>
-
-    </div>
     </div>
 </div>
 
