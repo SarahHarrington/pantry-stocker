@@ -111,4 +111,30 @@ myApp.service('AddItemService', function($http) {
             console.log('error');
         })
     }
+
+    self.removeOneItem = function(item) {
+        console.log('remove one item in service', item);
+        var itemId = item.item_id;
+        var itemToUpdate = item;
+        return $http.put('/removeitem/' + itemId, itemToUpdate)
+        .then(function(response){
+            console.log('success');
+            return response;
+        }).catch(function(error){
+            console.log('error');
+        })
+    }
+
+    self.addOneItem = function (item) {
+        console.log('remove one item in service', item);
+        var itemId = item.item_id;
+        var itemToUpdate = item;
+        return $http.put('/additem/' + itemId, itemToUpdate)
+            .then(function (response) {
+                console.log('success');
+                return response;
+            }).catch(function (error) {
+                console.log('error');
+            })
+    }
 })

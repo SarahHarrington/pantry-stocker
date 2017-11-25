@@ -5,15 +5,15 @@
         <md-button class="md-raised" ng-click="pvc.getPantryItems(pantry)">{{pantry.label}}</md-button>
         <div layout="row" ng-repeat="eachItem in pvc.userPantryItems.allitems track by $index" ng-if="pantry.pantry_id == eachItem.pantry_location">
             <div layout="row">
-                <md-button class="md-icon-button md-primary" aria-label="Settings">
+                <md-button  class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="../images/edit.svg"></md-icon>
                 </md-button>
                 <p>{{eachItem.item_name}}</p>
-                <md-button class="md-icon-button md-primary" aria-label="Settings">
+                <md-button id="removeItem" ng-click="pvc.removeOneItem(eachItem)" class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="../images/remove_circle.svg"></md-icon>
                 </md-button>
                 <p>{{eachItem.quantity}}</p>
-                <md-button class="md-icon-button md-primary" aria-label="Settings">
+                <md-button ng-click="pvc.addOneItem(eachItem)" class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="../images/add_circle.svg"></md-icon>
                 </md-button>
                 <md-button ng-click="pvc.deleteItemFromPantry(eachItem)" class="md-icon-button md-primary" aria-label="Settings">

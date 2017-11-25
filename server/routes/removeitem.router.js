@@ -5,25 +5,24 @@ var path = require('path');
 var pool = require('../modules/pool.js');
 var pg = require('pg');
 
-
-router.put('/mininmumquantity/:id', function (req, res) {
-    // console.log('req params', req.params.id);
-    console.log('req body', req.body);
-
+router.put('/:id', function (req, res) {
+    console.log('req.params.id', req.params.id);
+    console.log('req.body', req.body);
     if (req.isAuthenticated) {
-        var newMinQty = req.body.itemMin;
-        var itemId = req.params.id;
+        var itemtoUpdate = req.params.id;
+        var itemQuantity = req.body.quantity;
+        itemQuantity = itemQuantity -= 1;
+        var pantryId = req.body.pantry_location;
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText = 
-            'UPDATE "Items"' +
-            'SET "min_quantity" = $1' +
-            'WHERE "item_id" = $2;';
-            db.query(queryText, [newMinQty, itemId], function (errorMakingQuery, result) {
+            'UPDATE "stock"' +
+            'SET "quantity" = $1' +
+            'WHERE "item_id" = $2 AND "pantry_location" = $3;';
+            db.query(queryText, [itemQuantity, itemtoUpdate, pantryId], function (errorMakingQuery, result) {
                 if (errorMakingQuery) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);
                 } else {
-                    console.log('min quanity updated!');
                     res.sendStatus(200);
                 }//end else for second query
             })//end db.query for stock table
@@ -35,10 +34,5 @@ router.put('/mininmumquantity/:id', function (req, res) {
     }//end authenticated else
 })
 
-router.put('/remove/oneitem/:id', function(req, res){
-    console.log('req.params.id', req.params.id);
-    console.log('req.body', req.body);
-    
-})
 
 module.exports = router;

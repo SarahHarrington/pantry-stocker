@@ -27,4 +27,20 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
             vm.getPantryItems({ pantry_id: pantryId }); 
         })
     }
+
+    vm.removeOneItem = function(item) {
+        console.log('item in remove one item', item);
+        var pantryId = item.pantry_location;
+        AddItemService.removeOneItem(item).then(function(response){
+            vm.getPantryItems({ pantry_id: pantryId })
+        })
+    }
+
+    vm.addOneItem = function(item) {
+        console.log('item in add one item', item);
+        var pantryId = item.pantry_location;
+        AddItemService.addOneItem(item).then(function (response) {
+            vm.getPantryItems({ pantry_id: pantryId })
+        })
+    }
 });
