@@ -62,7 +62,7 @@
             <input id="reminderQty" ng-model="aic.minimumQty" type="number">
         </md-input-container>
 
-        <md-button>Add Item to Pantry</md-button>
+        <md-button ng-click="aic.addNewItemToPantry(aic.searchText, aic.userPantryList.allpantries, aic.minimumQty)">Add Item to Pantry</md-button>
     
     
 </div>

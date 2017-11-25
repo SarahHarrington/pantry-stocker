@@ -2,14 +2,6 @@ myApp.service('AddItemService', function($http) {
     console.log('AddItemsService loaded');
     var self = this;
 
-    // self.item = {
-    //     itemName: '',
-    //     itemQuantity: '',
-    //     itemStore: '',
-    //     itemPantry: '',        
-    //     reminderQty: ''
-    // }
-
     self.userPantryItems = {
         allitems: []
     }
@@ -21,17 +13,6 @@ myApp.service('AddItemService', function($http) {
     self.itemStock = {
         totals: []
     }
-
-    // self.addItem = function (newItem) {
-    //     console.log('add item button clicked');
-    //     return $http.post('/items/additems', newItem)
-    //     .then(function(response){
-    //         console.log('new item added');
-    //         return response;
-    //     }).catch(function(error){
-    //         console.log('Failed to add item', error);
-    //     })
-    // }
 
     self.getAllItems = function() {
         $http.get('/items/allitems')
@@ -136,5 +117,22 @@ myApp.service('AddItemService', function($http) {
             }).catch(function (error) {
                 console.log('error');
             })
+    }
+
+    self.addNewItemToPantry = function (newItemToAdd, addItemtoPantries, newItemMinimumQty) {
+        console.log('service addNewItemToPantry', newItemToAdd, addItemtoPantries, newItemMinimumQty);
+        var newItemtoAdd = {
+            itemLabel: newItemToAdd,
+            addItemtoPantries: addItemtoPantries,
+            newItemMinimumQty: newItemMinimumQty
+        }
+        $http.post('/additem', newItemtoAdd)
+        .then(function(response){
+            console.log('success');
+            
+        }).catch(function(error){
+            console.log('error');
+            
+        })
     }
 })

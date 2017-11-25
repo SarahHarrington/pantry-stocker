@@ -96,6 +96,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
 
     vm.addItem = function() {
+        vm.minimumQty = '';
         vm.addItemForm = true;
 
     }
@@ -122,7 +123,16 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         AddItemService.updateMinQty(itemId, newMinQty);
     }
 
-    //write function to fire what ng-include shows when the item is selected
-    //ng-include="THIS WOULD BE A VARIABLE THAT WOULD BE ASSIGNED BASED ON THE FUNCTION"
+    vm.addNewItemToPantry = function (newItemToAdd, pantry, newItemMinimumQty) {
+        console.log('add new item to pantry', newItemToAdd, pantry, newItemMinimumQty);
+        var addItemtoPantries = [];
+        for (var i = 0; i < pantry.length; i++) {
+            if (pantry[i].quantity) {
+                addItemtoPantries.push(pantry[i]);
+            }
+        }
+        console.log('addItemtoPantries', addItemtoPantries);
+        AddItemService.addNewItemToPantry(newItemToAdd, addItemtoPantries, newItemMinimumQty);
+    }
     
 });
