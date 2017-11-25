@@ -58,7 +58,7 @@ router.get('/mypantries/:id', function(req, res){
         var pantryId = req.params.id;
         pool.connect(function(errorConnectingtoDB, db, done){
             var queryText = 
-            'SELECT "Items"."item_name", "Items"."item_id", "Items"."default_store_id", "stock"."quantity", "stock"."min_quantity", "stock"."pantry_location"' +
+            'SELECT "Items"."item_name", "Items"."item_id", "Items"."default_store_id", "stock"."quantity", "stock"."pantry_location"' +
             'FROM "stock" JOIN "Items"' +
             'ON "stock"."item_id" = "Items"."item_id"' +
             'WHERE "stock"."pantry_location" = $1;';

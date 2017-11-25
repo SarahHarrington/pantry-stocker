@@ -43,15 +43,17 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
+    //gets items for my pantries page
     self.getPantryItems = function (pantry) {
         console.log('pantry', pantry.pantry_id);
         var pantryId = pantry.pantry_id;
         console.log('pantryId', pantryId);
         
-        $http.get('/items/mypantries/' + pantryId)
+        return $http.get('/items/mypantries/' + pantryId)
         .then(function(response){
             self.userPantryItems.allitems = response.data;
             console.log('self.userPantryItems.allitems', self.userPantryItems.allitems);
+            return response;
         }).catch(function(error){
             console.log('error');
             

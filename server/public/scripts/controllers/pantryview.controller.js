@@ -23,7 +23,8 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         console.log('item in delete pantry', item);
         var pantryId = item.pantry_location;
         console.log('pantryId in controller for delete', pantryId);
-        AddItemService.deleteItemFromPantry(item);
-        vm.getPantryItems({pantry_id: pantryId});
+        AddItemService.deleteItemFromPantry(item).then(function(response){
+            vm.getPantryItems({ pantry_id: pantryId }); 
+        })
     }
 });
