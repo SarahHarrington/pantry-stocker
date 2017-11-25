@@ -88,7 +88,7 @@ router.get('/allitems', function (req, res) {
 
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
-                'SELECT "Items"."item_id", "Items"."item_name", "Items"."default_store_id", "stores"."store_id", "stores"."label"' +
+                'SELECT "Items"."item_id", "Items"."item_name", "Items"."default_store_id", "Items"."min_quantity", "stores"."store_id", "stores"."label"' +
                 'FROM "Items" LEFT OUTER JOIN "stores"' +
                 'ON("Items"."default_store_id" = "stores"."store_id")' +
                 'WHERE "Items"."user_id" = $1;';
@@ -144,7 +144,7 @@ router.get('/itemstock/:id', function (req, res) {
         var itemId = req.params.id;
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
-                'SELECT "pantry"."pantry_id", "pantry"."label", "stock"."quantity", "stock"."min_quantity"' + 
+                'SELECT "pantry"."pantry_id", "pantry"."label", "stock"."quantity"' + 
                 'FROM "pantry" LEFT OUTER JOIN "stock"' + 
                 'ON("stock"."pantry_location" = "pantry"."pantry_id" and "stock"."item_id" = $1);';
             db.query(queryText, [itemId], function (errorMakingQuery, result) {
@@ -165,6 +165,8 @@ router.get('/itemstock/:id', function (req, res) {
         res.send(false);
     }
 })
+
+
 
 
 

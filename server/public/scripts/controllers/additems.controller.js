@@ -44,9 +44,10 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         if (!item) {
             return
         }
-        console.log('selected change item', item, vm);
+        console.log('selected change item', item);
         var itemToGetStock = item.item_id;
         vm.pantryLabel = item.label;
+        vm.minimumQty = item.min_quantity;
         vm.getItemStockTotal(itemToGetStock);
     }
 
@@ -58,6 +59,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         vm.reminderQuantity = '';
         vm.totalItemQuantity = '';
         vm.editAddItem = true;
+        vm.getAllItems();
     }
 
     //filters the item query to lower case
@@ -74,28 +76,21 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         .then(function(response){
             vm.itemStock.totals = response;
             vm.editAddItem = false;
-            console.log(vm.editAddItem);
-            
             console.log('response in getitemstocktotal', vm.itemStock.totals);            
         }).then(function(response){
             //vm.verifyItemStock();
         }) 
     }
 
-    vm.reminderQuantity = '';
     vm.totalItemQuantity = '';
     vm.verifyItemStock = function() {
         var quantityCalcArray = vm.itemStock.totals;
         var itemTotal = 0;
-        var itemMinQuantityTotal = 0;
         for (var i = 0; i < quantityCalcArray.length; i++) {
             itemTotal = itemTotal + quantityCalcArray[i].quantity;
-            itemMinQuantityTotal = itemMinQuantityTotal + quantityCalcArray[i].min_quantity;
         }
-        vm.reminderQuantity = itemMinQuantityTotal;
         vm.totalItemQuantity = itemTotal;
         console.log('itemTotal', vm.totalItemQuantity);
-        console.log('itemMinQuantityTotal', vm.reminderQuantity);
     }
 
     vm.addItem = function(item, reminderQty) {
@@ -114,11 +109,16 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             pantryQty: pantry.quantity,
             itemId: item.item_id
         }
-
         AddItemService.pantryUpdate(pantryId, pantryToUpdatete);
-        //item stock will be updating every time the field loses focus, clear the form here for the user
-        
-        
+    }
+
+    vm.updateMinQty = function (item, newMinQty) {
+        var itemId = item.item_id;
+        var newMinQty = {
+            itemMin: newMinQty
+        }
+        console.log('updateMinQty', itemId, newMinQty);
+        AddItemService.updateMinQty(itemId, newMinQty);
     }
 
     //write function to fire what ng-include shows when the item is selected

@@ -3,9 +3,17 @@
 
 <div layout-xs="column">
     <div>
-        <md-autocomplete md-floating-label="Search for Items" md-selected-item="aic.selectedItem" md-search-text="aic.searchText"
-            md-items="item in aic.querySearch(aic.searchText)" md-item-text="item.item_name" md-selected-item-change="aic.selectedItemChange(item)"
-            placeholder="Search for Items" md-match-case-insensitive=true md-min-length="1" md-clear-button="false">
+        <md-autocomplete 
+            md-floating-label="Search for Items" 
+            md-selected-item="aic.selectedItem" 
+            md-search-text="aic.searchText"
+            md-items="item in aic.querySearch(aic.searchText)" 
+            md-item-text="item.item_name" 
+            md-selected-item-change="aic.selectedItemChange(item)"
+            placeholder="Search for Items" 
+            md-match-case-insensitive=true 
+            md-min-length="1" 
+            md-clear-button="false">
             <md-item-template>
                 <span md-highlight-text="searchText">{{item.item_name}}</span>
             </md-item-template>
@@ -28,10 +36,8 @@
             <md-input-container ng-hide="aic.addEditItem">
                 <label for="reminderQty">Reminder Quantity:</label>
                 <br>
-                <input id="reminderQty" ng-model="aic.reminderQuantity" type="number">
+                <input id="reminderQty" ng-model="aic.minimumQty" ng-blur="aic.updateMinQty(aic.selectedItem, aic.minimumQty)" type="number">
             </md-input-container>
-
-            <md-button ng-hide="aic.addEditItem" ng-click="aic.addItem(aic.selectedItem, aic.reminderQuantity)">Update Item</md-button>
 
         </div>
     </div>

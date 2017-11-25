@@ -98,4 +98,15 @@ myApp.service('AddItemService', function($http) {
             
         })
     }
+
+    self.updateMinQty = function (itemId, newMinQty) {
+        console.log('in update min quantity', itemId, newMinQty);
+        $http.put('/itemupdate/mininmumquantity/' + itemId, newMinQty)
+        .then(function(response){
+            console.log('success');
+            
+        }).catch(function(error){
+            console.log('error');
+        })
+    }
 })
