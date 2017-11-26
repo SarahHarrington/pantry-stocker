@@ -1,0 +1,21 @@
+<md-dialog aria-label="Add to Shopping List">
+    <form ng-cloak>
+        <!-- <md-toolbar>
+            <div class="md-toolbar-tools">
+                The toolbar or headers
+            </div>
+        </md-toolbar> -->
+
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column">
+                Would you like to add this item to a shopping list?
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <div ng-repeat="store in aic.userStoreList.allstores track by $index">
+                <md-button ng-click="aic.addItemToShopList(store.store_id, shoppingListItemId)">{{store.label}}</md-button>
+            </div>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

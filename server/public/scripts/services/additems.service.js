@@ -145,15 +145,26 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
+    self.shoppingListItemId = '';
     self.verifyItemReminder = function(itemId) {
         console.log('item Id in verify reminder', itemId);
         return $http.get('/additem/itemstockmin/' + itemId)
         .then(function(response){
             console.log('success');
-            return response.data;
+            console.log('response.data in verifyItemReminder', response.data);
+            self.shoppingListItemId = itemId;
+            var verifiedItem = {
+                itemId: itemId,
+                response: response.data
+            }
+            console.log('verifiedItem', verifiedItem);
+            
+            return verifiedItem;
         }).catch(function(error){
             console.log('error');
             
         });
     }
+    console.log('shoppingListItemId in service', self.shoppingListItemId);
+    
 })

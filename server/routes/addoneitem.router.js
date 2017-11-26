@@ -65,6 +65,7 @@ router.put('/:id', function (req, res) {
                 'SET "quantity" = $1' +
                 'WHERE "item_id" = $2 AND "pantry_location" = $3;';
             db.query(queryText, [itemQuantity, itemtoUpdate, pantryId], function (errorMakingQuery, result) {
+                done();
                 if (errorMakingQuery) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);

@@ -5,7 +5,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     // vm.userItems = AddItemService.userItems.allitems;
     vm.addItemForm = false;
     vm.editAddItem = true;
-    vm.userStoreList = UserSetupService.stores.data;
+    vm.userStoreList = UserSetupService.stores.allstores;
     vm.userPantryList = UserSetupService.pantries.data;
     vm.userAllItems = AddItemService.allUserItems;
     vm.itemStock = {
@@ -102,7 +102,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         }
         AddItemService.pantryUpdate(pantryId, pantryToUpdate).then(function(response){
             vm.verifyItemReminder(pantryToUpdate.itemId);
-            vm.openToast(response);
+            // vm.openToast(response);
         })
     }
 
@@ -132,18 +132,23 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         })
     }
 
+    vm.shoppingListItemId = AddItemService.shoppingListItemId;
     vm.verifyItemReminder = function (itemId) {
+        console.log('in verifyitem reminder', vm.itemforShoppingList);
         AddItemService.verifyItemReminder(itemId)
         .then(function(response){
             console.log('response in verify item reminder', response);
+            var shoppingListItemId = response.itemId;
+            vm.shoppingListItemId = shoppingListItemId;
+            var response = response.response;
             for (var i = 0; i < response.length; i++) {
                 var totalItemQuantity = Number.parseInt(response[i].total_quantity);
                 var minItemQuantity = response[i].min_quantity;
                 console.log('in the for loop', totalItemQuantity, minItemQuantity);
                 
-                if (totalItemQuantity > 0) {
+                if (totalItemQuantity <= minItemQuantity) {
                     console.log('im in the if');
-                    vm.showConfirm(response);
+                    vm.showConfirm(shoppingListItemId);
                 }
             }
         })
@@ -153,24 +158,37 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         $mdToast.show($mdToast.simple().textContent('Your item has been updated!'));
     }
 
-    vm.showConfirm = function (ev) {
-        console.log('button clicked');
-        
-        // Appending dialog to document.body to cover sidenav in docs app
-        var confirm = $mdDialog.confirm()
-            .title('Would you like to delete your debt?')
-            .textContent('All of the banks have agreed to forgive you your debts.')
-            .ariaLabel('Lucky day')
-            .targetEvent(ev)
-            .ok('Please do it!')
-            .cancel('Sounds like a scam');
+    vm.showConfirm = function (shoppingListItemId) {
+        console.log('shoppingListItemId in show confirm', shoppingListItemId);
+        // vm.shoppingListItemId = shoppingListItemId;
+        $mdDialog.show({
+            controller: 'AddItemController as aic',
+            templateUrl: 'views/templates/addtoshoppinglist.html',
+            parent: angular.element(document.body),
+            targetEvent: shoppingListItemId,
+            clickOutsideToClose: true,
+            fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+    };
 
-            console.log('confirm', confirm);
-            $mdDialog.show(confirm).then(function () {
-                vm.status = 'You decided to get rid of your debt.';
-            }, function () {
-                vm.status = 'You decided to keep your debt.';
-            });
-            
+    vm.hide = function () {
+        $mdDialog.hide();
+    };
+
+    vm.cancel = function () {
+        $mdDialog.cancel();
+    };
+
+    vm.answer = function (answer) {
+        $mdDialog.hide(answer);
+    };
+
+    vm.addItemToShopList = function(storeId) {
+        console.log('add to shopping list storeId', storeId);
+        console.log('add to shopping list itemId', vm.shoppingListItemId);
+        
     }
+    console.log('shoppingListItemId in controller', vm.shoppingListItemId);
+    
+
 });

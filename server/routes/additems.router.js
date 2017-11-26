@@ -77,6 +77,7 @@ router.put('/removeitem/:id', function(req, res){
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText = 'DELETE FROM "stock" WHERE "item_id" = $1 AND "pantry_location" = $2;';
             db.query(queryText, [itemToDelete, itemPantry], function (errorMakingQuery, result) {
+                done();
                 if (errorMakingQuery) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);

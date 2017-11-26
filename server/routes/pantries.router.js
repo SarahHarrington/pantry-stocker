@@ -115,7 +115,7 @@ router.put('/:id', function (req, res) {
                 var queryText = 
                     'INSERT INTO "stock" ("item_id", "pantry_location", "quantity") VALUES ($1, $2, $3)' +
                     'ON CONFLICT ("item_id", "pantry_location")' +
-                    'DO UPDATE SET "quantity" = "stock"."quantity" + EXCLUDED.quantity;';
+                    'DO UPDATE SET "quantity" = EXCLUDED.quantity;';
                 db.query(queryText, [itemId, pantryId, pantryQty], function (errorMakingQuery, result) {
                     done();
                     if (errorMakingQuery) {

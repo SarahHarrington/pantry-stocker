@@ -58,6 +58,15 @@ myApp.config(function($routeProvider, $locationProvider) {
         }
       }
     })
+    // .when('/addtoshoppinglist', {
+    //   templateUrl: '/views/templates/addtoshoppinglist.html',
+    //   controller: 'ShoppingController as sc',
+    //   resolve: {
+    //     getuser: function (UserService) {
+    //       return UserService.getuser()
+    //     }
+    //   }
+    // })
     .otherwise({
       redirectTo: 'home'
     });

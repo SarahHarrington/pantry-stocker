@@ -19,6 +19,7 @@ router.put('/mininmumquantity/:id', function (req, res) {
             'SET "min_quantity" = $1' +
             'WHERE "item_id" = $2;';
             db.query(queryText, [newMinQty, itemId], function (errorMakingQuery, result) {
+                done();
                 if (errorMakingQuery) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);
