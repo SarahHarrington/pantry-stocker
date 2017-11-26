@@ -1,4 +1,4 @@
-myApp.controller('AddItemController', function (UserService, AddItemService, UserSetupService, $log) {
+myApp.controller('AddItemController', function (UserService, AddItemService, UserSetupService, $log, $mdToast) {
     console.log('AddItemController created');
     var vm = this;
 
@@ -84,17 +84,6 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         }) 
     }
 
-    // vm.totalItemQuantity = '';
-    // vm.verifyItemStock = function() {
-    //     var quantityCalcArray = vm.itemStock.totals;
-    //     var itemTotal = 0;
-    //     for (var i = 0; i < quantityCalcArray.length; i++) {
-    //         itemTotal = itemTotal + quantityCalcArray[i].quantity;
-    //     }
-    //     vm.totalItemQuantity = itemTotal;
-    //     console.log('itemTotal', vm.totalItemQuantity);
-    // }
-
     vm.addItem = function() {
         vm.minimumQty = '';
         vm.addItemForm = true;
@@ -111,8 +100,9 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             pantryQty: pantry.quantity,
             itemId: item.item_id
         }
-        AddItemService.pantryUpdate(pantryId, pantryToUpdate).then(function(error){
+        AddItemService.pantryUpdate(pantryId, pantryToUpdate).then(function(response){
             vm.verifyItemReminder(pantryToUpdate.itemId);
+            vm.openToast(response);
         })
     }
 
@@ -124,6 +114,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         console.log('updateMinQty', itemId, newMinQty);
         AddItemService.updateMinQty(itemId, newMinQty).then(function(response){
             vm.verifyItemReminder(itemId); 
+            vm.openToast(response);
         })
     }
 
@@ -148,29 +139,26 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             var minItemQuantity = response.min_quantity;
             
             if (totalItemQuantity <= minItemQuantity) {
-                
+                vm.showDialogue(ev);
             }
         })
     }
 
-    vm.showPrompt = function (ev) {
+    vm.showDialogue = function (ev) {
         // Appending dialog to document.body to cover sidenav in docs app
-        var confirm = $mdDialog.prompt()
-            .title('Would you like to add this item to your shopping list?')
-            .textContent('Bowser is a common name.')
-            .placeholder('Dog name')
-            .ariaLabel('Dog name')
-            .initialValue('Buddy')
-            .targetEvent(ev)
-            .required(true)
-            .ok('Add!')
-            .cancel('No');
-
-        $mdDialog.show(confirm).then(function (result) {
-            $scope.status = 'You decided to name your dog ' + result + '.';
-        }, function () {
-            $scope.status = 'You didn\'t name your dog.';
-        });
+        $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title('This is an alert title')
+                .textContent('You can specify some description text in here.')
+                .ariaLabel('Alert Dialog Demo')
+                .ok('Got it!')
+                .targetEvent(ev)
+        );
     };
-    
+
+    vm.openToast = function ($event) {
+        $mdToast.show($mdToast.simple().textContent('Your item has been updated!'));
+    }
 });

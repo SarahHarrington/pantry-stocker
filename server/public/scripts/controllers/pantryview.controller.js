@@ -1,4 +1,4 @@
-myApp.controller('PantryViewController', function (UserService, UserSetupService, AddItemService) {
+myApp.controller('PantryViewController', function (UserService, UserSetupService, AddItemService, $mdToast) {
     console.log('PantryViewController created');
     var vm = this;
 
@@ -33,6 +33,7 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         var pantryId = item.pantry_location;
         AddItemService.removeOneItem(item).then(function(response){
             vm.getPantryItems({ pantry_id: pantryId })
+            vm.openToast(response);
         })
     }
 
@@ -40,7 +41,12 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         console.log('item in add one item', item);
         var pantryId = item.pantry_location;
         AddItemService.addOneItem(item).then(function (response) {
-            vm.getPantryItems({ pantry_id: pantryId })
+            vm.getPantryItems({ pantry_id: pantryId });
+            vm.openToast(response);
         })
+    }
+
+    vm.openToast = function ($event) {
+        $mdToast.show($mdToast.simple().textContent('Your item has been updated!'));
     }
 });
