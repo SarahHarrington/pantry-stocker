@@ -9,45 +9,45 @@ router.post('/', function (req, res) {
     console.log('add item post');
     console.log('userid', req.user.id)
     console.log(req.body);
-    // if (req.isAuthenticated()) {
-    //     console.log('add item post');
-    //     var userInfo = req.user.id;
-    //     var item = req.body;
-    //     console.log('userid', req.user.id)
-    //     console.log(req.body);
-    //     pool.connect(function (errorConnectingtoDB, db, done) {
-    //         if (errorConnectingtoDB) {
-    //             console.log('Error Connecting to DB', errorConnectingtoDB);
-    //             res.sendStatus(500);
-    //         }
-    //         else {
-    //             db.query('INSERT INTO "Items" ("item_name", "user_id", "default_store_id") VALUES ($1, $2, $3) RETURNING "item_id";',
-    //                 [item.itemName, userInfo, item.itemStore], function (errorMakingQuery, result) {
-    //                     if (errorMakingQuery) {
-    //                         console.log('Error Making Query - Add Item', errorMakingQuery);
-    //                         res.sendStatus(500);
-    //                     }//if query error for item insert in item table
-    //                     else {
-    //                         db.query('INSERT INTO "stock" ("item_id", "quantity", "min_quantity", "pantry_location") VALUES ($1, $2, $3, $4);',
-    //                             [result.rows[0].item_id, item.itemQuantity, item.reminderQuantity, item.itemPantry], function (errorMakingQuery, result) {
-    //                                 done();
-    //                                 if (errorMakingQuery) {
-    //                                     console.log('Error Making Query - Add Item to Stock', errorMakingQuery);
-    //                                     res.sendStatus(500);
-    //                                 }//if for item stock insert
-    //                                 else {
-    //                                     res.sendStatus(201);
-    //                                 }//item stock insert
-    //                             })//db.query 
-    //                     }//if query else   
-    //                 })//db.query
-    //         }//end else for pool
-    //     })//end pool
-    // }//if authenticated
-    // else {
-    //     console.log('User is not logged in');
-    //     res.send(false);
-    // }//is authenticated
+    if (req.isAuthenticated()) {
+        console.log('add item post');
+        var userInfo = req.user.id;
+        var itemLabel = req.body.itemLabel;
+        var addItemtoPantries = req.body.addItemtoPantries;
+        var newItemMinimumQty = req.body.newItemMinimumQty;
+        pool.connect(function (errorConnectingtoDB, db, done) {
+            if (errorConnectingtoDB) {
+                console.log('Error Connecting to DB', errorConnectingtoDB);
+                res.sendStatus(500);
+            }
+            else {
+                var queryText = 'INSERT INTO "Items" ("item_name", "user_id", "min_quantity") VALUES ($1, $2, $3) RETURNING "item_id";'
+                db.query(queryText, [itemLabel, userInfo, newItemMinimumQty], function (errorMakingQuery, result) {
+                        if (errorMakingQuery) {
+                            console.log('Error Making Query - Add Item', errorMakingQuery);
+                            res.sendStatus(500);
+                        }//if query error for item insert in item table
+                        else {
+                            for (var i = 0; i < addItemtoPantries.length; i++) {
+                                db.query('INSERT INTO "stock" ("item_id", "quantity", "pantry_location") VALUES ($1, $2, $3);',
+                                    [result.rows[0].item_id, addItemtoPantries[i].quantity, addItemtoPantries[i].pantry_id], function (errorMakingQuery, result) {
+                                        done();
+                                        if (errorMakingQuery) {
+                                            console.log('Error Making Query - Add new item to stock', errorMakingQuery);
+                                            res.sendStatus(500);
+                                            return
+                                        }//if for item stock insert
+                                    })
+                            }//end of for loop
+                        }//if query else   
+                    })//db.query
+            }//end else for pool
+        })//end pool
+    }//if authenticated
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }//is authenticated
 });//router.post for add item
 
 router.put('/:id', function (req, res) {
