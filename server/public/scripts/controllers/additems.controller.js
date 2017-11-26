@@ -84,16 +84,16 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         }) 
     }
 
-    vm.totalItemQuantity = '';
-    vm.verifyItemStock = function() {
-        var quantityCalcArray = vm.itemStock.totals;
-        var itemTotal = 0;
-        for (var i = 0; i < quantityCalcArray.length; i++) {
-            itemTotal = itemTotal + quantityCalcArray[i].quantity;
-        }
-        vm.totalItemQuantity = itemTotal;
-        console.log('itemTotal', vm.totalItemQuantity);
-    }
+    // vm.totalItemQuantity = '';
+    // vm.verifyItemStock = function() {
+    //     var quantityCalcArray = vm.itemStock.totals;
+    //     var itemTotal = 0;
+    //     for (var i = 0; i < quantityCalcArray.length; i++) {
+    //         itemTotal = itemTotal + quantityCalcArray[i].quantity;
+    //     }
+    //     vm.totalItemQuantity = itemTotal;
+    //     console.log('itemTotal', vm.totalItemQuantity);
+    // }
 
     vm.addItem = function() {
         vm.minimumQty = '';
@@ -107,11 +107,13 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         console.log('item', item);
 
         var pantryId = pantry.pantry_id;
-        var pantryToUpdatete = {
+        var pantryToUpdate = {
             pantryQty: pantry.quantity,
             itemId: item.item_id
         }
-        AddItemService.pantryUpdate(pantryId, pantryToUpdatete);
+        AddItemService.pantryUpdate(pantryId, pantryToUpdate).then(function(error){
+            vm.verifyItemReminder(pantryToUpdate.itemId);
+        })
     }
 
     vm.updateMinQty = function (item, newMinQty) {
@@ -120,7 +122,9 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             itemMin: newMinQty
         }
         console.log('updateMinQty', itemId, newMinQty);
-        AddItemService.updateMinQty(itemId, newMinQty);
+        AddItemService.updateMinQty(itemId, newMinQty).then(function(response){
+            vm.verifyItemReminder(itemId); 
+        })
     }
 
     vm.addNewItemToPantry = function (newItemToAdd, pantry, newItemMinimumQty) {
@@ -132,7 +136,41 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             }
         }
         console.log('addItemtoPantries', addItemtoPantries);
-        AddItemService.addNewItemToPantry(newItemToAdd, addItemtoPantries, newItemMinimumQty);
+        AddItemService.addNewItemToPantry(newItemToAdd, addItemtoPantries, newItemMinimumQty).then(function(response){
+            vm.clearSearch();
+        })
     }
+
+    vm.verifyItemReminder = function (itemId) {
+        AddItemService.verifyItemReminder(itemId).then(function(response){
+            console.log('response in verify item reminder', response);
+            var totalItemQuantity = response.total_quantity;
+            var minItemQuantity = response.min_quantity;
+            
+            if (totalItemQuantity <= minItemQuantity) {
+                
+            }
+        })
+    }
+
+    vm.showPrompt = function (ev) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.prompt()
+            .title('Would you like to add this item to your shopping list?')
+            .textContent('Bowser is a common name.')
+            .placeholder('Dog name')
+            .ariaLabel('Dog name')
+            .initialValue('Buddy')
+            .targetEvent(ev)
+            .required(true)
+            .ok('Add!')
+            .cancel('No');
+
+        $mdDialog.show(confirm).then(function (result) {
+            $scope.status = 'You decided to name your dog ' + result + '.';
+        }, function () {
+            $scope.status = 'You didn\'t name your dog.';
+        });
+    };
     
 });

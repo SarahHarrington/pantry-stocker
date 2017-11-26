@@ -14,6 +14,7 @@ myApp.service('AddItemService', function($http) {
         totals: []
     }
 
+    //retrieves all items for the logged in user
     self.getAllItems = function() {
         $http.get('/items/allitems')
         .then(function(response){
@@ -41,6 +42,7 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
+    //deletes item from the pantry view
     self.deleteItemFromPantry = function (item) {
         console.log('item in delete', item);
         
@@ -56,6 +58,7 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
+    //gets the item stock totals when item is selected from md-autocomplete
     self.getItemStockTotal = function (item) {
         console.log('item', item); 
         var itemId = item;
@@ -69,6 +72,7 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
+    //updates pantry item quantity on ng-blur
     self.pantryUpdate = function (pantryId, pantryToUpdate) {
         console.log('in pantryUpdate', pantryId, pantryToUpdate);
         return $http.put('/pantries/' + pantryId, pantryToUpdate)
@@ -82,17 +86,20 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
+
+    //updates the minimium quantity on item view
     self.updateMinQty = function (itemId, newMinQty) {
         console.log('in update min quantity', itemId, newMinQty);
-        $http.put('/itemupdate/mininmumquantity/' + itemId, newMinQty)
+        return $http.put('/itemupdate/mininmumquantity/' + itemId, newMinQty)
         .then(function(response){
             console.log('success');
-            
+            return response;
         }).catch(function(error){
             console.log('error');
         })
     }
 
+    //subtracts one item from the pantry view on click of the -
     self.removeOneItem = function(item) {
         console.log('remove one item in service', item);
         var itemId = item.item_id;
@@ -106,6 +113,7 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
+    //adds one item from the pantry view on click of the +
     self.addOneItem = function (item) {
         console.log('remove one item in service', item);
         var itemId = item.item_id;
@@ -119,6 +127,7 @@ myApp.service('AddItemService', function($http) {
             })
     }
 
+    //adds new item to pantry
     self.addNewItemToPantry = function (newItemToAdd, addItemtoPantries, newItemMinimumQty) {
         console.log('service addNewItemToPantry', newItemToAdd, addItemtoPantries, newItemMinimumQty);
         var newItemtoAdd = {
@@ -126,13 +135,25 @@ myApp.service('AddItemService', function($http) {
             addItemtoPantries: addItemtoPantries,
             newItemMinimumQty: newItemMinimumQty
         }
-        $http.post('/additem', newItemtoAdd)
+        return $http.post('/additem', newItemtoAdd)
         .then(function(response){
             console.log('success');
-            
+            return response;
         }).catch(function(error){
             console.log('error');
             
         })
+    }
+
+    self.verifyItemReminder = function(itemId) {
+        console.log('item Id in verify reminder', itemId);
+        return $http.get('/additem/itemstockmin/' + itemId)
+        .then(function(response){
+            console.log('success');
+            return response.data;
+        }).catch(function(error){
+            console.log('error');
+            
+        });
     }
 })

@@ -39,6 +39,7 @@ router.post('/', function (req, res) {
                                         }//if for item stock insert
                                     })
                             }//end of for loop
+                            res.sendStatus(200);
                         }//if query else   
                     })//db.query
             }//end else for pool
@@ -79,7 +80,31 @@ router.put('/:id', function (req, res) {
     }//end authenticated else
 })
 
+router.get('/itemstockmin/:id', function(req, res){
+        if (req.isAuthenticated) {
+            var itemId = req.params.id;
 
-
+            pool.connect(function (errorConnectingtoDB, db, done) {
+                var queryText =
+                    'SELECT "total_quantity", "min_quantity"' +
+                    'FROM "stock_totals"' +
+                    'WHERE "item_id" = $1;';
+                db.query(queryText, [itemId], function (errorMakingQuery, result) {
+                    done();
+                    if (errorMakingQuery) {
+                        console.log('Error making query', errorMakingQuery);
+                        res.sendStatus(500);
+                    } else {
+                        res.send(result.rows);
+                        console.log(result.rows);
+                    }
+                })
+            })
+        }
+        else {
+            console.log('User is not logged in');
+            res.send(false);
+        }
+})
 
 module.exports = router;
