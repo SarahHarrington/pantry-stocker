@@ -33,7 +33,7 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         var pantryId = item.pantry_location;
         AddItemService.removeOneItem(item).then(function(response){
             vm.getPantryItems({ pantry_id: pantryId })
-            vm.openToast(response);
+            vm.openToast();
         })
     }
 
@@ -42,11 +42,16 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         var pantryId = item.pantry_location;
         AddItemService.addOneItem(item).then(function (response) {
             vm.getPantryItems({ pantry_id: pantryId });
-            vm.openToast(response);
+            vm.openToast();
         })
     }
 
     vm.openToast = function ($event) {
-        $mdToast.show($mdToast.simple().textContent('Your item has been updated!'));
+        $mdToast.show(
+            $mdToast.simple()
+            .textContent('Your item has been updated!')
+            .hideDelay(2000));
     }
+
+
 });

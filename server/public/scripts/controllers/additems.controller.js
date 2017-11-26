@@ -1,4 +1,4 @@
-myApp.controller('AddItemController', function (UserService, AddItemService, UserSetupService, $log, $mdToast) {
+myApp.controller('AddItemController', function (UserService, AddItemService, UserSetupService, $log, $mdToast, $mdDialog) {
     console.log('AddItemController created');
     var vm = this;
 
@@ -80,7 +80,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             vm.editAddItem = false;
             console.log('response in getitemstocktotal', vm.itemStock.totals);            
         }).then(function(response){
-            //vm.verifyItemStock();
+            // vm.verifyItemStock();
         }) 
     }
 
@@ -113,7 +113,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         }
         console.log('updateMinQty', itemId, newMinQty);
         AddItemService.updateMinQty(itemId, newMinQty).then(function(response){
-            vm.verifyItemReminder(itemId); 
+            // vm.verifyItemReminder(itemId); 
             vm.openToast(response);
         })
     }
@@ -133,32 +133,44 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
 
     vm.verifyItemReminder = function (itemId) {
-        AddItemService.verifyItemReminder(itemId).then(function(response){
+        AddItemService.verifyItemReminder(itemId)
+        .then(function(response){
             console.log('response in verify item reminder', response);
-            var totalItemQuantity = response.total_quantity;
-            var minItemQuantity = response.min_quantity;
-            
-            if (totalItemQuantity <= minItemQuantity) {
-                vm.showDialogue(ev);
+            for (var i = 0; i < response.length; i++) {
+                var totalItemQuantity = Number.parseInt(response[i].total_quantity);
+                var minItemQuantity = response[i].min_quantity;
+                console.log('in the for loop', totalItemQuantity, minItemQuantity);
+                
+                if (totalItemQuantity > 0) {
+                    console.log('im in the if');
+                    vm.showConfirm(response);
+                }
             }
         })
     }
 
-    vm.showDialogue = function (ev) {
-        // Appending dialog to document.body to cover sidenav in docs app
-        $mdDialog.show(
-            $mdDialog.alert()
-                .parent(angular.element(document.querySelector('#popupContainer')))
-                .clickOutsideToClose(true)
-                .title('This is an alert title')
-                .textContent('You can specify some description text in here.')
-                .ariaLabel('Alert Dialog Demo')
-                .ok('Got it!')
-                .targetEvent(ev)
-        );
-    };
-
     vm.openToast = function ($event) {
         $mdToast.show($mdToast.simple().textContent('Your item has been updated!'));
+    }
+
+    vm.showConfirm = function (ev) {
+        console.log('button clicked');
+        
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+            .title('Would you like to delete your debt?')
+            .textContent('All of the banks have agreed to forgive you your debts.')
+            .ariaLabel('Lucky day')
+            .targetEvent(ev)
+            .ok('Please do it!')
+            .cancel('Sounds like a scam');
+
+            console.log('confirm', confirm);
+            $mdDialog.show(confirm).then(function () {
+                vm.status = 'You decided to get rid of your debt.';
+            }, function () {
+                vm.status = 'You decided to keep your debt.';
+            });
+            
     }
 });

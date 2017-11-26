@@ -96,7 +96,7 @@ router.get('/itemstockmin/:id', function(req, res){
                         res.sendStatus(500);
                     } else {
                         res.send(result.rows);
-                        console.log(result.rows);
+                        console.log('itemstock verify', result.rows);
                     }
                 })
             })

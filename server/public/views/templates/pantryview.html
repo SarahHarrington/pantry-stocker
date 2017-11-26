@@ -1,9 +1,9 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
-<div>
-    <div layout="column" ng-repeat="pantry in pvc.userPantryList.allpantries track by $index">
+
+    <div layout="column" ng-repeat="pantry in pvc.userPantryList.allpantries | orderBy:'label' track by $index"> <!-- Pantry repeat -->
         <md-button class="md-raised" ng-click="pvc.getPantryItems(pantry)">{{pantry.label}}</md-button>
-        <div layout="row" ng-repeat="eachItem in pvc.userPantryItems.allitems track by $index" ng-if="pantry.pantry_id == eachItem.pantry_location">
+        <div layout="row" ng-repeat="eachItem in pvc.userPantryItems.allitems | orderBy:'item_name' track by $index" ng-if="pantry.pantry_id == eachItem.pantry_location">
             <div layout="row">
                 <md-button  class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="../images/edit.svg"></md-icon>
@@ -21,5 +21,27 @@
                 </md-button>
             </div>
         </div>
-    </div>
-</div>
+    </div> <!-- Pantry repeat -->
+    <!-- <div ng-controller="AddItemController as aic">
+    <md-button class="md-raised" ng-click="aic.getAllItems(pantry)">All Items</md-button>
+    <div layout="row" ng-repeat="eachItem in aic.userAllItems.allUserItems | orderBy:'item_name' track by $index">
+        <div layout="row">
+            {{eachItem}}
+            <md-button class="md-icon-button md-primary" aria-label="Settings">
+                <md-icon md-svg-icon="../images/edit.svg"></md-icon>
+            </md-button>
+            <p>{{eachItem.item_name}}</p>
+            <md-button id="removeItem" ng-click="pvc.removeOneItem(eachItem)" class="md-icon-button md-primary" aria-label="Settings">
+                <md-icon md-svg-icon="../images/remove_circle.svg"></md-icon>
+            </md-button>
+            <p>{{eachItem.quantity}}</p>
+            <md-button ng-click="pvc.addOneItem(eachItem)" class="md-icon-button md-primary" aria-label="Settings">
+                <md-icon md-svg-icon="../images/add_circle.svg"></md-icon>
+            </md-button>
+            <md-button ng-click="pvc.deleteItemFromPantry(eachItem)" class="md-icon-button md-primary" aria-label="Settings">
+                <md-icon md-svg-icon="../images/delete.svg"></md-icon>
+            </md-button>
+        </div>
+    </div> -->
+    <!-- </div> -->
+
