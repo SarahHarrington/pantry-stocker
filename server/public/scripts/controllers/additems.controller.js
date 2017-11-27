@@ -97,7 +97,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             itemId: item.item_id
         }
         AddItemService.pantryUpdate(pantryId, pantryToUpdate).then(function(response){
-            vm.verifyItemReminder(pantryToUpdate.itemId);
+            vm.verifyItemShopList(pantryToUpdate.itemId);
             vm.openToast(response);
         })
     }
@@ -109,7 +109,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         }
         console.log('updateMinQty', itemId, newMinQty);
         AddItemService.updateMinQty(itemId, newMinQty).then(function(response){
-            vm.verifyItemReminder(itemId); 
+            vm.verifyItemShopList(itemId); 
             vm.openToast(response);
         })
     }
@@ -177,8 +177,19 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     vm.addItemToShopList = function(storeId) {
         var itemId = vm.shoppingListItemId;        
         AddItemService.addItemToShopList(storeId, itemId);
-        
     }
     
+    vm.verifyItemShopList = function(itemId) {
+        var itemId = itemId;
+        AddItemService.verifyItemShopList(itemId).then(function(response){
+            console.log('resposne in verfify shop lsit controller', response);
+            var checkItemOnShopList = Number.parseInt(response[0].c);
+            console.log(checkItemOnShopList);
+            if (checkItemOnShopList === 0) {
+                console.log('in the if');
+                vm.verifyItemReminder(itemId);
+            }
+        })
+    }
 
 });

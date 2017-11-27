@@ -37,7 +37,7 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         AddItemService.removeOneItem(item).then(function(response){
             vm.getPantryItems({ pantry_id: pantryId })
             vm.openToast();
-            vm.verifyItemReminder(itemId);
+            vm.verifyItemShopList(itemId);
         })
     }
 
@@ -48,7 +48,7 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         AddItemService.addOneItem(item).then(function (response) {
             vm.getPantryItems({ pantry_id: pantryId });
             vm.openToast();
-            vm.verifyItemReminder(itemId);
+            vm.verifyItemShopList(itemId);
         })
     }
 
@@ -104,6 +104,22 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         $mdDialog.hide(answer);
     };
 
-        
+    vm.addItemToShopList = function (storeId) {
+        var itemId = vm.shoppingListItemId;
+        AddItemService.addItemToShopList(storeId, itemId);
+    }
+
+    vm.verifyItemShopList = function (itemId) {
+        var itemId = itemId;
+        AddItemService.verifyItemShopList(itemId).then(function (response) {
+            console.log('resposne in verfify shop lsit controller', response);
+            var checkItemOnShopList = Number.parseInt(response[0].c);
+            console.log(checkItemOnShopList);
+            if (checkItemOnShopList === 0) {
+                console.log('in the if');
+                vm.verifyItemReminder(itemId);
+            }
+        })
+    }
 
 });

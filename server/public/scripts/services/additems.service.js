@@ -158,7 +158,6 @@ myApp.service('AddItemService', function($http) {
                 response: response.data
             }
             console.log('verifiedItem', verifiedItem);
-            
             return verifiedItem;
         }).catch(function(error){
             console.log('error');
@@ -176,6 +175,20 @@ myApp.service('AddItemService', function($http) {
         .then(function(response){
             console.log('success');
             return response;
+        }).catch(function(error){
+            console.log('error');
+            
+        })
+    }
+
+    self.verifyItemShopList = function(itemId) {
+        console.log('item shop list verify', itemId);
+        return $http.get('/shoppinglist/checkitem/' + itemId)
+        .then(function(response){
+            console.log('success');
+            console.log('verify shopping list', response);
+            
+            return response.data;
         }).catch(function(error){
             console.log('error');
             

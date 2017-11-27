@@ -37,5 +37,32 @@ router.post('/', function (req, res) {
     }//is authenticated
 });//router.post for add item to shopping list
 
+router.get('/checkitem/:id', function (req, res) {
+    console.log('req params', req.params.id);
+    if (req.isAuthenticated) {
+        var userId = req.user.id;
+        var itemId = req.params.id;
+        pool.connect(function (errorConnectingtoDB, db, done) {
+            var queryText =
+                'SELECT COUNT(*) AS c FROM "shopping_list" WHERE item_id = $1 AND user_id = $2;';
+            db.query(queryText, [itemId, userId], function (errorMakingQuery, result) {
+                done();
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                    console.log(result.rows);
+
+                }
+            })
+        })
+    }
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }
+})
+
 
 module.exports = router;
