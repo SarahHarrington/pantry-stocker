@@ -9,7 +9,6 @@
         <md-dialog-content>
             <div class="md-dialog-content" layout="column">
                 <div layout="row" ng-repeat="pantry in aic.itemStock track by $index">
-                    {{aic.itemStock.totals}}
                     <p>{{pantry.label}}</p>
                     <md-input-container>
                         <label for="pantryQty">Quantity:</label>

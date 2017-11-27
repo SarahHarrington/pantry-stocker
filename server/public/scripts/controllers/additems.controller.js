@@ -69,6 +69,8 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
     vm.itemMinQty = '';
     vm.getItemStockTotal = function (item) {
+        console.log('getitemstocktotal controller', item);
+        
         AddItemService.getItemStockTotal(item)
         .then(function(response){
             // vm.itemStock.totals = response;

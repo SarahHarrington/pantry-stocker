@@ -26,7 +26,7 @@
         <!-- Pantries loaded with quantities when item is selected above -->
         
         <div ng-hide="aic.editAddItem" class="ng-hide">
-            <div layout="row" ng-repeat="pantry in aic.itemStock.totals track by $index">
+            <div layout="row" ng-repeat="pantry in aic.itemStock track by $index">
                 <p>{{pantry.label}}</p>
                 <md-input-container>
                     <label for="pantryQty">Quantity:</label>

@@ -10,10 +10,11 @@ body, html {
 }
 
 .header {
-  background-image: url('../images/pantrystocker.jpg');
+  background-image: url('../images/pantrystockerheader.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  height: 200px;
 }
 
 #entryForm {
