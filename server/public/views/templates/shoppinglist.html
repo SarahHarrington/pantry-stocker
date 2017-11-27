@@ -9,13 +9,16 @@
             <md-checkbox aria-label="Checkbox"></md-checkbox>
             <p>{{item.item_name}}</p>
             <md-input-container>
-                <label for="desiredQty">Desired Quantity</label>
+                <label for="desiredQty">Desired</label>
                 <input id="desiredQty"  type="number">
             </md-input-container>
             <md-input-container>
-                <label for="purchasedQty">Purchased Quantity</label>
+                <label for="purchasedQty">Purchased</label>
                 <input id="purchasedQty"  type="number">
             </md-input-container>
+            <md-button ng-click="slc.deleteItemFromList(item)" class="md-icon-button md-primary" aria-label="Settings">
+                <md-icon md-svg-icon="../images/delete.svg"></md-icon>
+            </md-button>
         </div>
     </div>
 </div>

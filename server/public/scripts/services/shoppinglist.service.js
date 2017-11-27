@@ -22,4 +22,18 @@ myApp.service('ShoppingListService', function ($http) {
         })
     }
 
+    self.deleteItemFromList = function(item) {
+        console.log('delete service', item);
+        var itemId = item.item_id;
+        var itemStore = item;
+        return $http.put('/shoppinglist/deleteitem/' + itemId, itemStore)
+        .then(function(response){
+            console.log('success');
+            return response;
+        }).catch(function(error){
+            console.log('error');
+            
+        })
+    }
+
 });

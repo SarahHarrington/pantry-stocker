@@ -97,4 +97,31 @@ router.get('/allitems/:id', function (req, res) {
     }
 })
 
+router.put('/deleteitem/:id', function(req, res){
+    var storeId = req.body.store_id;
+    var itemId = req.params.id;
+    var userId = req.user.id;
+    if (req.isAuthenticated) {
+        console.log('router delete item from stores list', storeId, itemId, userId);
+
+        pool.connect(function (errorConnectingtoDB, db, done) {
+            var queryText =
+                'DELETE FROM "shopping_list" WHERE "store_id" = $2 AND "user_id" = $3 AND "item_id" = $1'
+            db.query(queryText, [itemId, storeId, userId], function (errorMakingQuery, result) {
+                done();
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(200);
+                }
+            })
+        })
+    }
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }
+})
+
 module.exports = router;
