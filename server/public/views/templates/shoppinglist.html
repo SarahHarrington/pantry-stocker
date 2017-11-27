@@ -2,8 +2,19 @@
 <!-- Navigation Above -->
 
 <div layout="column" ng-repeat="store in slc.userStoreList.allstores | orderBy: 'label' track by $index">
-    <md-button class="md-raised" ng-click="slc.getListItems(store)">{{store.label}}</md-button>
-    <div ng-repeat="item in slc.shoppingLists | orderBy:'item_name' track by $index" ng-if="store.store_id == item.store_id">
-        <p>{{item.item_name}}</p>
+    <md-button class="md-raised" ng-click="slc.getShoppingLists(store)">{{store.label}}</md-button>
+    <div ng-show="slc.showShopList" ng-repeat="item in slc.shoppingLists | orderBy:'item_name' track by $index" ng-if="store.store_id == item.store_id">
+        <div layout="row">
+            <md-checkbox aria-label="Checkbox"></md-checkbox>
+            <p>{{item.item_name}}</p>
+            <md-input-container>
+                <label for="desiredQty">Desired Quantity</label>
+                <input id="desiredQty"  type="number">
+            </md-input-container>
+            <md-input-container>
+                <label for="purchasedQty">Purchased Quantity</label>
+                <input id="purchasedQty"  type="number">
+            </md-input-container>
+        </div>
     </div>
 </div>

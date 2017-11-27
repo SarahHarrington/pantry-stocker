@@ -63,10 +63,13 @@ router.get('/checkitem/:id', function (req, res) {
     }
 })
 
-router.get('/allitems', function (req, res) {
-    console.log('req params', req.params.id);
+router.get('/allitems/:id', function (req, res) {
+    // console.log('req params', req.params.id);
     if (req.isAuthenticated) {
         var userId = req.user.id;
+        var storeId = Number.parseInt(req.params);
+        console.log('router get stores list', storeId);
+        
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
                 'SELECT "shopping_list"."item_id", "shopping_list"."store_id", "shopping_list"."desired_qty", "shopping_list"."purchased_amount",' +
@@ -75,8 +78,8 @@ router.get('/allitems', function (req, res) {
                 'ON("shopping_list"."item_id" = "Items"."item_id")' +
                 'RIGHT OUTER JOIN "stores"' +
                 'ON("shopping_list"."store_id" = "stores"."store_id")' +
-                'WHERE "shopping_list"."user_id" = $1;'
-            db.query(queryText, [userId], function (errorMakingQuery, result) {
+                'WHERE "shopping_list"."user_id" = $1 AND "shopping_list"."store_id" = $2;'
+            db.query(queryText, [userId, storeId], function (errorMakingQuery, result) {
                 done();
                 if (errorMakingQuery) {
                     console.log('Error making query', errorMakingQuery);
