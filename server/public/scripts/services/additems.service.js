@@ -165,6 +165,22 @@ myApp.service('AddItemService', function($http) {
             
         });
     }
-    console.log('shoppingListItemId in service', self.shoppingListItemId);
     
+    self.addItemToShopList = function(storeId, itemId) {
+        console.log('additem to shopping list in the service', storeId, itemId);
+        var itemForShopList = {
+            storeId: storeId,
+            itemId: itemId
+        }
+        return $http.post('/shoppinglist', itemForShopList)
+        .then(function(response){
+            console.log('success');
+            return response;
+        }).catch(function(error){
+            console.log('error');
+            
+        })
+    }
+
+
 })

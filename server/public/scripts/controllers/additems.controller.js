@@ -91,10 +91,6 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
 
     vm.updatePantryQty = function(pantry, item) {
-        console.log('updatepantryqty function fired');
-        console.log('pantry', pantry);
-        console.log('item', item);
-
         var pantryId = pantry.pantry_id;
         var pantryToUpdate = {
             pantryQty: pantry.quantity,
@@ -102,7 +98,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         }
         AddItemService.pantryUpdate(pantryId, pantryToUpdate).then(function(response){
             vm.verifyItemReminder(pantryToUpdate.itemId);
-            // vm.openToast(response);
+            vm.openToast(response);
         })
     }
 
@@ -113,7 +109,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         }
         console.log('updateMinQty', itemId, newMinQty);
         AddItemService.updateMinQty(itemId, newMinQty).then(function(response){
-            // vm.verifyItemReminder(itemId); 
+            vm.verifyItemReminder(itemId); 
             vm.openToast(response);
         })
     }
@@ -126,7 +122,6 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
                 addItemtoPantries.push(pantry[i]);
             }
         }
-        console.log('addItemtoPantries', addItemtoPantries);
         AddItemService.addNewItemToPantry(newItemToAdd, addItemtoPantries, newItemMinimumQty).then(function(response){
             vm.clearSearch();
         })
@@ -134,20 +129,15 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
 
     vm.shoppingListItemId = AddItemService.shoppingListItemId;
     vm.verifyItemReminder = function (itemId) {
-        console.log('in verifyitem reminder', vm.itemforShoppingList);
         AddItemService.verifyItemReminder(itemId)
         .then(function(response){
-            console.log('response in verify item reminder', response);
             var shoppingListItemId = response.itemId;
             vm.shoppingListItemId = shoppingListItemId;
             var response = response.response;
             for (var i = 0; i < response.length; i++) {
                 var totalItemQuantity = Number.parseInt(response[i].total_quantity);
                 var minItemQuantity = response[i].min_quantity;
-                console.log('in the for loop', totalItemQuantity, minItemQuantity);
-                
                 if (totalItemQuantity <= minItemQuantity) {
-                    console.log('im in the if');
                     vm.showConfirm(shoppingListItemId);
                 }
             }
@@ -155,12 +145,13 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
 
     vm.openToast = function ($event) {
-        $mdToast.show($mdToast.simple().textContent('Your item has been updated!'));
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent('Your item has been updated!')
+                .hideDelay(1000));
     }
 
     vm.showConfirm = function (shoppingListItemId) {
-        console.log('shoppingListItemId in show confirm', shoppingListItemId);
-        // vm.shoppingListItemId = shoppingListItemId;
         $mdDialog.show({
             controller: 'AddItemController as aic',
             templateUrl: 'views/templates/addtoshoppinglist.html',
@@ -184,11 +175,10 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     };
 
     vm.addItemToShopList = function(storeId) {
-        console.log('add to shopping list storeId', storeId);
-        console.log('add to shopping list itemId', vm.shoppingListItemId);
+        var itemId = vm.shoppingListItemId;        
+        AddItemService.addItemToShopList(storeId, itemId);
         
     }
-    console.log('shoppingListItemId in controller', vm.shoppingListItemId);
     
 
 });

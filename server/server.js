@@ -15,6 +15,7 @@ var pantriesRouter = require('./routes/pantries.router');
 var itemUpdateRouter = require('./routes/itemupdate.router');
 var removeItemRouter = require('./routes/removeitem.router');
 var addOneItemRouter = require('./routes/addoneitem.router');
+var shoppingListRouter = require('./routes/shoppinglist.router')
 
 var port = process.env.PORT || 5000;
 
@@ -41,6 +42,7 @@ app.use('/pantries', pantriesRouter);
 app.use('/itemupdate', itemUpdateRouter);
 app.use('/removeitem', removeItemRouter);
 app.use('/additem', addOneItemRouter);
+app.use('/shoppinglist', shoppingListRouter);
 
 // Catch all bucket, must be last!
 app.use('/', indexRouter);
