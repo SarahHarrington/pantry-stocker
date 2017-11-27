@@ -3,21 +3,19 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     var vm = this;
 
     vm.userStoreList = UserSetupService.stores.data;
-    
+    vm.shoppingLists = ShoppingListService.shoppingLists.lists;
+
     vm.getStores = function () {
         UserSetupService.getStores();
         vm.userStoreList = UserSetupService.stores;
     }
 
     vm.getStores();
-    vm.shoppingLists = [];
     vm.getShoppingLists = function(store) {
-        console.log('store', store);
-        ShoppingListService.getShoppingLists(store).then(function(response){
-            vm.shoppingLists = response.data;
-            console.log('controller response', vm.shoppingLists);
-            // vm.showShopList = true;
-        })
+        ShoppingListService.getShoppingLists(store);
+        vm.shoppingLists = ShoppingListService.shoppingLists;
+        console.log('vm.shoppingLists', vm.shoppingLists);
+        
     }
     // vm.getShoppingLists();
 
