@@ -8,9 +8,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     vm.userStoreList = UserSetupService.stores.allstores;
     vm.userPantryList = UserSetupService.pantries.data;
     vm.userAllItems = AddItemService.allUserItems;
-    vm.itemStock = {
-        totals: []
-    }
+    vm.itemStock = AddItemService.itemStock.totals;
 
     vm.getStores = function () {
         UserSetupService.getStores();
@@ -24,7 +22,6 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
 
     vm.getAllItems = function () {
         AddItemService.getAllItems();
-        console.log('vm.userAllItems', vm.userAllItems);
     }
 
     vm.getStores();
@@ -33,7 +30,6 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     // vm.querySearch = querySearch();
 
     vm.querySearch = function (query) {
-        console.log('in query search function', vm.userAllItems.items);
         var results
         results = query ? vm.createFilterFor(query) : vm.userAllItems.items;
         return results;
@@ -45,7 +41,6 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         if (!item) {
             return
         }
-        console.log('selected change item', item);
         var itemToGetStock = item.item_id;
         vm.pantryLabel = item.label;
         vm.minimumQty = item.min_quantity;
@@ -76,9 +71,8 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     vm.getItemStockTotal = function (item) {
         AddItemService.getItemStockTotal(item)
         .then(function(response){
-            vm.itemStock.totals = response;
+            // vm.itemStock.totals = response;
             vm.editAddItem = false;
-            console.log('response in getitemstocktotal', vm.itemStock.totals);            
         }).then(function(response){
             // vm.verifyItemStock();
         }) 
@@ -115,7 +109,6 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
 
     vm.addNewItemToPantry = function (newItemToAdd, pantry, newItemMinimumQty) {
-        console.log('add new item to pantry', newItemToAdd, pantry, newItemMinimumQty);
         var addItemtoPantries = [];
         for (var i = 0; i < pantry.length; i++) {
             if (pantry[i].quantity) {
@@ -189,7 +182,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     vm.verifyItemShopList = function(itemId) {
         var itemId = itemId;
         AddItemService.verifyItemShopList(itemId).then(function(response){
-            console.log('resposne in verfify shop lsit controller', response);
+            console.log('resposne in verify shop lsit controller', response);
             var checkItemOnShopList = Number.parseInt(response[0].c);
             console.log(checkItemOnShopList);
             if (checkItemOnShopList === 0) {
@@ -198,5 +191,18 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             }
         })
     }
+
+    // vm.editItemIndividual = function(item) {
+    //     console.log('edit clicked');
+        
+    //     $mdDialog.show({
+    //         controller: 'AddItemController as aic',
+    //         templateUrl: 'views/templates/edititem.html',
+    //         parent: angular.element(document.body),
+    //         targetEvent: item,
+    //         clickOutsideToClose: true,
+    //         fullscreen: vm.customFullscreen
+    //     })
+    // }
 
 });

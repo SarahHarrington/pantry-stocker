@@ -27,8 +27,12 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         };
         ShoppingListService.deleteItemFromList(item).then(function (response) {
             vm.getShoppingLists(store); 
-            
         })
     }
+
+    vm.shopQuantitiesUpdate =  function(item) {
+        ShoppingListService.shopQuantitiesUpdate(item);
+    }
+
 
 });

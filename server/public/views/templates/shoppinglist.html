@@ -10,15 +10,15 @@
             <p>{{item.item_name}}</p>
             <md-input-container>
                 <label for="desiredQty">Desired</label>
-                <input id="desiredQty"  type="number">
+                <input id="desiredQty" ng-blur="slc.shopQuantitiesUpdate(item)" ng-model="item.desired_qty" type="number">
             </md-input-container>
             <md-input-container>
                 <label for="purchasedQty">Purchased</label>
-                <input id="purchasedQty"  type="number">
+                <input id="purchasedQty" ng-blur="slc.shopQuantitiesUpdate(item)" ng-model="item.purchased_amount" type="number">
             </md-input-container>
             <md-button ng-click="slc.deleteItemFromList(item)" class="md-icon-button md-primary" aria-label="Settings">
                 <md-icon md-svg-icon="../images/delete.svg"></md-icon>
             </md-button>
         </div>
     </div>
-</div>
+</div><!-- End of Repeat for store lists -->

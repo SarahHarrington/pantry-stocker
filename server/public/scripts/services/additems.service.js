@@ -51,9 +51,14 @@ myApp.service('AddItemService', function($http) {
 
     //gets the item stock totals when item is selected from md-autocomplete
     self.getItemStockTotal = function (item) {
+        console.log('service full item');
+        
         var itemId = item;
+        console.log('get item stock total service', item);
+        
         return $http.get('/items/itemstock/' + itemId)
         .then(function(response){
+            self.itemStock.totals = response.data;
             return response.data;
         }).catch(function(error){
             console.log('error');

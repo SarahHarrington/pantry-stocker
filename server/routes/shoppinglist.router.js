@@ -69,7 +69,7 @@ router.get('/allitems/:id', function (req, res) {
         var userId = req.user.id;
         var storeId = req.params.id;
         console.log('router get stores list', req.params.id);
-        
+
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
                 'SELECT "shopping_list"."item_id", "shopping_list"."store_id", "shopping_list"."desired_qty", "shopping_list"."purchased_amount",' +
@@ -97,7 +97,7 @@ router.get('/allitems/:id', function (req, res) {
     }
 })
 
-router.put('/deleteitem/:id', function(req, res){
+router.put('/deleteitem/:id', function (req, res) {
     var storeId = req.body.store_id;
     var itemId = req.params.id;
     var userId = req.user.id;
@@ -123,5 +123,37 @@ router.put('/deleteitem/:id', function(req, res){
         res.send(false);
     }
 })
+
+router.put('/updateitem/:id', function (req, res) {
+    var storeId = req.body.store_id;
+    var itemId = req.params.id;
+    var userId = req.user.id;
+    var desiredQty = req.body.desired_qty;
+    var purchasedQty = req.body.purchased_amount;
+    if (req.isAuthenticated) {
+        console.log('router delete item from stores list', storeId, itemId, userId, purchasedQty);
+
+        pool.connect(function (errorConnectingtoDB, db, done) {
+            var queryText =
+                'UPDATE "shopping_list"' +
+                'SET "desired_qty" = $4, "purchased_amount" = $5' +
+                'WHERE "item_id" = $1 AND "store_id" = $2 AND "user_id" = $3;';
+            db.query(queryText, [itemId, storeId, userId, desiredQty, purchasedQty], function (errorMakingQuery, result) {
+                done();
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(200);
+                }
+            })
+        })
+    }
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }
+})
+
 
 module.exports = router;

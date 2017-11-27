@@ -1,4 +1,4 @@
-myApp.controller('PantryViewController', function (UserService, UserSetupService, AddItemService, $mdToast, $mdDialog) {
+myApp.controller('PantryViewController', function (UserService, UserSetupService, AddItemService, $mdToast, $mdDialog, $location) {
     console.log('PantryViewController created');
     var vm = this;
 
@@ -107,5 +107,21 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
             }
         })
     }
+
+    vm.editItemIndividual = function (item) {
+        var itemId = item.item_id;
+        AddItemService.getItemStockTotal(itemId).then(function(response){
+            $mdDialog.show({
+                controller: 'AddItemController as aic',
+                templateUrl: 'views/templates/edititem.html',
+                parent: angular.element(document.body),
+                targetEvent: response,
+                clickOutsideToClose: true,
+                fullscreen: vm.customFullscreen
+            })
+        });
+    }
+
+    
 
 });
