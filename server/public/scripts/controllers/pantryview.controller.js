@@ -14,24 +14,19 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
 
     //retrieves the items when the pantry button is clicked
     vm.getPantryItems = function (pantryId) {
-        console.log('get items clicked');
         AddItemService.getPantryItems(pantryId);
         vm.userPantryItems = AddItemService.userPantryItems;
     }
 
     //deletes the item from the pantry
     vm.deleteItemFromPantry = function(item) {
-        console.log('delete item from pantry clicked');
-        console.log('item in delete pantry', item);
         var pantryId = item.pantry_location;
-        console.log('pantryId in controller for delete', pantryId);
         AddItemService.deleteItemFromPantry(item).then(function(response){
             vm.getPantryItems({ pantry_id: pantryId }); 
         })
     }
 
     vm.removeOneItem = function(item) {
-        console.log('item in remove one item', item);
         var itemId = item.item_id;
         var pantryId = item.pantry_location;
         AddItemService.removeOneItem(item).then(function(response){
@@ -42,7 +37,6 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
     }
 
     vm.addOneItem = function(item) {
-        console.log('item in add one item', item);
         var itemId = item.item_id;
         var pantryId = item.pantry_location;
         AddItemService.addOneItem(item).then(function (response) {
@@ -63,16 +57,13 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
     vm.verifyItemReminder = function (itemId) {
         AddItemService.verifyItemReminder(itemId)
             .then(function (response) {
-                console.log('response in verify item reminder', response);
                 var shoppingListItemId = response.itemId;
                 vm.shoppingListItemId = shoppingListItemId;
                 var response = response.response;
                 for (var i = 0; i < response.length; i++) {
                     var totalItemQuantity = Number.parseInt(response[i].total_quantity);
                     var minItemQuantity = response[i].min_quantity;
-                    console.log('in the for loop', totalItemQuantity, minItemQuantity);
                     if (totalItemQuantity <= minItemQuantity) {
-                        console.log('im in the if');
                         vm.showConfirm(shoppingListItemId);
                     }
                 }
@@ -80,8 +71,6 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
     }
 
     vm.showConfirm = function (shoppingListItemId) {
-        console.log('shoppingListItemId in show confirm', shoppingListItemId);
-        // vm.shoppingListItemId = shoppingListItemId;
         $mdDialog.show({
             controller: 'AddItemController as aic',
             templateUrl: 'views/templates/addtoshoppinglist.html',
@@ -112,11 +101,8 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
     vm.verifyItemShopList = function (itemId) {
         var itemId = itemId;
         AddItemService.verifyItemShopList(itemId).then(function (response) {
-            console.log('resposne in verfify shop lsit controller', response);
             var checkItemOnShopList = Number.parseInt(response[0].c);
-            console.log(checkItemOnShopList);
             if (checkItemOnShopList === 0) {
-                console.log('in the if');
                 vm.verifyItemReminder(itemId);
             }
         })

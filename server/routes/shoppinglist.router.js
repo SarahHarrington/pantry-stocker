@@ -6,7 +6,6 @@ var pool = require('../modules/pool.js');
 var pg = require('pg');
 
 router.post('/', function (req, res) {
-
     if (req.isAuthenticated()) {
         var userId = req.user.id;
         var storeId = req.body.storeId;
@@ -64,5 +63,35 @@ router.get('/checkitem/:id', function (req, res) {
     }
 })
 
+router.get('/allitems', function (req, res) {
+    console.log('req params', req.params.id);
+    if (req.isAuthenticated) {
+        var userId = req.user.id;
+        pool.connect(function (errorConnectingtoDB, db, done) {
+            var queryText =
+                'SELECT "shopping_list"."item_id", "shopping_list"."store_id", "shopping_list"."desired_qty", "shopping_list"."purchased_amount",' +
+                '"shopping_list"."custom_item", "stores"."label", "Items"."item_name"' +
+                'FROM "shopping_list" LEFT OUTER JOIN "Items"' +
+                'ON("shopping_list"."item_id" = "Items"."item_id")' +
+                'RIGHT OUTER JOIN "stores"' +
+                'ON("shopping_list"."store_id" = "stores"."store_id")' +
+                'WHERE "shopping_list"."user_id" = $1;'
+            db.query(queryText, [userId], function (errorMakingQuery, result) {
+                done();
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                    console.log(result.rows);
+                }
+            })
+        })
+    }
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }
+})
 
 module.exports = router;

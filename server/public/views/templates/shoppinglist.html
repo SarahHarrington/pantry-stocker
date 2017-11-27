@@ -1,3 +1,9 @@
-<div>
-    
+<div ng-include="'views/partials/nav.html'"></div>
+<!-- Navigation Above -->
+
+<div layout="column" ng-repeat="store in slc.userStoreList.allstores | orderBy: 'label' track by $index">
+    <md-button class="md-raised" ng-click="slc.getListItems(store)">{{store.label}}</md-button>
+    <div ng-repeat="item in slc.shoppingLists | orderBy:'item_name' track by $index" ng-if="store.store_id == item.store_id">
+        <p>{{item.item_name}}</p>
+    </div>
 </div>

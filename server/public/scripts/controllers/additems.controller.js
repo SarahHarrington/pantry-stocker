@@ -159,6 +159,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             targetEvent: shoppingListItemId,
             clickOutsideToClose: true,
             fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
+        
         })
     };
 
@@ -176,7 +177,9 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
 
     vm.addItemToShopList = function(storeId) {
         var itemId = vm.shoppingListItemId;        
-        AddItemService.addItemToShopList(storeId, itemId);
+        AddItemService.addItemToShopList(storeId, itemId).then(function(response){
+            vm.hide(response);
+        })
     }
     
     vm.verifyItemShopList = function(itemId) {

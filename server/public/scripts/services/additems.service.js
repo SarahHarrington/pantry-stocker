@@ -19,7 +19,6 @@ myApp.service('AddItemService', function($http) {
         $http.get('/items/allitems')
         .then(function(response){
             self.allUserItems.items = response.data;
-            console.log('self.allUserItems.items', self.allUserItems.items);
         }).catch(function(error){
             console.log('error');
         })
@@ -27,28 +26,20 @@ myApp.service('AddItemService', function($http) {
 
     //gets items for my pantries page
     self.getPantryItems = function (pantry) {
-        console.log('pantry', pantry.pantry_id);
-        var pantryId = pantry.pantry_id;
-        console.log('pantryId', pantryId);
-        
+        var pantryId = pantry.pantry_id;        
         return $http.get('/items/mypantries/' + pantryId)
         .then(function(response){
             self.userPantryItems.allitems = response.data;
-            console.log('self.userPantryItems.allitems', self.userPantryItems.allitems);
             return response;
         }).catch(function(error){
             console.log('error');
-            
         })
     }
 
     //deletes item from the pantry view
-    self.deleteItemFromPantry = function (item) {
-        console.log('item in delete', item);
-        
+    self.deleteItemFromPantry = function (item) {        
         var itemToDelete = item.item_id;
         var itemPantry = item;
-        // var itemPantry= item.pantry_location;
         return $http.put('/items/removeitem/' + itemToDelete, itemPantry)
         .then(function(response){
             console.log('item delete success');
@@ -60,13 +51,10 @@ myApp.service('AddItemService', function($http) {
 
     //gets the item stock totals when item is selected from md-autocomplete
     self.getItemStockTotal = function (item) {
-        console.log('item', item); 
         var itemId = item;
         return $http.get('/items/itemstock/' + itemId)
         .then(function(response){
-            console.log('response from get itemstock total service', response.data);
             return response.data;
-
         }).catch(function(error){
             console.log('error');
         })
@@ -74,15 +62,11 @@ myApp.service('AddItemService', function($http) {
 
     //updates pantry item quantity on ng-blur
     self.pantryUpdate = function (pantryId, pantryToUpdate) {
-        console.log('in pantryUpdate', pantryId, pantryToUpdate);
         return $http.put('/pantries/' + pantryId, pantryToUpdate)
         .then(function(response){
-            console.log('response');
             return response;
-            //need to add a resposne return here for a notification
         }).catch(function(error){
             console.log('error');
-            
         })
     }
 
@@ -101,7 +85,6 @@ myApp.service('AddItemService', function($http) {
 
     //subtracts one item from the pantry view on click of the -
     self.removeOneItem = function(item) {
-        console.log('remove one item in service', item);
         var itemId = item.item_id;
         var itemToUpdate = item;
         return $http.put('/removeitem/' + itemId, itemToUpdate)
@@ -115,7 +98,6 @@ myApp.service('AddItemService', function($http) {
 
     //adds one item from the pantry view on click of the +
     self.addOneItem = function (item) {
-        console.log('remove one item in service', item);
         var itemId = item.item_id;
         var itemToUpdate = item;
         return $http.put('/additem/' + itemId, itemToUpdate)
@@ -129,7 +111,6 @@ myApp.service('AddItemService', function($http) {
 
     //adds new item to pantry
     self.addNewItemToPantry = function (newItemToAdd, addItemtoPantries, newItemMinimumQty) {
-        console.log('service addNewItemToPantry', newItemToAdd, addItemtoPantries, newItemMinimumQty);
         var newItemtoAdd = {
             itemLabel: newItemToAdd,
             addItemtoPantries: addItemtoPantries,
@@ -147,26 +128,21 @@ myApp.service('AddItemService', function($http) {
 
     self.shoppingListItemId = '';
     self.verifyItemReminder = function(itemId) {
-        console.log('item Id in verify reminder', itemId);
         return $http.get('/additem/itemstockmin/' + itemId)
         .then(function(response){
             console.log('success');
-            console.log('response.data in verifyItemReminder', response.data);
             self.shoppingListItemId = itemId;
             var verifiedItem = {
                 itemId: itemId,
                 response: response.data
             }
-            console.log('verifiedItem', verifiedItem);
             return verifiedItem;
         }).catch(function(error){
             console.log('error');
-            
         });
     }
     
     self.addItemToShopList = function(storeId, itemId) {
-        console.log('additem to shopping list in the service', storeId, itemId);
         var itemForShopList = {
             storeId: storeId,
             itemId: itemId
@@ -182,18 +158,13 @@ myApp.service('AddItemService', function($http) {
     }
 
     self.verifyItemShopList = function(itemId) {
-        console.log('item shop list verify', itemId);
         return $http.get('/shoppinglist/checkitem/' + itemId)
         .then(function(response){
             console.log('success');
-            console.log('verify shopping list', response);
-            
             return response.data;
         }).catch(function(error){
             console.log('error');
-            
         })
     }
-
 
 })
