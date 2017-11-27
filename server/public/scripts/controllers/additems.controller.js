@@ -181,6 +181,10 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             vm.hide(response);
         })
     }
+
+    vm.closeShopList = function(ev) {
+        vm.hide(ev);
+    }
     
     vm.verifyItemShopList = function(itemId) {
         var itemId = itemId;
