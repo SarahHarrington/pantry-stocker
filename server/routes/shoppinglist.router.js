@@ -67,8 +67,8 @@ router.get('/allitems/:id', function (req, res) {
     // console.log('req params', req.params.id);
     if (req.isAuthenticated) {
         var userId = req.user.id;
-        var storeId = Number.parseInt(req.params);
-        console.log('router get stores list', storeId);
+        var storeId = req.params.id;
+        console.log('router get stores list', req.params.id);
         
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =

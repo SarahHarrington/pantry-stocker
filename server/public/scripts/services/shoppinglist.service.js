@@ -6,6 +6,8 @@ myApp.service('ShoppingListService', function ($http) {
     self.getShoppingLists = function(store) {
         console.log('service getShoppingLists', store);
         var storeId = store.store_id;
+        console.log('storeId', storeId);
+        
         var storeList = store;
         return $http.get('/shoppinglist/allitems/' + storeId, storeList)
         .then(function(response){
