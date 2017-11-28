@@ -24,7 +24,7 @@
         </md-autocomplete>
         <md-button ng-click="aic.clearSearch()">clear</md-button>
         <!-- Pantries loaded with quantities when item is selected above -->
-        
+        <div>
         <div ng-hide="aic.editAddItem" class="ng-hide">
             <div layout="row" ng-repeat="pantry in aic.itemStock track by $index">
                 <p>{{pantry.label}}</p>

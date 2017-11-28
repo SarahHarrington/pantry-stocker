@@ -10,11 +10,11 @@ body, html {
 }
 
 .header {
-  background-image: url('../images/pantrystockerheader.png');
+  background-image: url('../images/pantrystalker.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 200px;
+  height: 125px;
 }
 
 #entryForm {
@@ -86,4 +86,8 @@ md-select {
 
 .ng-hide {
   display: none !important
+}
+
+.pantryButton {
+  color: #757575;
 }

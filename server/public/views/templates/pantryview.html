@@ -2,7 +2,7 @@
 <!-- Navigation Above -->
 
     <div layout="column" ng-repeat="pantry in pvc.userPantryList.allpantries | orderBy:'label' track by $index"> <!-- Pantry repeat -->
-        <md-button class="md-raised" ng-click="pvc.getPantryItems(pantry)">{{pantry.label}}</md-button>
+        <md-button class="md-raised pantryButton" ng-click="pvc.getPantryItems(pantry)">{{pantry.label}}</md-button>
         <div layout="row" ng-repeat="eachItem in pvc.userPantryItems.allitems | orderBy:'item_name' track by $index" ng-if="pantry.pantry_id == eachItem.pantry_location">
             <div layout="row">
                 <md-button ng-click="pvc.editItemIndividual(eachItem)" class="md-icon-button md-primary" aria-label="Settings">
