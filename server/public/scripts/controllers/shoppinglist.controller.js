@@ -4,6 +4,7 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
 
     vm.userStoreList = UserSetupService.stores.data;
     vm.shoppingLists = ShoppingListService.shoppingLists.lists;
+    vm.hideDoneButton = true;
 
     vm.getStores = function () {
         UserSetupService.getStores();
@@ -13,7 +14,6 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     vm.getStores();
     vm.getShoppingLists = function(store) {
         console.log('store', store);
-        
         ShoppingListService.getShoppingLists(store);
         vm.shoppingLists = ShoppingListService.shoppingLists;
         console.log('vm.shoppingLists', vm.shoppingLists);

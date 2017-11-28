@@ -88,7 +88,7 @@ md-select {
   display: none !important
 }
 
-.pantryButton {
+#pantryButton {
   color: #757575;
 }
 
@@ -100,3 +100,28 @@ md-select {
 .pantryview {
   color: #474747;
 }
+
+md-checkbox.md-checked.teal .md-icon{
+  background-color: #56CBE2;
+}
+
+#navButton {
+  color: #FFB014;
+  font-weight: bold;
+  font-size: 10px;
+  min-height: 24px;
+  min-width: 45px;
+  margin: 0;
+}
+
+.md-button {
+  width: 100%;
+}
+
+p {
+  font-size: 12px;
+}
+
+/* md-toolbar md-button {
+  width: 24px;
+} */

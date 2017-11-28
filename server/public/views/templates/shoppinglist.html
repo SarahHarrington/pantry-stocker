@@ -3,10 +3,11 @@
 
 <div layout="column" ng-repeat="store in slc.userStoreList.allstores | orderBy: 'label' track by $index">
     <md-button class="md-raised" ng-click="slc.getShoppingLists(store)">{{store.label}}</md-button>
+    <md-button ng-hide="slc.hideDoneButton" class="md-raised">Done Shopping</md-button>
     <div ng-repeat="item in slc.shoppingLists.lists | orderBy:'item_name' track by $index" ng-if="store.store_id == item.store_id">
         <div layout="row">
             
-            <md-checkbox aria-label="Checkbox"></md-checkbox>
+            <md-checkbox class="teal" aria-label="Checkbox"></md-checkbox>
             <p>{{item.item_name}}</p>
             <md-input-container>
                 <label for="desiredQty">Desired</label>
@@ -19,6 +20,7 @@
             <md-button ng-click="slc.deleteItemFromList(item)" class="md-icon-button md-primary" aria-label="Settings">
                 <md-icon md-svg-icon="../images/delete.svg"></md-icon>
             </md-button>
+            
         </div>
     </div>
 </div><!-- End of Repeat for store lists -->

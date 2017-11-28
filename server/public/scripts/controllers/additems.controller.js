@@ -44,7 +44,9 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         var itemToGetStock = item.item_id;
         vm.pantryLabel = item.label;
         vm.minimumQty = item.min_quantity;
-        vm.getItemStockTotal(itemToGetStock);
+        vm.getItemStockTotal(itemToGetStock)//.then(function(repsonse){
+            // vm.minimumQty = item.min_quantity;
+        //})
     }
 
     //clears the search for items
@@ -70,14 +72,14 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     vm.itemMinQty = '';
     vm.getItemStockTotal = function (item) {
         console.log('getitemstocktotal controller', item);
-        
         AddItemService.getItemStockTotal(item)
         .then(function(response){
-            // vm.itemStock.totals = response;
+            console.log('controller item stock', vm.itemStock);
+            vm.itemStock = response;
             vm.editAddItem = false;
-        }).then(function(response){
+        })//.then(function(response){
             // vm.verifyItemStock();
-        }) 
+        //}) 
     }
 
     vm.addItem = function() {

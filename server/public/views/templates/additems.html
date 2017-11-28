@@ -1,8 +1,9 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
 
-<div layout-xs="column">
+<div ng-cloak layout-xs="column">
     <div>
+        <div layout="row">
         <md-autocomplete 
             md-floating-label="Search for Items" 
             md-selected-item="aic.selectedItem" 
@@ -18,11 +19,13 @@
                 <span md-highlight-text="searchText">{{item.item_name}}</span>
             </md-item-template>
             <md-not-found>
-                "{{aic.searchText}}" not found.
+                <!-- {{aic.searchText}}" not found. -->
                 <span ng-click="aic.addItem(aic.searchText)">Add to my pantries!</span>
+                "{{aic.searchText}}" not found.
             </md-not-found>
         </md-autocomplete>
         <md-button ng-click="aic.clearSearch()">clear</md-button>
+        </div>
         <!-- Pantries loaded with quantities when item is selected above -->
         <div>
         <div ng-hide="aic.editAddItem" class="ng-hide">
