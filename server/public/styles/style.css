@@ -49,11 +49,11 @@ body, html {
   margin-left: 10px;
 }
 
-.navbar {
+/* .navbar {
   background-color: #333333;
   width: 100%;
   border-radius: 0px;
-}
+} */
 
 ul {
   list-style-type: none;
@@ -90,4 +90,13 @@ md-select {
 
 .pantryButton {
   color: #757575;
+}
+
+.md-toolbar-tools {
+  background-color: #757575;
+  /* width: 100%; */
+}
+
+.pantryview {
+  color: #474747;
 }
