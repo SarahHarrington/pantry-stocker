@@ -155,7 +155,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             parent: angular.element(document.body),
             targetEvent: shoppingListItemId,
             clickOutsideToClose: true,
-            fullscreen: vm.customFullscreen // Only for -xs, -sm breakpoints.
+            fullscreen: true // Only for -xs, -sm breakpoints.
         
         })
     };
@@ -196,17 +196,8 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         })
     }
 
-    // vm.editItemIndividual = function(item) {
-    //     console.log('edit clicked');
-        
-    //     $mdDialog.show({
-    //         controller: 'AddItemController as aic',
-    //         templateUrl: 'views/templates/edititem.html',
-    //         parent: angular.element(document.body),
-    //         targetEvent: item,
-    //         clickOutsideToClose: true,
-    //         fullscreen: vm.customFullscreen
-    //     })
+    // vm.pickImage = function() {
+    //     AddItemService.pickImage();
     // }
 
 });
