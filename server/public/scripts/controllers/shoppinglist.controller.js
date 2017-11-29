@@ -5,6 +5,10 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     vm.userStoreList = UserSetupService.stores.data;
     vm.shoppingLists = ShoppingListService.shoppingLists.lists;
 
+    vm.doneShoppingData = {
+        store_id: '',
+    }
+
     vm.getStores = function () {
         UserSetupService.getStores();
         vm.userStoreList = UserSetupService.stores;
@@ -17,6 +21,7 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         ShoppingListService.getShoppingLists(store).then(function(response){
             vm.shoppingLists = ShoppingListService.shoppingLists;
             var arrayForDone = vm.shoppingLists.lists;
+            vm.doneShoppingData.store_id = store.store_id;
             console.log('vm.shoppingLists', vm.shoppingLists);
             vm.checkForDone(arrayForDone);
         })
@@ -45,15 +50,47 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
 
     vm.shopQuantitiesUpdate =  function(item) {
         ShoppingListService.shopQuantitiesUpdate(item);
-        // vm.checkForDone()
+        if (item.item_purchased === true) {
+            vm.doneShopping = true;
+        }
     }
 
-    vm.doneShoppingUpdate = function (store, item) {
-        console.log('done shopping update', store, item);
-        
+    var doneShoppingList = [];
+    vm.doneShoppingUpdate = function (doneShoppingData) {
+        console.log('done shopping update', doneShoppingData);
+        vm.confirmDeleteUnpurchased(doneShoppingData);
+        ShoppingListService.doneShoppingUpdate(doneShoppingData).then(function(response){
+            console.log('controller doneshopping update', response);
+            doneShoppingList = response;
+            console.log('doneshoppinglist', doneShoppingList);
+        })
     }
 
+    vm.removeNotPurchasedItems = function (array) {
+        console.log('removeNotPurchasedItems', array);
+        ShoppingListService.removeNotPurchasedItems(array);
+    
+    }
+    
 
+    vm.confirmDeleteUnpurchased = function (ev) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+            .title('Delete all unpurchased items?')
+            .textContent('')
+            .ariaLabel('Lucky day')
+            .targetEvent(ev)
+            .ok('Yes')
+            .cancel('No');
 
+        $mdDialog.show(confirm).then(function () {
+            console.log('confrim clicked');
+            vm.removeNotPurchasedItems(doneShoppingList);
+        }), function () {
+            console.log('cancel clicked');
+            
+        };
+    };
 
+    
 });

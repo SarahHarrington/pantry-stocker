@@ -18,9 +18,6 @@ myApp.service('AddItemService', function($http) {
         image: ''
     }
 
-    
-
-
     self.pickImage = function () {
         console.log('pick image service');
         client.pick({
