@@ -156,5 +156,33 @@ router.put('/updateitem/:id', function (req, res) {
     }
 })
 
+//removes items not purchased from the users shopping list
+router.put('/removenotpurchased/items/:id', function (req, res) {
+    var storeId = req.params.id;
+    // var itemId = req.body.item_id;
+    var userId = req.user.id;
+    console.log('remove items not purchased', storeId, userId);
+
+    if (req.isAuthenticated) {
+        pool.connect(function (errorConnectingtoDB, db, done) {
+            var queryText =
+                'DELETE FROM "shopping_list"' +
+                'WHERE "store_id" = $1 AND "user_id" = $2 AND "item_purchased" = false;';
+            db.query(queryText, [storeId, userId], function (errorMakingQuery, result) {
+                done();
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(200);
+                }
+            })
+        })
+    }
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }
+})
 
 module.exports = router;
