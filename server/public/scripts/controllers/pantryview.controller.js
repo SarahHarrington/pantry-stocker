@@ -109,6 +109,8 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
     }
 
     vm.editItemIndividual = function (item) {
+        console.log('item in edit from pantry', item);
+        
         var itemId = item.item_id;
         AddItemService.getItemStockTotal(itemId).then(function(response){
             $mdDialog.show({
@@ -122,6 +124,5 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         });
     }
 
-    
 
 });

@@ -12,9 +12,11 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     }
 
     vm.getStores();
+    vm.doneShopping = true;
     vm.getShoppingLists = function(store) {
         console.log('store', store);
         ShoppingListService.getShoppingLists(store);
+        vm.doneShopping = false;
         vm.shoppingLists = ShoppingListService.shoppingLists;
         console.log('vm.shoppingLists', vm.shoppingLists);
         

@@ -3,18 +3,18 @@
 
 <div layout="column" ng-repeat="store in slc.userStoreList.allstores | orderBy: 'label' track by $index">
     <md-button class="md-raised" ng-click="slc.getShoppingLists(store)">{{store.label}}</md-button>
-    <md-button ng-hide="slc.hideDoneButton" class="md-raised">Done Shopping</md-button>
+    <md-button ng-model="store.store_id" ng-hide="" class="md-raised">Done Shopping</md-button>
     <div ng-repeat="item in slc.shoppingLists.lists | orderBy:'item_name' track by $index" ng-if="store.store_id == item.store_id">
-        <div layout="row">
+        <div layout="row" id="itemRow">
             
-            <md-checkbox ng-model="item.item_purchased" ng-init="item.item_purchased" class="teal" ng-change="slc.shopQuantitiesUpdate(item)" aria-label="Checkbox"></md-checkbox>
-            <p>{{item.item_name}}</p>
+            <md-checkbox id="checkbox" ng-model="item.item_purchased" class="teal" ng-change="slc.shopQuantitiesUpdate(item)" aria-label="Checkbox"></md-checkbox>
+            <div id="itemNameHolder"><span id="listItemName">{{item.item_name}}</span></div>
             <md-input-container id="shopInput">
-                <label for="desiredQty">Desired</label>
+                <label for="desiredQty">Want</label>
                 <input id="desiredQty" ng-blur="slc.shopQuantitiesUpdate(item)" ng-model="item.desired_qty" type="number">
             </md-input-container>
             <md-input-container id="shopInput">
-                <label for="purchasedQty">Purchased</label>
+                <label for="purchasedQty">Got</label>
                 <input id="purchasedQty" ng-blur="slc.shopQuantitiesUpdate(item)" ng-model="item.purchased_amount" type="number">
             </md-input-container>
             <md-button ng-click="slc.deleteItemFromList(item)" class="md-icon-button md-primary" aria-label="Settings">

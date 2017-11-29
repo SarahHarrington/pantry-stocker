@@ -130,9 +130,9 @@ router.put('/updateitem/:id', function (req, res) {
     var userId = req.user.id;
     var desiredQty = req.body.desired_qty;
     var purchasedQty = req.body.purchased_amount;
-    var purchased = req.body.purchased;
+    var purchased = req.body.item_purchased;
     if (req.isAuthenticated) {
-        console.log('router update item from stores list', storeId, itemId, userId, purchasedQty, purchased);
+        console.log('router update item from stores list', storeId, itemId, userId, desiredQty, purchasedQty, purchased);
 
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =

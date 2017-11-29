@@ -10,11 +10,11 @@ body, html {
 }
 
 .header {
-  background-image: url('../images/pantrystalker.png');
+  background-image: url('../images/pantry-stocker.png');
   background-repeat: no-repeat;
-  background-size: cover;
   background-position: center;
-  height: 125px;
+  height: 50px;
+  background-color: #FFB014;
 }
 
 #entryForm {
@@ -102,25 +102,25 @@ md-select {
 }
 
 md-checkbox.md-checked.teal .md-icon{
-  background-color: #56CBE2;
+  background-color: #474747;
+}
+
+#checkbox {
+  margin: 10px;
 }
 
 #navButton {
   color: #FFB014;
   font-weight: bold;
-  font-size: 10px;
+  font-size: 11px;
   min-height: 24px;
   min-width: 45px;
   margin: 0;
 }
 
-.md-button {
+/* .md-button {
   width: 100%;
-}
-
-p {
-  font-size: 12px;
-}
+} */
 
 /* md-toolbar md-button {
   width: 24px;
@@ -128,4 +128,41 @@ p {
 
 #shopInput {
   margin: 5px;
+  width: 50px;
+  height: 50px;
+  align-items: center;
 }
+
+#desiredQty, #purchasedQty {
+  margin-top: 15px;
+}
+
+#navbar {
+  min-height: 24px !important;
+  height: 24px !important;
+  max-height: 24px !important;
+}
+
+md-toolbar {
+  min-height: 24px !important;
+}
+
+#listItemName {
+  font-size: 12px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#itemNameHolder {
+  display: flex;
+}
+
+#itemRow {
+  align-items: center;
+}
+
+/* #itemDetails {
+  align-items: center;
+} */

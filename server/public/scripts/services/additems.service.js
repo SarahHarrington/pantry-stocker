@@ -14,6 +14,28 @@ myApp.service('AddItemService', function($http) {
         totals: []
     }
 
+    self.item = {
+        image: ''
+    }
+
+
+
+    // self.pickImage = function () {
+    //     console.log('pick image service');
+    //     client.pick({
+    //         maxFiles: 1,
+    //         uploadInBackground: false,
+    //         onOpen: () => console.log('Opened')
+    //     })
+    //         .then((res) => {
+    //             console.log(res);
+    //             console.log(res.filesUploaded);
+    //             console.log(res.filesFailed);
+    //             self.item.image = res.filesUploaded[0].url;
+    //         });
+
+    // }
+
     //retrieves all items for the logged in user
     self.getAllItems = function() {
         $http.get('/items/allitems')
@@ -173,26 +195,6 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
-    // self.item ={
-    //     image: ''
-    // }
-
-    // // self.item.image = '';
-
-    // var client = filestack.init("A3Vqr1n4fTliP3L3xj16Iz")
-    // self.pickImage = function() {
-    //     client.pick({
-    //         maxFiles: 1,
-    //         uploadInBackground: false,
-    //         onOpen: () => console.log('Opened')
-    //     })
-    //         .then((res) => {
-    //             console.log(res);
-    //             console.log(res.filesUploaded);
-    //             console.log(res.filesFailed);
-    //             self.item.image = res.filesUploaded[0].url;
-    //         });
-        
-    // }
+    
 
 })
