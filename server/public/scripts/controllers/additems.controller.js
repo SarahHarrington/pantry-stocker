@@ -196,9 +196,9 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         })
     }
 
-    // vm.pickImage = function() {
-    //     console.log('pickimage clicked');
-    //     AddItemService.pickImage();
-    // }
+    vm.pickImage = function() {
+        console.log('pickimage clicked');
+        AddItemService.pickImage();
+    }
 
 });

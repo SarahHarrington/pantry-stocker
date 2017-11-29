@@ -4,23 +4,34 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
 
     vm.userStoreList = UserSetupService.stores.data;
     vm.shoppingLists = ShoppingListService.shoppingLists.lists;
-    vm.hideDoneButton = true;
 
     vm.getStores = function () {
         UserSetupService.getStores();
         vm.userStoreList = UserSetupService.stores;
     }
 
-    vm.getStores();
-    vm.doneShopping = true;
+    vm.getStores()
+    vm.doneShopping = false;
     vm.getShoppingLists = function(store) {
         console.log('store', store);
-        ShoppingListService.getShoppingLists(store);
-        vm.doneShopping = false;
-        vm.shoppingLists = ShoppingListService.shoppingLists;
-        console.log('vm.shoppingLists', vm.shoppingLists);
-        
+        ShoppingListService.getShoppingLists(store).then(function(response){
+            vm.shoppingLists = ShoppingListService.shoppingLists;
+            var arrayForDone = vm.shoppingLists.lists;
+            console.log('vm.shoppingLists', vm.shoppingLists);
+            vm.checkForDone(arrayForDone);
+        })
     }
+
+    vm.checkForDone = function (array) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].item_purchased === true) {
+                vm.doneShopping = true;
+            }  else {
+                vm.doneShopping = false;
+            }
+        }
+    }
+
     vm.deleteItemFromList= function(item) {
         console.log('delete from list', item);
         var itemId = item.item_id;
@@ -34,12 +45,15 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
 
     vm.shopQuantitiesUpdate =  function(item) {
         ShoppingListService.shopQuantitiesUpdate(item);
+        // vm.checkForDone()
     }
 
-    // vm.itemChecked = function(item) {
-    //     console.log('item in listCheckbox', item);
-    //     ShoppingListService.itemChecked();
-    // }
+    vm.doneShoppingUpdate = function (store, item) {
+        console.log('done shopping update', store, item);
+        
+    }
+
+
 
 
 });

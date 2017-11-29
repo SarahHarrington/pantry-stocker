@@ -3,7 +3,7 @@
 
 <div ng-cloak layout-xs="column">
     <div>
-        <!-- <button ng-click "aic.pickImage()">Upload Picture</button> -->
+        <!-- <button ng-click="aic.pickImage()">Upload Picture</button> -->
         <div layout="row">
         <md-autocomplete 
             md-floating-label="Search for Items" 
@@ -65,7 +65,7 @@
             <br>
             <input id="reminderQty" ng-model="aic.minimumQty" type="number">
         </md-input-container>
-        
+        <button ng-click="aic.pickImage()">Upload Picture</button>
         <md-button ng-click="aic.addNewItemToPantry(aic.searchText, aic.userPantryList.allpantries, aic.minimumQty)">Add Item to Pantry</md-button>
     
     

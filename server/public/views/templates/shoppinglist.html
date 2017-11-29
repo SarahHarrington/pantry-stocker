@@ -1,9 +1,9 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
-
+<md-button ng-model="item" ng-show="slc.doneShopping" class="md-raised" ng-click="slc.doneShoppingUpdate(store, item)">Done Shopping</md-button>
 <div layout="column" ng-repeat="store in slc.userStoreList.allstores | orderBy: 'label' track by $index">
     <md-button class="md-raised" ng-click="slc.getShoppingLists(store)">{{store.label}}</md-button>
-    <md-button ng-model="store.store_id" ng-hide="" class="md-raised">Done Shopping</md-button>
+    
     <div ng-repeat="item in slc.shoppingLists.lists | orderBy:'item_name' track by $index" ng-if="store.store_id == item.store_id">
         <div layout="row" id="itemRow">
             
@@ -20,7 +20,6 @@
             <md-button ng-click="slc.deleteItemFromList(item)" class="md-icon-button md-primary" aria-label="Settings">
                 <md-icon md-svg-icon="../images/delete.svg"></md-icon>
             </md-button>
-            
         </div>
     </div>
 </div><!-- End of Repeat for store lists -->

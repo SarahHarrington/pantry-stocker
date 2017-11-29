@@ -16,7 +16,9 @@ myApp.service('ShoppingListService', function ($http) {
         .then(function(response){
             self.shoppingLists.lists = response.data;
             console.log('shopping service shoppinglists', self.shoppingLists.lists);
-            return response;
+            console.log('response in get shopping lists service', response);
+            return response.data;
+        
         }).catch(function(error){
             console.log('error');
         })
