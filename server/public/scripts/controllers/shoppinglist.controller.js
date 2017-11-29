@@ -34,10 +34,10 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         ShoppingListService.shopQuantitiesUpdate(item);
     }
 
-    vm.listCheckbox = function(item) {
-        console.log('item in listCheckbox', item);
-        
-    }
+    // vm.itemChecked = function(item) {
+    //     console.log('item in listCheckbox', item);
+    //     ShoppingListService.itemChecked();
+    // }
 
 
 });

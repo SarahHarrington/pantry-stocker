@@ -39,6 +39,7 @@ myApp.service('ShoppingListService', function ($http) {
     self.shopQuantitiesUpdate = function(item) {
         console.log('shopdesiredqty', item);
         var itemId = item.item_id;
+        
         $http.put('shoppinglist/updateitem/' + itemId, item)
         .then(function(response){
             console.log('success');

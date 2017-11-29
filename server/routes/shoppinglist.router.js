@@ -73,7 +73,7 @@ router.get('/allitems/:id', function (req, res) {
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
                 'SELECT "shopping_list"."item_id", "shopping_list"."store_id", "shopping_list"."desired_qty", "shopping_list"."purchased_amount",' +
-                '"shopping_list"."custom_item", "stores"."label", "Items"."item_name"' +
+                '"shopping_list"."custom_item", "stores"."label", "Items"."item_name", "shopping_list"."item_purchased"' +
                 'FROM "shopping_list" LEFT OUTER JOIN "Items"' +
                 'ON("shopping_list"."item_id" = "Items"."item_id")' +
                 'RIGHT OUTER JOIN "stores"' +
@@ -130,15 +130,16 @@ router.put('/updateitem/:id', function (req, res) {
     var userId = req.user.id;
     var desiredQty = req.body.desired_qty;
     var purchasedQty = req.body.purchased_amount;
+    var purchased = req.body.purchased;
     if (req.isAuthenticated) {
-        console.log('router delete item from stores list', storeId, itemId, userId, purchasedQty);
+        console.log('router update item from stores list', storeId, itemId, userId, purchasedQty, purchased);
 
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
                 'UPDATE "shopping_list"' +
-                'SET "desired_qty" = $4, "purchased_amount" = $5' +
+                'SET "desired_qty" = $4, "purchased_amount" = $5, "item_purchased" = $6' +
                 'WHERE "item_id" = $1 AND "store_id" = $2 AND "user_id" = $3;';
-            db.query(queryText, [itemId, storeId, userId, desiredQty, purchasedQty], function (errorMakingQuery, result) {
+            db.query(queryText, [itemId, storeId, userId, desiredQty, purchasedQty, purchased], function (errorMakingQuery, result) {
                 done();
                 if (errorMakingQuery) {
                     console.log('Error making query', errorMakingQuery);

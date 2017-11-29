@@ -7,13 +7,13 @@
     <div ng-repeat="item in slc.shoppingLists.lists | orderBy:'item_name' track by $index" ng-if="store.store_id == item.store_id">
         <div layout="row">
             
-            <md-checkbox ng-model="item.purchased" class="teal" ng-change="slc.listCheckbox(item)" aria-label="Checkbox"></md-checkbox>
+            <md-checkbox ng-model="item.item_purchased" ng-init="item.item_purchased" class="teal" ng-change="slc.shopQuantitiesUpdate(item)" aria-label="Checkbox"></md-checkbox>
             <p>{{item.item_name}}</p>
             <md-input-container id="shopInput">
                 <label for="desiredQty">Desired</label>
                 <input id="desiredQty" ng-blur="slc.shopQuantitiesUpdate(item)" ng-model="item.desired_qty" type="number">
             </md-input-container>
-            <md-input-container>
+            <md-input-container id="shopInput">
                 <label for="purchasedQty">Purchased</label>
                 <input id="purchasedQty" ng-blur="slc.shopQuantitiesUpdate(item)" ng-model="item.purchased_amount" type="number">
             </md-input-container>
