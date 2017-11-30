@@ -2,7 +2,6 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     console.log('AddItemController created');
     var vm = this;
 
-    // vm.userItems = AddItemService.userItems.allitems;
     vm.addItemForm = false;
     vm.editAddItem = true;
     vm.userStoreList = UserSetupService.stores.allstores;
@@ -10,6 +9,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     vm.userAllItems = AddItemService.allUserItems;
     vm.itemStock = AddItemService.itemStock.totals;
 
+//initial functions for page load
     vm.getStores = function () {
         UserSetupService.getStores();
         vm.userStoreList = UserSetupService.stores;
@@ -25,10 +25,11 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
 
     vm.getStores();
-    vm.getPantries();
     vm.getAllItems();
-    // vm.querySearch = querySearch();
 
+// END initial functions for page load
+
+//Functions for Item search in md-autocomplete
     vm.querySearch = function (query) {
         var results
         results = query ? vm.createFilterFor(query) : vm.userAllItems.items;
@@ -44,9 +45,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         var itemToGetStock = item.item_id;
         vm.pantryLabel = item.label;
         vm.minimumQty = item.min_quantity;
-        vm.getItemStockTotal(itemToGetStock)//.then(function(repsonse){
-            // vm.minimumQty = item.min_quantity;
-        //})
+        vm.getItemStockTotal(itemToGetStock);
     }
 
     //clears the search for items
@@ -69,25 +68,27 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             }
         );
     }
-    vm.itemMinQty = '';
+//Functions for Item search in md-autocomplete
+
+    //Gets item stock totals when an item is selected from the autocomplete options
     vm.getItemStockTotal = function (item) {
-        console.log('getitemstocktotal controller', item);
         AddItemService.getItemStockTotal(item)
         .then(function(response){
-            console.log('controller item stock', vm.itemStock);
             vm.itemStock = response;
             vm.editAddItem = false;
-        })//.then(function(response){
-            // vm.verifyItemStock();
-        //}) 
+        })
     }
 
+    vm.itemMinQty = '';
+
+    //Opens the section to add a new item to your lists/pantries
     vm.addItem = function() {
+        vm.getPantries();
         vm.minimumQty = '';
         vm.addItemForm = true;
-
     }
 
+    //runs on ng-blur to auto update the pantry quantities when editing
     vm.updatePantryQty = function(pantry, item) {
         var pantryId = pantry.pantry_id;
         var pantryToUpdate = {
@@ -96,22 +97,24 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         }
         AddItemService.pantryUpdate(pantryId, pantryToUpdate).then(function(response){
             vm.verifyItemShopList(pantryToUpdate.itemId);
-            vm.openToast(response);
+            AddItemService.openToast(response);
         })
     }
 
+    //runs on ng-blur to auto update the min quantity when editing
     vm.updateMinQty = function (item, newMinQty) {
         var itemId = item.item_id;
         var newMinQty = {
             itemMin: newMinQty
         }
-        console.log('updateMinQty', itemId, newMinQty);
         AddItemService.updateMinQty(itemId, newMinQty).then(function(response){
             vm.verifyItemShopList(itemId); 
-            vm.openToast(response);
+            AddItemService.openToast(response);
         })
     }
 
+    //adds the new item to the pantries
+    //NEED TO ADD THE PICTURE THING
     vm.addNewItemToPantry = function (newItemToAdd, pantry, newItemMinimumQty) {
         var addItemtoPantries = [];
         for (var i = 0; i < pantry.length; i++) {
@@ -125,77 +128,36 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
 
     vm.shoppingListItemId = AddItemService.shoppingListItemId;
+
+    //Checks to see if the item is below the reminder threshold
     vm.verifyItemReminder = function (itemId) {
-        AddItemService.verifyItemReminder(itemId)
-        .then(function(response){
-            var shoppingListItemId = response.itemId;
-            vm.shoppingListItemId = shoppingListItemId;
-            var response = response.response;
-            for (var i = 0; i < response.length; i++) {
-                var totalItemQuantity = Number.parseInt(response[i].total_quantity);
-                var minItemQuantity = response[i].min_quantity;
-                if (totalItemQuantity <= minItemQuantity) {
-                    vm.showConfirm(shoppingListItemId);
-                }
-            }
-        })
+        AddItemService.verifyItemReminder(itemId);
     }
 
-    vm.openToast = function ($event) {
-        $mdToast.show(
-            $mdToast.simple()
-                .textContent('Your item has been updated!')
-                .hideDelay(1000));
-    }
-
-    vm.showConfirm = function (shoppingListItemId) {
-        $mdDialog.show({
-            controller: 'AddItemController as aic',
-            templateUrl: 'views/templates/addtoshoppinglist.html',
-            parent: angular.element(document.body),
-            targetEvent: shoppingListItemId,
-            clickOutsideToClose: true,
-            fullscreen: true // Only for -xs, -sm breakpoints.
-        
-        })
-    };
-
-    vm.hide = function () {
-        $mdDialog.hide();
-    };
-
-    vm.cancel = function () {
-        $mdDialog.cancel();
-    };
-
-    vm.answer = function (answer) {
-        $mdDialog.hide(answer);
-    };
-
+    //triggers the pop to add the item to shopping lists
     vm.addItemToShopList = function(storeId) {
         var itemId = vm.shoppingListItemId;        
         AddItemService.addItemToShopList(storeId, itemId).then(function(response){
-            vm.hide(response);
+            AddItemService.hide(response);
         })
     }
 
     vm.closeShopList = function(ev) {
-        vm.hide(ev);
+        AddItemService.hide(ev);
     }
     
+    //verifies if the item is on the shopping lists already
     vm.verifyItemShopList = function(itemId) {
         var itemId = itemId;
         AddItemService.verifyItemShopList(itemId).then(function(response){
-            console.log('resposne in verify shop lsit controller', response);
             var checkItemOnShopList = Number.parseInt(response[0].c);
-            console.log(checkItemOnShopList);
             if (checkItemOnShopList === 0) {
-                console.log('in the if');
                 vm.verifyItemReminder(itemId);
             }
         })
     }
 
+    //image picker through file stack
     vm.pickImage = function() {
         console.log('pickimage clicked');
         AddItemService.pickImage();

@@ -1,4 +1,4 @@
-myApp.service('AddItemService', function($http) {
+myApp.service('AddItemService', function($http, $mdToast, $mdDialog) {
     console.log('AddItemsService loaded');
     var self = this;
 
@@ -17,33 +17,21 @@ myApp.service('AddItemService', function($http) {
     self.item = {
         image: ''
     }
-    // const client = filestack.init(privateAPIForFileStack());
-    // client.pick();
-    // self.pickImage = function () {
-    //     console.log('pick image service');
-    //     client.pick({
-    //         maxFiles: 1,
-    //         uploadInBackground: false,
-    //         onOpen: () => console.log('Opened')
-    //     })
-    //         .then((res) => {
-    //             console.log(res);
-    //             console.log(res.filesUploaded);
-    //             console.log(res.filesFailed);
-    //             self.item.image = res.filesUploaded[0].url;
-    //         });
-    // }
+
     var client = filestack.init(privateAPIForFileStack());
     self.pickImage = function () {
+        console.log('pick image service');
         client.pick({
-            fromSources: ["local_file_system", "imagesearch", "dropbox", "webcam"],
-            accept: ["image/*"]
-        }).then(function (response) {
-            console.log(response);
-            console.log(res.filesUploaded);
-            console.log(res.filesFailed);
-            self.item.image = res.filesUploaded[0].url;
-        });
+            maxFiles: 1,
+            uploadInBackground: false,
+            onOpen: () => console.log('Opened')
+        })
+            .then((res) => {
+                console.log(res);
+                console.log(res.filesUploaded);
+                console.log(res.filesFailed);
+                self.item.image = res.filesUploaded[0].url;
+            });
     }
     
 
@@ -167,19 +155,35 @@ myApp.service('AddItemService', function($http) {
 
     self.shoppingListItemId = '';
     self.verifyItemReminder = function(itemId) {
-        return $http.get('/additem/itemstockmin/' + itemId)
+        $http.get('/additem/itemstockmin/' + itemId)
         .then(function(response){
             console.log('success');
             self.shoppingListItemId = itemId;
-            var verifiedItem = {
-                itemId: itemId,
-                response: response.data
-            }
-            return verifiedItem;
+            var shoppingListItemId = itemId;
+            var array = response.data;
+            console.log('array', response.data);
+            for (var i = 0; i < array.length; i++) {
+                var totalItemQuantity = Number.parseInt(array[i].total_quantity);
+                var minItemQuantity = array[i].min_quantity;
+                    if (totalItemQuantity <= minItemQuantity) {
+                        self.showConfirm(shoppingListItemId);
+                    }
+                }
         }).catch(function(error){
             console.log('error');
         });
     }
+
+    self.showConfirm = function (shoppingListItemId) {
+        $mdDialog.show({
+            controller: 'AddItemController as aic',
+            templateUrl: 'views/templates/addtoshoppinglist.html',
+            parent: angular.element(document.body),
+            targetEvent: shoppingListItemId,
+            clickOutsideToClose: true,
+            fullscreen: self.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+    };
     
     self.addItemToShopList = function(storeId, itemId) {
         var itemForShopList = {
@@ -206,6 +210,35 @@ myApp.service('AddItemService', function($http) {
         })
     }
 
-    
+    self.openToast = function ($event) {
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent('Your item has been updated!')
+                .hideDelay(1000));
+    }
+
+    self.showConfirm = function (shoppingListItemId) {
+        $mdDialog.show({
+            controller: 'AddItemController as aic',
+            templateUrl: 'views/templates/addtoshoppinglist.html',
+            parent: angular.element(document.body),
+            targetEvent: shoppingListItemId,
+            clickOutsideToClose: true,
+            fullscreen: false // Only for -xs, -sm breakpoints.
+
+        })
+    };
+
+    self.hide = function () {
+        $mdDialog.hide();
+    };
+
+    self.cancel = function () {
+        $mdDialog.cancel();
+    };
+
+    self.answer = function (answer) {
+        $mdDialog.hide(answer);
+    };
 
 })
