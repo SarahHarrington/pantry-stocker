@@ -4,7 +4,7 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
 
     vm.userStoreList = UserSetupService.stores.data;
     vm.shoppingLists = ShoppingListService.shoppingLists.lists;
-    vm.userPantryList = UserSetupService.pantries.data;
+    vm.userPantryList = UserSetupService.pantries;
 
     vm.doneShoppingData = {
         store_id: '',
@@ -15,7 +15,15 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         vm.userStoreList = UserSetupService.stores;
     }
 
+    UserSetupService.getPantries();
+
+    // vm.userPantryList = {
+    //     allpantries: []
+    // }
+    console.log('vm.userpantrylist on page load', vm.userPantryList);
+    
     vm.getStores()
+    
     vm.doneShopping = false;
     vm.getShoppingLists = function(store) {
         console.log('get shopping lists store', store);
@@ -97,12 +105,7 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     vm.purchasedItems = ShoppingListService.purchasedItems;
     
     vm.getPurchasedItemsForPantry = function(storeId){
-        ShoppingListService.getPurchasedItemsForPantry(storeId)//.then(function(response){
-            // vm.purchasedItems.allitems = response;
-            vm.purchasedItems = ShoppingListService.purchasedItems;
-            console.log('controller purchased items for pantry', vm.purchasedItems.allitems);
-            
-    // })
+        ShoppingListService.getPurchasedItemsForPantry(storeId);
         $location.path('purchasedadd');
     }
 
@@ -119,18 +122,28 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
 
         $mdDialog.show(confirm).then(function () {
             console.log('confirm clicked');
-            vm.getPurchasedItemsForPantry(storeId).then(function(response){
-                UserSetupService.getPantries();
-                vm.userPantryList = UserSetupService.pantries;
-                console.log('vm.userpantrylist in slc controller', vm.userPantryList);
-                
-            })
-            // UserSetupService.getPantries();
-            //will need to run a delete function after to remove from DB
+            vm.getPurchasedItemsForPantry(storeId);
         }), function () {
             console.log('cancel clicked');
-            // vm.updateShopList = true;
         };
     };
+
+    vm.pantryLocationsforItem = [];
+    vm.itemPantryLocation = function(itemId, pantry) {
+        console.log('itempantrylocation', itemId, pantry);
+        var itemForPantry = {
+            itemId: itemId,
+            pantry_id: pantry.pantry_id,
+            quanity: pantry.quantity
+        }
+        vm.pantryLocationsforItem.push(itemForPantry);
+        console.log('pantrylocationsforitem array', vm.pantryLocationsforItem);
+        
+    }
+
+    vm.addItemtoPantries = function (item) {
+        console.log('addItemtoPantries button clicked', item);
+        ShoppingListService.addItemtoPantries(item, vm.pantryLocationsforItem);
+    }
     
 });

@@ -76,4 +76,9 @@ myApp.service('ShoppingListService', function ($http) {
             
         })
     }
+
+    self.addItemtoPantries = function(item, pantries) {
+        console.log('service add item to pantries', item, pantries);
+        
+    }
 });
