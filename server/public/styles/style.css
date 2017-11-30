@@ -89,7 +89,12 @@ md-select {
 }
 
 #pantryButton {
-  color: #757575;
+  color: #474747;
+}
+
+#doneButtonShop {
+  color: #474747;
+  width: 100%;
 }
 
 .md-toolbar-tools {
@@ -149,15 +154,16 @@ md-toolbar {
 
 #listItemName {
   font-size: 12px;
-  width: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  width: 60px;
+  margin-right: 5px;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: space-around; */
 }
 
-#itemNameHolder {
+/* #itemNameHolder {
   display: flex;
-}
+} */
 
 #itemRow {
   align-items: center;
@@ -202,4 +208,9 @@ md-toolbar {
 #reminderQty {
   width: 150px;
   padding-left: 5px;
+}
+
+#itemActionOnDone {
+  color: #474747;
+  font-size: 12px;
 }
