@@ -166,3 +166,14 @@ md-toolbar {
 /* #itemDetails {
   align-items: center;
 } */
+
+.itemNameinPantry {
+  width: 130px;
+  font-size: 12px;
+}
+
+#iconButtons {
+  padding-left: 4px;
+  padding-right: 4px;
+  margin: 0;
+}

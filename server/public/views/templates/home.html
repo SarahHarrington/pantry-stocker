@@ -3,7 +3,7 @@
         <h1 class="lead">Login</h1>
         <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
     </div>
-        <form layout="column" ng-submit="lc.login()">
+        <!-- <form layout="column" ng-submit="lc.login()"> -->
             <md-input-container>
                 <label for="username">Username</label>
                 <br>
@@ -14,11 +14,14 @@
                 <br>
                 <input id="password" ng-model="lc.user.password" type="text">
             </md-input-container>
-            
             <!-- <md-button ng-click="aic.addNewItemToPantry(aic.searchText, aic.userPantryList.allpantries, aic.minimumQty)">Add Item to Pantry</md-button> -->
-            <div layout="row" layout-align="center">
+            <md-button class="md-raised" ng-click="lc.login()">
+                Login
+            </md-button>
+            <a href="#register">Register</a>
+            <!-- <div layout="row" layout-align="center">
                 <input class="btn btn-default" type="submit" name="submit" value="Log In" />
                 <a href="#register">Register</a>
-            </div>
-        </form>
+            </div> -->
+        <!-- </form> -->
 </div>
