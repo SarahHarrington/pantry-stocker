@@ -31,7 +31,7 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         var pantryId = item.pantry_location;
         AddItemService.removeOneItem(item).then(function(response){
             vm.getPantryItems({ pantry_id: pantryId })
-            vm.openToast();
+            // vm.openToast();
             vm.verifyItemShopList(itemId);
         })
     }
@@ -41,7 +41,7 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         var pantryId = item.pantry_location;
         AddItemService.addOneItem(item).then(function (response) {
             vm.getPantryItems({ pantry_id: pantryId });
-            vm.openToast();
+            // vm.openToast();
             vm.verifyItemShopList(itemId);
         })
     }
