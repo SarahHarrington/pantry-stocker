@@ -5,8 +5,7 @@
         <md-button class="md-raised" id="pantryButton" ng-click="pvc.getPantryItems(pantry)">{{pantry.label}}</md-button>
         <div layout="row" ng-repeat="eachItem in pvc.userPantryItems.allitems | orderBy:'item_name' track by $index" ng-if="pantry.pantry_id == eachItem.pantry_location">
             <div layout="row" layout-wrap>
-                <!-- <div layout="column">
-                    <div layout="row"> -->
+                
                 <md-button id="iconButtons" ng-click="pvc.deleteItemFromPantry(eachItem)" class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="../images/delete.svg"></md-icon>
                 </md-button>
@@ -23,11 +22,7 @@
                 <md-button id="iconButtons" ng-click="pvc.addOneItem(eachItem)" class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="../images/add_circle.svg"></md-icon>
                 </md-button>
-                <!-- <md-button ng-click="pvc.deleteItemFromPantry(eachItem)" class="md-icon-button md-primary" aria-label="Settings">
-                    <md-icon md-svg-icon="../images/delete.svg"></md-icon>
-                </md-button> -->
-                <!-- </div>
-                </div> -->
+                
             </div>
         </div><!-- end layout row -->
     </div> 
