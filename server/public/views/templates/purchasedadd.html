@@ -2,6 +2,20 @@
 <!-- Navigation Above -->
 
 <div ng-repeat="item in slc.purchasedItems.allitems">
-    <span>{{item.item_name}}</span>
-    <span>{{item.purchased_amount}}</span>
+    <md-input-container id="itemName">
+        <label for="itemName"></label>
+        <input id="itemName" ng-model="item.item_name" type="text">
+    </md-input-container>
+
+    <md-input-container id="purchasedAmount">
+        <label for="purchasedAmount"></label>
+        <input id="purchasedAmount" ng-model="item.purchased_amount" type="number">
+    </md-input-container>
+
+    <div ng-repeat="pantry slc.userPantryList.allpantries">
+        <md-input-container>
+            <label for="pantryQty">Quantity:</label>
+            <input id="pantryQty" ng-model="pantry.quantity" type="number">
+        </md-input-container>
+    </div>
 </div>

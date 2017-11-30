@@ -1,15 +1,42 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
-<md-button ng-model="slc.doneShoppingData.store_id" ng-show="slc.doneShopping" class="md-raised" ng-click="slc.doneShoppingUpdate(slc.doneShoppingData.store_id)">Done</md-button>
-<md-button ng-model="slc.doneShoppingData.store_id" ng-hide="slc.updateShopList" class="md-raised" ng-click="slc.confirmDeleteUnpurchased(slc.doneShoppingData.store_id)">Delete Not Check</md-button>
-<md-button ng-model="slc.doneShoppingData.store_id" ng-hide="slc.updateShopList" class="md-raised" ng-click="slc.addPurchasedItemstoPantries(slc.doneShoppingData.store_id)">Add to Pantries</md-button>
+<md-button 
+    ng-model="slc.doneShoppingData.store_id" 
+    ng-show="slc.doneShopping" 
+    class="md-raised" 
+    ng-click="slc.doneShoppingUpdate(slc.doneShoppingData.store_id)">
+    Done
+</md-button>
+<md-button 
+    ng-model="slc.doneShoppingData.store_id" 
+    ng-hide="slc.updateShopList" 
+    class="md-raised" 
+    ng-click="slc.confirmDeleteUnpurchased(slc.doneShoppingData.store_id)">
+    Delete Not Check
+</md-button>
+<md-button 
+    ng-model="slc.doneShoppingData.store_id" 
+    ng-hide="slc.updateShopList" 
+    class="md-raised" 
+    ng-click="slc.addPurchasedItemstoPantries(slc.doneShoppingData.store_id)">
+    Add to Pantries
+</md-button>
+
 <div layout="column" ng-repeat="store in slc.userStoreList.allstores | orderBy: 'label' track by $index">
-    <md-button id="pantryButton" class="md-raised" ng-click="slc.getShoppingLists(store.store_id)">{{store.label}}</md-button>
+    <md-button id="pantryButton" 
+        class="md-raised" 
+        ng-click="slc.getShoppingLists(store.store_id)">{{store.label}}
+    </md-button>
     
     <div ng-repeat="item in slc.shoppingLists.lists | orderBy:'item_name' track by $index" ng-if="store.store_id == item.store_id">
         <div layout="row" id="itemRow">
             
-            <md-checkbox id="checkbox" ng-model="item.item_purchased" class="teal" ng-change="slc.shopQuantitiesUpdate(item)" aria-label="Checkbox"></md-checkbox>
+            <md-checkbox id="checkbox" 
+                ng-model="item.item_purchased" 
+                class="teal" 
+                ng-change="slc.shopQuantitiesUpdate(item)" 
+                aria-label="Checkbox">
+            </md-checkbox>
             <div id="itemNameHolder"><span id="listItemName">{{item.item_name}}</span></div>
             <md-input-container id="shopInput">
                 <label for="desiredQty">Want</label>
@@ -22,6 +49,7 @@
             <md-button ng-click="slc.deleteItemFromList(item)" class="md-icon-button md-primary" aria-label="Settings">
                 <md-icon md-svg-icon="../images/delete.svg"></md-icon>
             </md-button>
+        
         </div>
     </div>
 </div><!-- End of Repeat for store lists -->

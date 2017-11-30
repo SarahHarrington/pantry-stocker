@@ -4,6 +4,7 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
 
     vm.userStoreList = UserSetupService.stores.data;
     vm.shoppingLists = ShoppingListService.shoppingLists.lists;
+    vm.userPantryList = UserSetupService.pantries.data;
 
     vm.doneShoppingData = {
         store_id: '',
@@ -108,9 +109,9 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     vm.addPurchasedItemstoPantries = function (storeId) {
         // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
-            .title('Move purchased items to pantries?')
-            .textContent('')
-            .ariaLabel('Lucky day')
+            .title('Move Items')
+            .textContent('Move items to pantries?')
+            .ariaLabel('Move to Pantry Confirm')
             .clickOutsideToClose(true)
             .targetEvent(storeId)
             .ok('Yes')
@@ -118,7 +119,13 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
 
         $mdDialog.show(confirm).then(function () {
             console.log('confirm clicked');
-            vm.getPurchasedItemsForPantry(storeId);
+            vm.getPurchasedItemsForPantry(storeId).then(function(response){
+                UserSetupService.getPantries();
+                vm.userPantryList = UserSetupService.pantries;
+                console.log('vm.userpantrylist in slc controller', vm.userPantryList);
+                
+            })
+            // UserSetupService.getPantries();
             //will need to run a delete function after to remove from DB
         }), function () {
             console.log('cancel clicked');
