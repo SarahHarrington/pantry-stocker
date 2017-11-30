@@ -103,7 +103,9 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     };
 
     vm.purchasedItems = ShoppingListService.purchasedItems;
-    
+    vm.item_index = 0;
+    vm.individualItem = {};
+
     vm.getPurchasedItemsForPantry = function(storeId){
         ShoppingListService.getPurchasedItemsForPantry(storeId);
         $location.path('purchasedadd');
@@ -134,16 +136,35 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         var itemForPantry = {
             itemId: itemId,
             pantry_id: pantry.pantry_id,
-            quanity: pantry.quantity
+            quantity: pantry.quantity
         }
         vm.pantryLocationsforItem.push(itemForPantry);
         console.log('pantrylocationsforitem array', vm.pantryLocationsforItem);
-        
     }
 
     vm.addItemtoPantries = function (item) {
         console.log('addItemtoPantries button clicked', item);
         ShoppingListService.addItemtoPantries(item, vm.pantryLocationsforItem);
+        vm.next();
+
+    }
+
+    vm.next = function () {
+        var array = vm.purchasedItems.allitems;
+        console.log('move to next item');
+        console.log('purchased items in vm.next', );
+        console.log('vm.item_index', array);
+        if (vm.item_index >= array.length -1) {
+            console.log('all the items are done');
+            //add a notification here and clear the page or go to home
+        } else {
+            vm.item_index++
+        }
+
+        // for (var i = 0; i < array.length; i++) {
+        //     vm.item_index ++;
+            
+        // }
     }
     
 });
