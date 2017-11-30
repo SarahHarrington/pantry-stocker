@@ -1,12 +1,11 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
 
-<div ng-repeat="item in slc.purchasedItems.allitems track by $index">
-    <!-- <md-input-container id="itemName">
-        <label for="itemName">Name</label>
-        <input id="itemName" ng-model="item.item_name" type="text">
-    </md-input-container> -->
-    <div>{{item.item_name}}</div>
+<div ng-repeat="item in slc.purchasedItems.allitems">
+    <div ng-if="slc.item_index == $index">
+
+        <!-- {{slc.purchasedItems.allitems}} -->
+        <div>{{item.item_name}}</div>
 
     <md-input-container id="purchasedAmount">
         <label for="purchasedAmount">Purchased Quantity</label>
@@ -22,4 +21,5 @@
     </div>
     <md-button ng-click="slc.addItemtoPantries(item)">Update Item</md-button>
     <br>
+    </div>
 </div>
