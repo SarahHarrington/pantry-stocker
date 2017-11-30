@@ -49,9 +49,11 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     vm.deleteItemFromList= function(item) {
         console.log('delete from list', item);
         var itemId = item.item_id;
-        var store = {
-            store_id: item.store_id
-        };
+        // var store = {
+        //     store_id: item.store_id
+        // };
+
+        var store = item.store_id;
         ShoppingListService.deleteItemFromList(item).then(function (response) {
             vm.getShoppingLists(store); 
         })

@@ -187,6 +187,7 @@ md-toolbar {
 .navigationBar {
   height: 34px;
   background-color: #BCBCBC;
+  margin-bottom: 5px;
 }
 
 #autocomplete {
@@ -213,4 +214,8 @@ md-toolbar {
 #itemActionOnDone {
   color: #474747;
   font-size: 12px;
+}
+
+.chipTitle {
+  font-size: 18px;
 }
