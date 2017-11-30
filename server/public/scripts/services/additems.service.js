@@ -17,20 +17,33 @@ myApp.service('AddItemService', function($http) {
     self.item = {
         image: ''
     }
-
+    // const client = filestack.init(privateAPIForFileStack());
+    // client.pick();
+    // self.pickImage = function () {
+    //     console.log('pick image service');
+    //     client.pick({
+    //         maxFiles: 1,
+    //         uploadInBackground: false,
+    //         onOpen: () => console.log('Opened')
+    //     })
+    //         .then((res) => {
+    //             console.log(res);
+    //             console.log(res.filesUploaded);
+    //             console.log(res.filesFailed);
+    //             self.item.image = res.filesUploaded[0].url;
+    //         });
+    // }
+    var client = filestack.init(privateAPIForFileStack());
     self.pickImage = function () {
-        console.log('pick image service');
         client.pick({
-            maxFiles: 1,
-            uploadInBackground: false,
-            onOpen: () => console.log('Opened')
-        })
-            .then((res) => {
-                console.log(res);
-                console.log(res.filesUploaded);
-                console.log(res.filesFailed);
-                self.item.image = res.filesUploaded[0].url;
-            });
+            fromSources: ["local_file_system", "imagesearch", "dropbox", "webcam"],
+            accept: ["image/*"]
+        }).then(function (response) {
+            console.log(response);
+            console.log(res.filesUploaded);
+            console.log(res.filesFailed);
+            self.item.image = res.filesUploaded[0].url;
+        });
     }
     
 

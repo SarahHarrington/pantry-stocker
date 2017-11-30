@@ -25,7 +25,10 @@
                 "{{aic.searchText}}" not found.
             </md-not-found>
         </md-autocomplete>
-        <md-button ng-click="aic.clearSearch()">clear</md-button>
+        <!-- <md-button ng-click="aic.clearSearch()">clear</md-button> -->
+        <md-button ng-click="aic.clearSearch()" id="navButton" class="md-icon-button" aria-label="Clear Search">
+            <md-icon md-svg-icon="../images/clear.svg"></md-icon>
+        </md-button>
         </div>
         <!-- Pantries loaded with quantities when item is selected above -->
         <div>
@@ -65,8 +68,9 @@
             <br>
             <input id="reminderQty" ng-model="aic.minimumQty" type="number">
         </md-input-container>
-        <button ng-click="aic.pickImage()">Upload Picture</button>
+        <!-- <button ng-click="aic.pickImage()">Upload Picture</button> -->
+        <md-button  ng-click="aic.pickImage()" class="md-icon-button" aria-label="Add Photo">
+            <md-icon md-svg-icon="../images/addaphoto.svg"></md-icon>
+        </md-button>
         <md-button ng-click="aic.addNewItemToPantry(aic.searchText, aic.userPantryList.allpantries, aic.minimumQty)">Add Item to Pantry</md-button>
-    
-    
 </div>
