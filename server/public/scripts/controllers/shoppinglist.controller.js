@@ -1,4 +1,4 @@
-myApp.controller('ShoppingListController', function (UserService, AddItemService, UserSetupService, $log, $mdToast, $mdDialog, ShoppingListService) {
+myApp.controller('ShoppingListController', function (UserService, AddItemService, UserSetupService, $log, $mdToast, $mdDialog, ShoppingListService, $location) {
     console.log('ShoppingListController created');
     var vm = this;
 
@@ -60,19 +60,12 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     vm.storeIdForShoppingListUpdates = '';
 
     vm.doneShoppingUpdate = function (storeId) {
-        console.log('done shopping update controller', storeId);
         vm.doneShopping = false;
         vm.updateShopList = false;
         vm.doneShoppingData.store_id = storeId;
-        // ShoppingListService.doneShoppingUpdate(storeId).then(function(response){
-        //     console.log('controller doneshopping update', response);
-        //     vm.doneShoppingList = response;
-        //     console.log('doneshoppinglist', vm.doneShoppingList);
-        // })
     }
 
     vm.removeNotPurchasedItems = function (storeId) {
-        console.log('removeNotPurchasedItems', storeId);
         vm.doneShoppingUpdate(vm.doneShoppingData);
         ShoppingListService.removeNotPurchasedItems(storeId).then(function(response){
             vm.getShoppingLists(storeId);
@@ -100,6 +93,11 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         };
     };
 
+    vm.getPurchasedItemsForPantry = function(storeId){
+        ShoppingListService.getPurchasedItemsForPantry(storeId);
+        $location.path('purchasedadd');
+    }
+
     vm.addPurchasedItemstoPantries = function (storeId) {
         // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
@@ -111,12 +109,13 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
             .ok('Yes')
             .cancel('No');
 
-        $mdDialog.show(confirm).then(function (storeId) {
+        $mdDialog.show(confirm).then(function () {
             console.log('confirm clicked');
-            
+            vm.getPurchasedItemsForPantry(storeId);
+            //will need to run a delete function after to remove from DB
         }), function () {
             console.log('cancel clicked');
-            vm.updateShopList = true;
+            // vm.updateShopList = true;
         };
     };
     

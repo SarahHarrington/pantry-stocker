@@ -5,6 +5,7 @@ var path = require('path');
 var pool = require('../modules/pool.js');
 var pg = require('pg');
 
+//puts items on shopping lists
 router.post('/', function (req, res) {
     if (req.isAuthenticated()) {
         var userId = req.user.id;
@@ -36,6 +37,7 @@ router.post('/', function (req, res) {
     }//is authenticated
 });//router.post for add item to shopping list
 
+//check if item is already on shopping list
 router.get('/checkitem/:id', function (req, res) {
     console.log('req params', req.params.id);
     if (req.isAuthenticated) {
@@ -63,13 +65,11 @@ router.get('/checkitem/:id', function (req, res) {
     }
 })
 
+//get shopping list items
 router.get('/allitems/:id', function (req, res) {
-    // console.log('req params', req.params.id);
     if (req.isAuthenticated) {
         var userId = req.user.id;
         var storeId = req.params.id;
-        console.log('router get stores list', req.params.id);
-
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
                 'SELECT "shopping_list"."item_id", "shopping_list"."store_id", "shopping_list"."desired_qty", "shopping_list"."purchased_amount",' +
@@ -124,6 +124,7 @@ router.put('/deleteitem/:id', function (req, res) {
     }
 })
 
+//updates items 
 router.put('/updateitem/:id', function (req, res) {
     var storeId = req.body.store_id;
     var itemId = req.params.id;
@@ -159,10 +160,7 @@ router.put('/updateitem/:id', function (req, res) {
 //removes items not purchased from the users shopping list
 router.put('/removenotpurchased/items/:id', function (req, res) {
     var storeId = req.params.id;
-    // var itemId = req.body.item_id;
     var userId = req.user.id;
-    console.log('remove items not purchased', storeId, userId);
-
     if (req.isAuthenticated) {
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
@@ -184,5 +182,38 @@ router.put('/removenotpurchased/items/:id', function (req, res) {
         res.send(false);
     }
 })
+
+router.get('/getstore/purchaseditems/:id', function (req, res) {
+    console.log('req params', req.params.id);
+    if (req.isAuthenticated) {
+        var userId = req.user.id;
+        var storeId = req.params.id;
+        pool.connect(function (errorConnectingtoDB, db, done) {
+            var queryText =
+                'SELECT "shopping_list"."item_id", "shopping_list"."store_id", "shopping_list"."purchased_amount",' +
+                '"shopping_list"."custom_item", "stores"."label", "Items"."item_name"' +
+                'FROM "shopping_list" LEFT OUTER JOIN "Items"' +
+                'ON("shopping_list"."item_id" = "Items"."item_id")' +
+                'RIGHT OUTER JOIN "stores"' +
+                'ON("shopping_list"."store_id" = "stores"."store_id")' +
+                'WHERE "shopping_list"."user_id" = $1 AND "shopping_list"."store_id" = $2 AND "shopping_list"."item_purchased" = true;'
+            db.query(queryText, [userId, storeId], function (errorMakingQuery, result) {
+                done();
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                    console.log(result.rows);
+                }
+            })
+        })
+    }
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }
+})
+
 
 module.exports = router;

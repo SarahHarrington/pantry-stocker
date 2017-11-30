@@ -67,6 +67,15 @@ myApp.config(function($routeProvider, $locationProvider) {
         }
       }
     })
+    .when('/purchasedadd', {
+      templateUrl: '/views/templates/purchasedadd.html',
+      controller: 'ShoppingListController as slc',
+      resolve: {
+        getuser: function (UserService) {
+          return UserService.getuser()
+        }
+      }
+    })
     .otherwise({
       redirectTo: 'home'
     });
