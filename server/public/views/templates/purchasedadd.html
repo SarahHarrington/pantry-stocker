@@ -1,1 +1,7 @@
-purchaseadded
+<div ng-include="'views/partials/nav.html'"></div>
+<!-- Navigation Above -->
+
+<div ng-repeat="item in slc.purchasedItems.allitems">
+    <span>{{item.item_name}}</span>
+    <span>{{item.purchased_amount}}</span>
+</div>

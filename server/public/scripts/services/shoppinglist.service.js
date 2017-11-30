@@ -11,7 +11,7 @@ myApp.service('ShoppingListService', function ($http) {
     }
 
     self.purchasedItems = {
-        list: []
+        allitems: []
     }
 
     self.getShoppingLists = function (store) {
@@ -65,12 +65,12 @@ myApp.service('ShoppingListService', function ($http) {
     //gets all purchased items for updates to pantry
     self.getPurchasedItemsForPantry = function(storeId) {
         var storeId = storeId;
-        $http.get('shoppinglist/getstore/purchaseditems/' + storeId)
+        return $http.get('shoppinglist/getstore/purchaseditems/' + storeId)
         .then(function(response){
             console.log('success');
-            self.purchasedItems.list = response.data;
-            console.log('getpurchaseditemspantry service', self.purchasedItems.list);
-            
+            self.purchasedItems.allitems = response.data;
+            console.log('getpurchaseditemspantry service', self.purchasedItems.allitems);
+            // return response.data;
         }).catch(function(error){
             console.log('error');
             

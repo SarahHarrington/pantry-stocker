@@ -93,8 +93,15 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         };
     };
 
+    vm.purchasedItems = ShoppingListService.purchasedItems;
+    
     vm.getPurchasedItemsForPantry = function(storeId){
-        ShoppingListService.getPurchasedItemsForPantry(storeId);
+        ShoppingListService.getPurchasedItemsForPantry(storeId)//.then(function(response){
+            // vm.purchasedItems.allitems = response;
+            vm.purchasedItems = ShoppingListService.purchasedItems;
+            console.log('controller purchased items for pantry', vm.purchasedItems.allitems);
+            
+    // })
         $location.path('purchasedadd');
     }
 
