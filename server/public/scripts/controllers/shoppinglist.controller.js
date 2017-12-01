@@ -146,17 +146,28 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
 
     vm.addItemtoPantries = function (item, pantry) {
         console.log('addItemtoPantries button clicked', item, pantry);
-        var addItemtoPantries = [];
-        for (var i = 0; i < pantry.length; i++) {
-            if (pantry[i].quantity) {
-                addItemtoPantries.push(pantry[i]);
+        if (vm.purchasedItems.allitems.length > 0) {
+            var addItemtoPantries = [];
+            var storeId = item.store_id;
+            for (var i = 0; i < pantry.length; i++) {
+                if (pantry[i].quantity) {
+                    addItemtoPantries.push(pantry[i]);
+                } 
             }
+            console.log('addItemtoPantries', addItemtoPantries);
+            //this is adding the items to the pantries and deleting the current item
+            ShoppingListService.addItemtoPantries(item, addItemtoPantries).then(function(response){
+                vm.getPurchasedItemsForPantry(storeId);
+                $location.path('purchasedadd');
+            })
+            //get the new data to refresh the page
+            // vm.getPurchasedItemsForPantry(storeId);
+            // $location.path('purchasedadd');
         }
-        console.log('addItemtoPantries', addItemtoPantries);
-        
-        ShoppingListService.addItemtoPantries(item, addItemtoPantries);
-        // vm.next();
-
+        else {
+            console.log('out of items');
+            
+        }
     }
 
     vm.next = function () {

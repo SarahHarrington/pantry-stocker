@@ -222,11 +222,6 @@ router.put('/purchaseditmes/addtopantries/:id', function (req, res) {
         var itemId = req.params.id;
         var addItemtoPantries = req.body.addItemtoPantries;
         pool.connect(function (errorConnectingtoDB, db, done) {
-            // if (errorConnectingtoDB) {
-            //     console.log('Error Connecting to DB', errorConnectingtoDB);
-            //     res.sendStatus(500);
-            // }
-            // else{
                 var queryText =
                     'INSERT INTO "stock" ("item_id", "pantry_location", "quantity") VALUES ($1, $2, $3)' +
                     'ON CONFLICT ("item_id", "pantry_location")' +
@@ -248,6 +243,36 @@ router.put('/purchaseditmes/addtopantries/:id', function (req, res) {
         console.log('User is not logged in');
         res.send(false);
     }
+})
+
+router.delete('/delete/purchased/shopping_list/:id', function(req, res){
+    console.log('delete route', req.params.id);
+    
+    if (req.isAuthenticated) {
+        var shopping_list_id = req.params.id;
+        pool.connect(function (errorConnectingToDb, db, done) {
+            if (errorConnectingToDb) {
+                console.log('Error Connecting', errorConnectingToDb);
+                res.sendStatus(500);
+            }//end pool if
+            else {
+                var queryText = 'DELETE from "shopping_list" WHERE "shopping_list_id" = $1;'
+                db.query(queryText, [shopping_list_id], function (errorMakingQuery, result) {
+                    if (errorMakingQuery) {
+                        console.log('Error making query', errorMakingQuery);
+                        res.sendStatus(500);
+                    }//end query if
+                    else {
+                        res.sendStatus(201);
+                    }
+                })//end db.query
+            }//end pool else
+        })//end pool connect
+    }//end req authenticated
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }//end req else authenticated
 })
 
 
