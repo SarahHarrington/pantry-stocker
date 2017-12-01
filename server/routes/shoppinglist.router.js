@@ -191,12 +191,12 @@ router.get('/getstore/purchaseditems/:id', function (req, res) {
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
                 'SELECT "shopping_list"."item_id", "shopping_list"."store_id", "shopping_list"."purchased_amount",' +
-                '"shopping_list"."custom_item", "stores"."label", "Items"."item_name"' +
+                '"shopping_list"."shopping_list_id", "stores"."label", "Items"."item_name"' +
                 'FROM "shopping_list" LEFT OUTER JOIN "Items"' +
                 'ON("shopping_list"."item_id" = "Items"."item_id")' +
                 'RIGHT OUTER JOIN "stores"' +
                 'ON("shopping_list"."store_id" = "stores"."store_id")' +
-                'WHERE "shopping_list"."user_id" = $1 AND "shopping_list"."store_id" = $2 AND "shopping_list"."item_purchased" = true;'
+                'WHERE "shopping_list"."user_id" = $1 AND "shopping_list"."store_id" = $2 AND "shopping_list"."item_purchased" = true LIMIT 1;'
             db.query(queryText, [userId, storeId], function (errorMakingQuery, result) {
                 done();
                 if (errorMakingQuery) {
@@ -207,6 +207,41 @@ router.get('/getstore/purchaseditems/:id', function (req, res) {
                     console.log(result.rows);
                 }
             })
+        })
+    }
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }
+})
+
+router.put('/purchaseditmes/addtopantries/:id', function (req, res) {
+
+    if (req.isAuthenticated) {
+        var userInfo = req.user.id;
+        var itemId = req.params.id;
+        var addItemtoPantries = req.body.addItemtoPantries;
+        pool.connect(function (errorConnectingtoDB, db, done) {
+            // if (errorConnectingtoDB) {
+            //     console.log('Error Connecting to DB', errorConnectingtoDB);
+            //     res.sendStatus(500);
+            // }
+            // else{
+                var queryText =
+                    'INSERT INTO "stock" ("item_id", "pantry_location", "quantity") VALUES ($1, $2, $3)' +
+                    'ON CONFLICT ("item_id", "pantry_location")' +
+                    'DO UPDATE SET "quantity" = "stock"."quantity" + EXCLUDED.quantity;';
+                for (var i = 0; i < addItemtoPantries.length; i++) {
+                    db.query(queryText, [itemId, addItemtoPantries[i].pantry_id, addItemtoPantries[i].quantity,], function (errorMakingQuery, result) {
+                    done();
+                    if (errorMakingQuery) {
+                        console.log('Error making query');
+                        res.sendStatus(500);
+                    } 
+                })
+            }//end of for loop
+            res.sendStatus(200);
+        // }
         })
     }
     else {

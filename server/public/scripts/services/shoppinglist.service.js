@@ -77,8 +77,20 @@ myApp.service('ShoppingListService', function ($http) {
         })
     }
 
-    self.addItemtoPantries = function(item, pantries) {
-        console.log('service add item to pantries', item, pantries);
-        
+    self.addItemtoPantries = function (item, addItemtoPantries) {
+        console.log('service add item to pantries', item, addItemtoPantries);
+        var itemId = item.item_id;
+        var shopping_list_id = item.shopping_list_id;
+        var itemDetails = {
+            shopping_list_id: shopping_list_id,
+            addItemtoPantries: addItemtoPantries
+        }
+        return $http.put('shoppinglist/purchaseditmes/addtopantries/' + itemId, itemDetails)
+        .then(function(response){
+            console.log('success');
+        }).catch(function(error){
+            console.log('error');
+            
+        })
     }
 });
