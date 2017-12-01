@@ -143,6 +143,8 @@ myApp.service('AddItemService', function($http, $mdToast, $mdDialog) {
             addItemtoPantries: addItemtoPantries,
             newItemMinimumQty: newItemMinimumQty
         }
+        console.log('new itmem to add service');
+        
         return $http.post('/additem', newItemtoAdd)
         .then(function(response){
             console.log('success');
