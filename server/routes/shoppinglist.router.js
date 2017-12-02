@@ -198,13 +198,16 @@ router.get('/getstore/purchaseditems/:id', function (req, res) {
                 'ON("shopping_list"."store_id" = "stores"."store_id")' +
                 'WHERE "shopping_list"."user_id" = $1 AND "shopping_list"."store_id" = $2 AND "shopping_list"."item_purchased" = true LIMIT 1;'
             db.query(queryText, [userId, storeId], function (errorMakingQuery, result) {
+                console.log('in get purchased item',new Date());
                 done();
                 if (errorMakingQuery) {
                     console.log('Error making query', errorMakingQuery);
                     res.sendStatus(500);
                 } else {
+                    console.log('next item from shopping list', result.rows);
+                    console.log('sending result', new Date());
                     res.send(result.rows);
-                    console.log(result.rows);
+                    
                 }
             })
         })
@@ -218,6 +221,8 @@ router.get('/getstore/purchaseditems/:id', function (req, res) {
 router.put('/purchaseditmes/addtopantries/:id', function (req, res) {
 
     if (req.isAuthenticated) {
+        console.log('in the purchased items add to pantry and delete from shopping list', req.params);
+        
         var userInfo = req.user.id;
         var itemId = req.params.id;
         var addItemtoPantries = req.body.addItemtoPantries;
@@ -234,18 +239,22 @@ router.put('/purchaseditmes/addtopantries/:id', function (req, res) {
                             console.log('Error making query');
                             res.sendStatus(500);
                             return
+                        }
+                    }); 
+                } 
+                console.log('deleting shopping list id', shopping_list_id);
+                db.query('DELETE from "shopping_list" WHERE "shopping_list_id" = $1;', [shopping_list_id], function (errorMakingQuery, result) {
+                    console.log('update and delete', new Date());
+                    done();
+                    if (errorMakingQuery) {
+                        console.log('error making query');
+                        res.sendStatus(500);
+                        return
                     }
+                res.sendStatus(200);
                 })
-                    db.query('DELETE from "shopping_list" WHERE "shopping_list_id" = $1;', [shopping_list_id], function(errorMakingQuery, result){
-                        done();
-                        if (errorMakingQuery) {
-                            console.log('error making query');
-                            res.sendStatus(500);
-                            return
-                        } 
-                    })
-            }//end of for loop
-            res.sendStatus(200);
+                // console.log('res send success status', new Date());
+            // res.sendStatus(200);
         // }
         })
     }

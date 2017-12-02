@@ -64,10 +64,14 @@ myApp.service('ShoppingListService', function ($http) {
 
     //gets all purchased items for updates to pantry
     self.getPurchasedItemsForPantry = function(storeId) {
+        console.log('in getPurchasedItemsForPantry service', storeId);
         var storeId = storeId;
         return $http.get('shoppinglist/getstore/purchaseditems/' + storeId)
         .then(function(response){
             console.log('success');
+            //assigning the item here 
+
+            
             self.purchasedItems.allitems = response.data;
             console.log('getpurchaseditemspantry service', self.purchasedItems.allitems);
             return response;
@@ -91,7 +95,7 @@ myApp.service('ShoppingListService', function ($http) {
         
         return $http.put('shoppinglist/purchaseditmes/addtopantries/' + itemId, itemDetails)
         .then(function(response){
-            console.log('success');
+            console.log('success add item to pantries and delete from shopping lists');
             // self.deletePurchasedItemFromList(shopping_list_id);
             return response;
         }).catch(function(error){

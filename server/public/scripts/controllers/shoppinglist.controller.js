@@ -109,7 +109,9 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     // vm.individualItem = {};
 
     vm.getPurchasedItemsForPantry = function(storeId){
+        console.log('getPurchasedItemsForPantry controller store id', storeId);
         ShoppingListService.getPurchasedItemsForPantry(storeId).then(function(response){
+            console.log('in promise chain for get purchased', response.data);
             vm.checkforViewChange();
         })
         // vm.checkforViewChange();
@@ -122,41 +124,44 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         vm.userPantryList = UserSetupService.pantries;
     }
     vm.updateItems = true;
-    //function on click in the shopping list page
+
+    //function on click in the shopping list page to move to new view
     vm.addPurchasedItems = function(storeId) {
-        console.log('add purchased items', storeId);
-        $location.path('purchasedadd');
-        vm.getPantries();
+        console.log('addPurchasedItems controller storeID', storeId);
+        $location.path('purchasedadd')
         vm.getPurchasedItemsForPantry(storeId);
-        console.log('in add purchased items function', vm.purchasedItems);
+        vm.getPantries();
+        console.log('addPurchasedItems item list', vm.purchasedItems);
         // vm.checkforViewChange();
     }
 
     vm.checkforViewChange = function(){
+        console.log('in check for view change');
+        
         if(vm.purchasedItems.allitems.length > 0) {
             vm.updateItems = true;
-            console.log('vm.updateItems', vm.updateItems);
+            console.log('check for view change if vm.updateItems', vm.updateItems);
 
         } else {
             vm.updateItems = false;
-            console.log('vm.updateItems', vm.updateItems);
+            console.log('check for view change else vm.updateItems', vm.updateItems);
         }
     }
 
-    vm.pantryLocationsforItem = [];
-    vm.itemPantryLocation = function(itemId, pantry) {
-        console.log('itempantrylocation', itemId, pantry);
-        var itemForPantry = {
-            itemId: itemId,
-            pantry_id: pantry.pantry_id,
-            quantity: pantry.quantity
-        }
-        vm.pantryLocationsforItem.push(itemForPantry);
-        console.log('pantrylocationsforitem array', vm.pantryLocationsforItem);
-    }
+    // vm.pantryLocationsforItem = [];
+    // vm.itemPantryLocation = function(itemId, pantry) {
+    //     console.log('itempantrylocation', itemId, pantry);
+    //     var itemForPantry = {
+    //         itemId: itemId,
+    //         pantry_id: pantry.pantry_id,
+    //         quantity: pantry.quantity
+    //     }
+    //     vm.pantryLocationsforItem.push(itemForPantry);
+    //     console.log('pantrylocationsforitem array', vm.pantryLocationsforItem);
+    // }
 
     vm.addItemtoPantries = function (item, pantry) {
-        console.log('addItemtoPantries button clicked', item, pantry);
+        console.log('addItemtoPantries button clicked, controller', item, pantry);
         if (item.length > 0) {
             var addItemtoPantries = [];
             var storeId = item.store_id;
@@ -165,13 +170,14 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
                     addItemtoPantries.push(pantry[i]);
                 } 
             }
-            console.log('addItemtoPantries', addItemtoPantries);
+            console.log('addItemtoPantries array', addItemtoPantries);
             //this is adding the items to the pantries and deleting the current item
             ShoppingListService.addItemtoPantries(item[0], addItemtoPantries).then(function(response){
                 // $location.path('purchasedadd');
                 var storeId = item[0].store_id;
-                console.log('storeId in shopping list service to restart process');
-                vm.addPurchasedItems(storeId);
+                console.log('storeId in shopping list service to restart process', response.data);
+                // vm.addPurchasedItems(storeId);
+                vm.getPurchasedItemsForPantry(storeId);
             })
         }
         else {
