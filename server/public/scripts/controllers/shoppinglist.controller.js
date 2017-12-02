@@ -15,7 +15,7 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         vm.userStoreList = UserSetupService.stores;
     }
 
-    UserSetupService.getPantries();
+    // UserSetupService.getPantries();
 
     // vm.userPantryList = {
     //     allpantries: []
@@ -31,7 +31,7 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
             vm.shoppingLists = ShoppingListService.shoppingLists;
             var arrayForDone = vm.shoppingLists.lists;
             vm.doneShoppingData.store_id = store;
-            console.log('array for done in get shopping lists', arrayForDone);
+            // console.log('array for done in get shopping lists', arrayForDone);
             vm.checkForDone(arrayForDone);
         })
     }
@@ -105,32 +105,43 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     };
 
     vm.purchasedItems = ShoppingListService.purchasedItems;
-    vm.item_index = 0;
-    vm.individualItem = {};
+    // vm.item_index = 0;
+    // vm.individualItem = {};
 
     vm.getPurchasedItemsForPantry = function(storeId){
-        ShoppingListService.getPurchasedItemsForPantry(storeId);
-        $location.path('purchasedadd');
+        ShoppingListService.getPurchasedItemsForPantry(storeId).then(function(response){
+            vm.checkforViewChange();
+        })
+        // vm.checkforViewChange();
     }
 
-    // vm.addPurchasedItemstoPantries = function (storeId) {
-    //     // Appending dialog to document.body to cover sidenav in docs app
-    //     // var confirm = $mdDialog.confirm()
-    //     //     .title('Move Items')
-    //     //     .textContent('Move items to pantries?')
-    //     //     .ariaLabel('Move to Pantry Confirm')
-    //     //     .clickOutsideToClose(true)
-    //     //     .targetEvent(storeId)
-    //     //     .ok('Yes')
-    //     //     .cancel('No');
+    // vm.itemPurchasedtoAdd = {}
 
-    //     // $mdDialog.show(confirm).then(function () {
-    //     //     console.log('confirm clicked');
-    //         vm.getPurchasedItemsForPantry(storeId);
-    //     }), function () {
-    //         console.log('cancel clicked');
-    //     };
-    // };
+    vm.getPantries = function () {
+        UserSetupService.getPantries();
+        vm.userPantryList = UserSetupService.pantries;
+    }
+    vm.updateItems = true;
+    //function on click in the shopping list page
+    vm.addPurchasedItems = function(storeId) {
+        console.log('add purchased items', storeId);
+        $location.path('purchasedadd');
+        vm.getPantries();
+        vm.getPurchasedItemsForPantry(storeId);
+        console.log('in add purchased items function', vm.purchasedItems);
+        // vm.checkforViewChange();
+    }
+
+    vm.checkforViewChange = function(){
+        if(vm.purchasedItems.allitems.length > 0) {
+            vm.updateItems = true;
+            console.log('vm.updateItems', vm.updateItems);
+
+        } else {
+            vm.updateItems = false;
+            console.log('vm.updateItems', vm.updateItems);
+        }
+    }
 
     vm.pantryLocationsforItem = [];
     vm.itemPantryLocation = function(itemId, pantry) {
@@ -146,7 +157,7 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
 
     vm.addItemtoPantries = function (item, pantry) {
         console.log('addItemtoPantries button clicked', item, pantry);
-        if (vm.purchasedItems.allitems.length > 0) {
+        if (item.length > 0) {
             var addItemtoPantries = [];
             var storeId = item.store_id;
             for (var i = 0; i < pantry.length; i++) {
@@ -156,32 +167,30 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
             }
             console.log('addItemtoPantries', addItemtoPantries);
             //this is adding the items to the pantries and deleting the current item
-            ShoppingListService.addItemtoPantries(item, addItemtoPantries).then(function(response){
-                vm.getPurchasedItemsForPantry(storeId);
-                $location.path('purchasedadd');
-                pantry.quantity = '';
+            ShoppingListService.addItemtoPantries(item[0], addItemtoPantries).then(function(response){
+                // $location.path('purchasedadd');
+                var storeId = item[0].store_id;
+                console.log('storeId in shopping list service to restart process');
+                vm.addPurchasedItems(storeId);
             })
-            //get the new data to refresh the page
-            // vm.getPurchasedItemsForPantry(storeId);
-            // $location.path('purchasedadd');
         }
         else {
             console.log('out of items');
-            
+            vm.updateItems = false;
         }
     }
 
-    vm.next = function () {
-        var array = vm.purchasedItems.allitems;
-        console.log('move to next item');
-        console.log('purchased items in vm.next', );
-        console.log('vm.item_index', array);
-        if (vm.item_index >= array.length -1) {
-            console.log('all the items are done');
-            //add a notification here and clear the page or go to home
-        } else {
-            vm.item_index++
-        }
-    }
+    // vm.next = function () {
+    //     var array = vm.purchasedItems.allitems;
+    //     console.log('move to next item');
+    //     console.log('purchased items in vm.next', );
+    //     console.log('vm.item_index', array);
+    //     if (vm.item_index >= array.length -1) {
+    //         console.log('all the items are done');
+    //         //add a notification here and clear the page or go to home
+    //     } else {
+    //         vm.item_index++
+    //     }
+    // }
     
 });
