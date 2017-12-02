@@ -5,26 +5,32 @@
     <!-- <div ng-if="slc.item_index == $index"> -->
     <div layout-xs="row">
             <!-- {{slc.purchasedItems.allitems}} -->
-            <p>Item Purchased: <span>{{item.item_name}}</span></p>
+            <p id="addItemToPantryBox">Item Purchased:<br>
+                <br>
+                <span id="itemName">{{item.item_name}}</span></p>
         <md-input-container id="purchasedAmount">
             <label for="purchasedAmount">Purchased Quantity</label>
-            <input id="purchasedAmount" ng-model="item.purchased_amount" type="number">
+            <input  ng-model="item.purchased_amount" type="number">
         </md-input-container>
     </div>  
 </div>
 <div ng-repeat="pantry in slc.userPantryList.allpantries track by $index">
     <div layout-xs="row">
-        <p>{{pantry.label}}</p> 
+        <div id="pantryLabel">
+        <p>{{pantry.label}}</p>
+        </div>
+        <div>
         <md-input-container id="purchaseAdds">
             <label for="pantryQty">Quantity</label>
             <input  ng-model="pantry.quantity" type="number">
         </md-input-container>
+        </div>
     </div>
 </div>
-<md-button ng-click="slc.addItemtoPantries(slc.purchasedItems.allitems, slc.userPantryList.allpantries)">Add Item</md-button>
+<md-button class="md-raised" ng-click="slc.addItemtoPantries(slc.purchasedItems.allitems, slc.userPantryList.allpantries)">Add Item</md-button>
 </div>
 
 
-<div ng-hide="slc.updateItems">
-    <p>All of your items have been added to your pantries!</p>
+<div layout="row" ng-hide="slc.updateItems">
+    <p id="shopItemAdded">All of your items have been added to your pantries!</p>
 </div>

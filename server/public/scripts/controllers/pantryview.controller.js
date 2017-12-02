@@ -66,9 +66,8 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
     //triggers edit winodw from pantry view
     vm.editItemIndividual = function (item) {
         console.log('item in edit from pantry', item);
-        
         var itemId = item.item_id;
-        AddItemService.getItemStockTotal(itemId).then(function(response){
+        AddItemService.getItemForEdit(itemId).then(function(response){
             $mdDialog.show({
                 controller: 'AddItemController as aic',
                 templateUrl: 'views/templates/edititem.html',
@@ -80,5 +79,18 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         });
     }
 
+    // vm.getItemForEdit = function (itemId) {
+    //     AddItemService.getItemForEdit(itemId);
+    // }
+    vm.imageUrl = ''
+
+    vm.showPrerenderedDialog = function (ev) {
+        $mdDialog.show({
+            contentElement: '#myDialog',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true
+        });
+    };
 
 });

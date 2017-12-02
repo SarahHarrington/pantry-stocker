@@ -199,11 +199,13 @@ md-toolbar {
   width: 200px;
   padding-left: 5px;
   height: 40px;
+  margin: 0 0 5px 0;
 }
 
 #itemInputs {
   width: 70px;
   height: 40px;
+  margin: 0;
 }
 
 #reminderQty {
@@ -223,4 +225,26 @@ md-toolbar {
 #purchaseAdds {
   width: 70px;
   height: 20px;
+  margin: 0 0 5px 0;
 }
+
+#shopItemAdded {
+  font-size: 20px;
+  align-content: center;
+  margin: 20px;
+}
+
+#purchasedAmount {
+  margin-right: 5px
+}
+
+#addItemToPantryBox {
+  margin-left: 5px;
+}
+
+#itemName {
+  font-weight: bold;
+}
+
+
+

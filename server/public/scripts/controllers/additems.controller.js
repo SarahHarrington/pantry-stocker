@@ -165,4 +165,5 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         AddItemService.pickImage();
     }
 
+    vm.getItemForEdit = AddItemService.itemForEditing;
 });

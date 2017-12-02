@@ -122,4 +122,31 @@ router.get('/itemstock/:id', function (req, res) {
     }
 })
 
+router.get('/edititem/:id', function (req, res) {
+    console.log('req params', req.params.id);
+    if (req.isAuthenticated) {
+        var itemId = req.params.id;
+        var userId = req.user.id;
+        pool.connect(function (errorConnectingtoDB, db, done) {
+            var queryText =
+                'SELECT "Items"."item_name", "Items"."item_image", "Items"."min_quantity"' +
+                'FROM "Items"' +
+                'WHERE "item_id" = $1 AND user_id = $2;';
+            db.query(queryText, [itemId, userId], function (errorMakingQuery, result) {
+                done();
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                    console.log(result.rows);
+                }
+            })
+        })
+    }
+    else {
+        console.log('User is not logged in');
+        res.send(false);
+    }
+})
 module.exports = router;

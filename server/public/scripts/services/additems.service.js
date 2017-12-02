@@ -246,4 +246,15 @@ myApp.service('AddItemService', function($http, $mdToast, $mdDialog) {
         $mdDialog.hide(answer);
     };
 
+    self.itemForEditing = [];
+    self.getItemForEdit = function (itemId) {
+        console.log('getItemforEdit', itemId);
+        return $http.get('/items/edititem/' + itemId)
+            .then(function (response) {
+                self.itemForEditing = response.data;
+                return response;
+            }).catch(function (error) {
+                console.log('error');
+            })
+    }
 })
