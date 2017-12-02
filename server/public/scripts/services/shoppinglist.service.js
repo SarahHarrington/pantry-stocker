@@ -89,6 +89,7 @@ myApp.service('ShoppingListService', function ($http) {
         .then(function(response){
             console.log('success');
             self.deletePurchasedItemFromList(shopping_list_id);
+            
             return response;
         }).catch(function(error){
             console.log('error');

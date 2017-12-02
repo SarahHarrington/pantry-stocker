@@ -159,6 +159,7 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
             ShoppingListService.addItemtoPantries(item, addItemtoPantries).then(function(response){
                 vm.getPurchasedItemsForPantry(storeId);
                 $location.path('purchasedadd');
+                pantry.quantity = '';
             })
             //get the new data to refresh the page
             // vm.getPurchasedItemsForPantry(storeId);

@@ -219,3 +219,8 @@ md-toolbar {
 .chipTitle {
   font-size: 18px;
 }
+
+#purchaseAdds {
+  width: 70px;
+  height: 20px;
+}

@@ -258,6 +258,7 @@ router.delete('/delete/purchased/shopping_list/:id', function(req, res){
             else {
                 var queryText = 'DELETE from "shopping_list" WHERE "shopping_list_id" = $1;'
                 db.query(queryText, [shopping_list_id], function (errorMakingQuery, result) {
+                    done();
                     if (errorMakingQuery) {
                         console.log('Error making query', errorMakingQuery);
                         res.sendStatus(500);
