@@ -15,6 +15,7 @@
         ng-model="slc.doneShoppingData.store_id" 
         ng-hide="slc.updateShopList" 
         class="md-raised"
+        layout-align="center center"
         id="itemActionOnDone"
         ng-click="slc.confirmDeleteUnpurchased(slc.doneShoppingData.store_id)">
         Delete Unchecked
@@ -24,6 +25,7 @@
         ng-hide="slc.updateShopList" 
         class="md-raised" 
         id="itemActionOnDone"
+        layout-align="center center"
         ng-click="slc.addPurchasedItems(slc.doneShoppingData.store_id)">
         Add to Pantries
     </md-button>

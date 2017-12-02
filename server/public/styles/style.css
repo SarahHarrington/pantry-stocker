@@ -12,7 +12,6 @@ body, html {
 .header {
   background-image: url('../images/pantry-stocker.png');
   background-repeat: no-repeat;
-  /* background-position: center; */
   height: 40px;
   background-color: #FFB014;
 }
@@ -49,12 +48,6 @@ body, html {
   margin-left: 10px;
 }
 
-/* .navbar {
-  background-color: #333333;
-  width: 100%;
-  border-radius: 0px;
-} */
-
 ul {
   list-style-type: none;
   margin: 0;
@@ -74,7 +67,6 @@ li a {
   text-decoration: none;
 }
 
-/* Change the link color to #111 (black) on hover */
 li a:hover {
   text-decoration: underline;
   color: #eee;
@@ -123,14 +115,6 @@ md-checkbox.md-checked.teal .md-icon{
   margin: 0;
 }
 
-/* .md-button {
-  width: 100%;
-} */
-
-/* md-toolbar md-button {
-  width: 24px;
-} */
-
 #shopInput {
   margin: 5px;
   width: 50px;
@@ -156,22 +140,13 @@ md-toolbar {
   font-size: 12px;
   width: 60px;
   margin-right: 5px;
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: space-around; */
 }
 
-/* #itemNameHolder {
-  display: flex;
-} */
 
 #itemRow {
   align-items: center;
 }
 
-/* #itemDetails {
-  align-items: center;
-} */
 
 .itemNameinPantry {
   width: 130px;
@@ -216,6 +191,7 @@ md-toolbar {
 #itemActionOnDone {
   color: #474747;
   font-size: 12px;
+  width: 150px;
 }
 
 .chipTitle {
@@ -235,7 +211,10 @@ md-toolbar {
 }
 
 #purchasedAmount {
-  margin-right: 5px
+  margin-right: 5px;
+  margin-left: 10px;
+  width: 100px;
+  align-content: right;
 }
 
 #addItemToPantryBox {
