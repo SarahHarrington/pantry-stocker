@@ -70,7 +70,7 @@ myApp.service('ShoppingListService', function ($http) {
             console.log('success');
             self.purchasedItems.allitems = response.data;
             console.log('getpurchaseditemspantry service', self.purchasedItems.allitems);
-            // return response.data;
+            return response;
         }).catch(function(error){
             console.log('error');
             
@@ -85,11 +85,14 @@ myApp.service('ShoppingListService', function ($http) {
             shopping_list_id: shopping_list_id,
             addItemtoPantries: addItemtoPantries
         }
+        console.log('itemId', itemId);
+        console.log('shopping list id', shopping_list_id);
+        console.log('add item to pantries', addItemtoPantries);
+        
         return $http.put('shoppinglist/purchaseditmes/addtopantries/' + itemId, itemDetails)
         .then(function(response){
             console.log('success');
-            self.deletePurchasedItemFromList(shopping_list_id);
-            
+            // self.deletePurchasedItemFromList(shopping_list_id);
             return response;
         }).catch(function(error){
             console.log('error');
@@ -97,15 +100,15 @@ myApp.service('ShoppingListService', function ($http) {
         })
     }
 
-    self.deletePurchasedItemFromList = function(shopping_list_id) {
-        console.log('item to delete from purchased items');
-        $http.delete('shoppinglist/delete/purchased/shopping_list/' + shopping_list_id)
-        .then(function(response){
-            console.log('success')
+    // self.deletePurchasedItemFromList = function(shopping_list_id) {
+    //     console.log('item to delete from purchased items');
+    //     $http.delete('shoppinglist/delete/purchased/shopping_list/' + shopping_list_id)
+    //     .then(function(response){
+    //         console.log('success')
             
-        }).catch(function(error){
-            console.log('error');
+    //     }).catch(function(error){
+    //         console.log('error');
             
-        })
-    }
+    //     })
+    // }
 });

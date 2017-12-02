@@ -221,6 +221,7 @@ router.put('/purchaseditmes/addtopantries/:id', function (req, res) {
         var userInfo = req.user.id;
         var itemId = req.params.id;
         var addItemtoPantries = req.body.addItemtoPantries;
+        var shopping_list_id = req.body.shopping_list_id;
         pool.connect(function (errorConnectingtoDB, db, done) {
                 var queryText =
                     'INSERT INTO "stock" ("item_id", "pantry_location", "quantity") VALUES ($1, $2, $3)' +
@@ -228,12 +229,21 @@ router.put('/purchaseditmes/addtopantries/:id', function (req, res) {
                     'DO UPDATE SET "quantity" = "stock"."quantity" + EXCLUDED.quantity;';
                 for (var i = 0; i < addItemtoPantries.length; i++) {
                     db.query(queryText, [itemId, addItemtoPantries[i].pantry_id, addItemtoPantries[i].quantity,], function (errorMakingQuery, result) {
-                    done();
-                    if (errorMakingQuery) {
-                        console.log('Error making query');
-                        res.sendStatus(500);
-                    } 
+                        done();
+                        if (errorMakingQuery) {
+                            console.log('Error making query');
+                            res.sendStatus(500);
+                            return
+                    }
                 })
+                    db.query('DELETE from "shopping_list" WHERE "shopping_list_id" = $1;', [shopping_list_id], function(errorMakingQuery, result){
+                        done();
+                        if (errorMakingQuery) {
+                            console.log('error making query');
+                            res.sendStatus(500);
+                            return
+                        } 
+                    })
             }//end of for loop
             res.sendStatus(200);
         // }
@@ -245,36 +255,36 @@ router.put('/purchaseditmes/addtopantries/:id', function (req, res) {
     }
 })
 
-router.delete('/delete/purchased/shopping_list/:id', function(req, res){
-    console.log('delete route', req.params.id);
+// router.delete('/delete/purchased/shopping_list/:id', function(req, res){
+//     console.log('delete route', req.params.id);
     
-    if (req.isAuthenticated) {
-        var shopping_list_id = req.params.id;
-        pool.connect(function (errorConnectingToDb, db, done) {
-            if (errorConnectingToDb) {
-                console.log('Error Connecting', errorConnectingToDb);
-                res.sendStatus(500);
-            }//end pool if
-            else {
-                var queryText = 'DELETE from "shopping_list" WHERE "shopping_list_id" = $1;'
-                db.query(queryText, [shopping_list_id], function (errorMakingQuery, result) {
-                    done();
-                    if (errorMakingQuery) {
-                        console.log('Error making query', errorMakingQuery);
-                        res.sendStatus(500);
-                    }//end query if
-                    else {
-                        res.sendStatus(201);
-                    }
-                })//end db.query
-            }//end pool else
-        })//end pool connect
-    }//end req authenticated
-    else {
-        console.log('User is not logged in');
-        res.send(false);
-    }//end req else authenticated
-})
+//     if (req.isAuthenticated) {
+//         var shopping_list_id = req.params.id;
+//         pool.connect(function (errorConnectingToDb, db, done) {
+//             if (errorConnectingToDb) {
+//                 console.log('Error Connecting', errorConnectingToDb);
+//                 res.sendStatus(500);
+//             }//end pool if
+//             else {
+//                 var queryText = 'DELETE from "shopping_list" WHERE "shopping_list_id" = $1;'
+//                 db.query(queryText, [shopping_list_id], function (errorMakingQuery, result) {
+//                     done();
+//                     if (errorMakingQuery) {
+//                         console.log('Error making query', errorMakingQuery);
+//                         res.sendStatus(500);
+//                     }//end query if
+//                     else {
+//                         res.sendStatus(201);
+//                     }
+//                 })//end db.query
+//             }//end pool else
+//         })//end pool connect
+//     }//end req authenticated
+//     else {
+//         console.log('User is not logged in');
+//         res.send(false);
+//     }//end req else authenticated
+// })
 
 
 module.exports = router;
