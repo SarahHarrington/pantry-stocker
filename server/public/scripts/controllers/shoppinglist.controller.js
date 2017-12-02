@@ -113,6 +113,7 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         ShoppingListService.getPurchasedItemsForPantry(storeId).then(function(response){
             console.log('in promise chain for get purchased', response.data);
             vm.checkforViewChange();
+            vm.getPantries();
         })
         // vm.checkforViewChange();
     }
@@ -122,6 +123,8 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     vm.getPantries = function () {
         UserSetupService.getPantries();
         vm.userPantryList = UserSetupService.pantries;
+        console.log('in get pantries controller', vm.userPantryList);
+        
     }
     vm.updateItems = true;
 
@@ -130,7 +133,7 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         console.log('addPurchasedItems controller storeID', storeId);
         $location.path('purchasedadd')
         vm.getPurchasedItemsForPantry(storeId);
-        vm.getPantries();
+        // vm.getPantries();
         console.log('addPurchasedItems item list', vm.purchasedItems);
         // vm.checkforViewChange();
     }
