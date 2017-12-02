@@ -49,9 +49,11 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
     vm.deleteItemFromList= function(item) {
         console.log('delete from list', item);
         var itemId = item.item_id;
-        var store = {
-            store_id: item.store_id
-        };
+        // var store = {
+        //     store_id: item.store_id
+        // };
+
+        var store = item.store_id;
         ShoppingListService.deleteItemFromList(item).then(function (response) {
             vm.getShoppingLists(store); 
         })
@@ -111,24 +113,24 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         $location.path('purchasedadd');
     }
 
-    vm.addPurchasedItemstoPantries = function (storeId) {
-        // Appending dialog to document.body to cover sidenav in docs app
-        var confirm = $mdDialog.confirm()
-            .title('Move Items')
-            .textContent('Move items to pantries?')
-            .ariaLabel('Move to Pantry Confirm')
-            .clickOutsideToClose(true)
-            .targetEvent(storeId)
-            .ok('Yes')
-            .cancel('No');
+    // vm.addPurchasedItemstoPantries = function (storeId) {
+    //     // Appending dialog to document.body to cover sidenav in docs app
+    //     // var confirm = $mdDialog.confirm()
+    //     //     .title('Move Items')
+    //     //     .textContent('Move items to pantries?')
+    //     //     .ariaLabel('Move to Pantry Confirm')
+    //     //     .clickOutsideToClose(true)
+    //     //     .targetEvent(storeId)
+    //     //     .ok('Yes')
+    //     //     .cancel('No');
 
-        $mdDialog.show(confirm).then(function () {
-            console.log('confirm clicked');
-            vm.getPurchasedItemsForPantry(storeId);
-        }), function () {
-            console.log('cancel clicked');
-        };
-    };
+    //     // $mdDialog.show(confirm).then(function () {
+    //     //     console.log('confirm clicked');
+    //         vm.getPurchasedItemsForPantry(storeId);
+    //     }), function () {
+    //         console.log('cancel clicked');
+    //     };
+    // };
 
     vm.pantryLocationsforItem = [];
     vm.itemPantryLocation = function(itemId, pantry) {
@@ -142,11 +144,31 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         console.log('pantrylocationsforitem array', vm.pantryLocationsforItem);
     }
 
-    vm.addItemtoPantries = function (item) {
-        console.log('addItemtoPantries button clicked', item);
-        ShoppingListService.addItemtoPantries(item, vm.pantryLocationsforItem);
-        vm.next();
-
+    vm.addItemtoPantries = function (item, pantry) {
+        console.log('addItemtoPantries button clicked', item, pantry);
+        if (vm.purchasedItems.allitems.length > 0) {
+            var addItemtoPantries = [];
+            var storeId = item.store_id;
+            for (var i = 0; i < pantry.length; i++) {
+                if (pantry[i].quantity) {
+                    addItemtoPantries.push(pantry[i]);
+                } 
+            }
+            console.log('addItemtoPantries', addItemtoPantries);
+            //this is adding the items to the pantries and deleting the current item
+            ShoppingListService.addItemtoPantries(item, addItemtoPantries).then(function(response){
+                vm.getPurchasedItemsForPantry(storeId);
+                $location.path('purchasedadd');
+                pantry.quantity = '';
+            })
+            //get the new data to refresh the page
+            // vm.getPurchasedItemsForPantry(storeId);
+            // $location.path('purchasedadd');
+        }
+        else {
+            console.log('out of items');
+            
+        }
     }
 
     vm.next = function () {
@@ -160,11 +182,6 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         } else {
             vm.item_index++
         }
-
-        // for (var i = 0; i < array.length; i++) {
-        //     vm.item_index ++;
-            
-        // }
     }
     
 });

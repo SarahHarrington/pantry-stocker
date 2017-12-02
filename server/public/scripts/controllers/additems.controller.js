@@ -116,6 +116,8 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     //adds the new item to the pantries
     //NEED TO ADD THE PICTURE THING
     vm.addNewItemToPantry = function (newItemToAdd, pantry, newItemMinimumQty) {
+        console.log('add item controller');
+        
         var addItemtoPantries = [];
         for (var i = 0; i < pantry.length; i++) {
             if (pantry[i].quantity) {

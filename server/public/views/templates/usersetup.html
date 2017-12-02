@@ -1,9 +1,11 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
-
+<p class="chipTitle">My Stores:</p>
 <div class="chipHolder"
-    <p>My Stores:</p>
-    <md-chips placeholder="Enter a new store" class="custom-chips" 
+    <p></p>
+    <md-chips 
+        placeholder="Enter a new store" 
+        class="custom-chips"
         ng-model="usc.userStoreList.allstores" 
         md-transform-chip = "usc.newStore($chip)" 
         md-on-add="usc.saveStore($chip)"
@@ -16,8 +18,9 @@
     </md-chips>
 </div>
 
+<p class="chipTitle">My Stores:</p>
 <div class="chipHolder">
-    <p>My Pantries:</p>
+    <p></p>
     <md-chips placeholder="Enter a new pantry" class="custom-chips" 
         ng-model="usc.userPantryList.allpantries" 
         md-transform-chip="usc.newPantry($chip)" 

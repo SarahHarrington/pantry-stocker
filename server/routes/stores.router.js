@@ -80,6 +80,7 @@ router.delete('/:id', function(req, res){
             else {
                 var queryText = 'DELETE from "stores" WHERE "store_id" = $1;'
                 db.query(queryText, [storeId],function (errorMakingQuery, result){
+                    done();
                     if (errorMakingQuery) {
                         console.log('Error making query', errorMakingQuery);
                         res.sendStatus(500);

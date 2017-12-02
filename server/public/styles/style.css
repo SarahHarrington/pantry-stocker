@@ -12,8 +12,8 @@ body, html {
 .header {
   background-image: url('../images/pantry-stocker.png');
   background-repeat: no-repeat;
-  background-position: center;
-  height: 50px;
+  /* background-position: center; */
+  height: 40px;
   background-color: #FFB014;
 }
 
@@ -89,7 +89,12 @@ md-select {
 }
 
 #pantryButton {
-  color: #757575;
+  color: #474747;
+}
+
+#doneButtonShop {
+  color: #474747;
+  width: 100%;
 }
 
 .md-toolbar-tools {
@@ -149,15 +154,16 @@ md-toolbar {
 
 #listItemName {
   font-size: 12px;
-  width: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  width: 60px;
+  margin-right: 5px;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: space-around; */
 }
 
-#itemNameHolder {
+/* #itemNameHolder {
   display: flex;
-}
+} */
 
 #itemRow {
   align-items: center;
@@ -166,3 +172,55 @@ md-toolbar {
 /* #itemDetails {
   align-items: center;
 } */
+
+.itemNameinPantry {
+  width: 130px;
+  font-size: 12px;
+}
+
+#iconButtons {
+  padding-left: 4px;
+  padding-right: 4px;
+  margin: 0;
+}
+
+.navigationBar {
+  height: 34px;
+  background-color: #BCBCBC;
+  margin-bottom: 5px;
+}
+
+#autocomplete {
+  width: 250px;
+  padding-left: 3px;
+}
+
+#pantryLabel {
+  width: 200px;
+  padding-left: 5px;
+  height: 40px;
+}
+
+#itemInputs {
+  width: 70px;
+  height: 40px;
+}
+
+#reminderQty {
+  width: 150px;
+  padding-left: 5px;
+}
+
+#itemActionOnDone {
+  color: #474747;
+  font-size: 12px;
+}
+
+.chipTitle {
+  font-size: 18px;
+}
+
+#purchaseAdds {
+  width: 70px;
+  height: 20px;
+}
