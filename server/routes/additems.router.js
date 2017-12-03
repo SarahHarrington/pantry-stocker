@@ -98,12 +98,14 @@ router.get('/itemstock/:id', function (req, res) {
     console.log('req params', req.params.id);
     if (req.isAuthenticated) {
         var itemId = req.params.id;
+        var userId = req.user.id;
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
                 'SELECT "pantry"."pantry_id", "pantry"."label", "stock"."quantity"' + 
                 'FROM "pantry" LEFT OUTER JOIN "stock"' + 
-                'ON("stock"."pantry_location" = "pantry"."pantry_id" and "stock"."item_id" = $1);';
-            db.query(queryText, [itemId], function (errorMakingQuery, result) {
+                'ON("stock"."pantry_location" = "pantry"."pantry_id" and "stock"."item_id" = $1)' +
+                'WHERE "pantry"."user_id" = $2;';
+            db.query(queryText, [itemId, userId], function (errorMakingQuery, result) {
                 done();
                 if (errorMakingQuery) {
                     console.log('Error making query', errorMakingQuery);

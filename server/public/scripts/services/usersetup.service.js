@@ -57,6 +57,7 @@ myApp.service('UserSetupService', function ($http) {
         $http.get('/pantries/userpantries')
             .then(function (response) {
                 self.pantries.allpantries = response.data;
+                console.log(self.pantries.allpantries);
                 // console.log('response data for pantries', self.pantries.allpantries);
             }).catch(function (error) {
                 console.log('error');
