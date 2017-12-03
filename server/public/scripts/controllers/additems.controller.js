@@ -175,6 +175,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
             AddItemService.addItemToShopList(storeId, itemId);
             vm.selectedStore = '';
         })
-        
     }
+
+    
 });

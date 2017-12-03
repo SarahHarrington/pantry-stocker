@@ -1,8 +1,9 @@
-<layout-xs="column">
+<div layout-xs="row" layout-align="center center">
   <h1 class="lead">Register User</h1>
   <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
-  
-  <layout-xs="column">
+</div>
+  <div layout-xs="row" layout-align="center">
+    <div class="loginBox">
   <!-- <form ng-submit="lc.registerUser()"> -->
     
     <!-- <md-input-container>
@@ -10,12 +11,12 @@
       <input type="name" ng-model="lc.user.name" />
     </md-input-container> -->
     
-    <md-input-container>
+    <md-input-container id="logIns">
         <label for="username">Username:</label>
         <input type="text" ng-model="lc.user.username" />
     </md-input-container>
     
-    <md-input-container>
+    <md-input-container id="logIns">
         <label for="password">Password:</label>
         <input type="password" ng-model="lc.user.password" />
     </md-input-container>
@@ -24,13 +25,16 @@
       <label for="email">Email:</label>
       <input type="email" ng-model="lc.user.email" />
     </md-input-container> -->
+    <div layout="column" layout-align="center center">
     <md-button class="md-raised" ng-click="lc.registerUser()">
       Register
     </md-button>
-    <a href="#home">Cancel</a>
+    <a class="registerLink" href="#home">Cancel</a>
+    </div>
     <!-- <input class="btn btn-default" type="submit" name="submit" value="Register" />
     <a href="#home">Cancel</a> -->
   <!-- </form> -->
-  </layout-xs="column">
+</div>  
+  </div>
 
 </div>
