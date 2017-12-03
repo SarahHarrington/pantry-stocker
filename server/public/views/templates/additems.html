@@ -34,7 +34,7 @@
             <div layout="row" ng-repeat="pantry in aic.itemStock track by $index">
                 <div layout-align="start end"><p id="pantryLabel">{{pantry.label}}</p></div>
                 <md-input-container layout-align="start end" id="itemInputs">
-                    <label for="pantryQty">Quantity:</label>
+                    <label for="pantryQty">Quantity</label>
                     <input id="pantryQty" ng-blur="aic.updatePantryQty(pantry, aic.selectedItem)" ng-model="pantry.quantity" type="number">
                 </md-input-container>
             </div>
@@ -43,7 +43,17 @@
                 <label for="reminderQty">Reminder Quantity:</label>
                 <br>
                 <input ng-model="aic.minimumQty" ng-blur="aic.updateMinQty(aic.selectedItem, aic.minimumQty)" type="number">
+            </md-input-container><br>
+            <p>Add to Shopping List?</p>
+            <md-input-container id="storeDropDown">
+                <label>Stores</label>
+                <md-select ng-model="aic.selectedStore" aria-label="Add to Shopping List">
+                    <md-optgroup label="stores">
+                        <md-option ng-value="store" ng-repeat="store in aic.userStoreList.allstores">{{store.label}}</md-option>
+                    </md-optgroup>
+                </md-select>
             </md-input-container>
+            <md-button class="md-raised" ng-click="aic.addToShoppingList(aic.selectedStore, aic.selectedItem)">Add</md-button>
 
         </div>
     </div>

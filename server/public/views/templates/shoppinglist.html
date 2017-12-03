@@ -39,7 +39,7 @@
     
     <div ng-repeat="item in slc.shoppingLists.lists | orderBy:'item_name' track by $index" ng-if="store.store_id == item.store_id">
         <div layout="row" id="itemRow">
-            <md-button ng-click="slc.deleteItemFromList(item)" class="md-icon-button md-primary" aria-label="Settings">
+            <md-button id="iconButtons" ng-click="slc.deleteItemFromList(item)" class="md-icon-button md-primary" aria-label="Settings">
                 <md-icon md-svg-icon="../images/delete.svg"></md-icon>
             </md-button>
             <md-checkbox id="checkbox" 

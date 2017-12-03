@@ -186,6 +186,9 @@ md-toolbar {
 #reminderQty {
   width: 150px;
   padding-left: 5px;
+  margin: 0;
+  margin-bottom: 5px;
+  height: 40px;
 }
 
 #itemActionOnDone {
@@ -225,5 +228,13 @@ md-toolbar {
   font-weight: bold;
 }
 
+#storeDropDown {
+  width: 200px;
+  margin: 0px;
+}
+
+#logIns {
+  width: 200px;
+}
 
 
