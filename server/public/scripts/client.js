@@ -1,5 +1,6 @@
 var myApp = angular.module('myApp', ['ngRoute', 'ngMaterial']);
 
+
 /// Routes ///
 myApp.config(function($routeProvider, $locationProvider) {
   $locationProvider.hashPrefix('');
@@ -79,4 +80,6 @@ myApp.config(function($routeProvider, $locationProvider) {
     .otherwise({
       redirectTo: 'home'
     });
+
+  
 });

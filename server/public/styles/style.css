@@ -138,7 +138,7 @@ md-toolbar {
 
 #listItemName {
   font-size: 12px;
-  width: 60px;
+  width: 130px;
   margin-right: 5px;
 }
 
@@ -149,8 +149,8 @@ md-toolbar {
 
 
 .itemNameinPantry {
-  width: 130px;
-  font-size: 12px;
+  width: 180px;
+  font-size: 13px;
 }
 
 #iconButtons {
@@ -234,7 +234,37 @@ md-toolbar {
 }
 
 #logIns {
-  width: 200px;
+  width: 180px;
+  margin-left: 20px;
 }
 
+.loginBox {
+  width: 220px;
+  -webkit-box-shadow: 2px 2px 2px 2px rgba(188,188,188,1);
+  -moz-box-shadow: 2px 2px 2px 2px rgba(188,188,188,1);
+  box-shadow: 2px 2px 2px 2px rgba(188,188,188,1);
+}
+
+.lead {
+  color: #474747;
+}
+
+.registerLink {
+  text-decoration: none;
+}
+
+.userSetup {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#quantityTotal {
+  width: 20px;
+  
+}
+
+#techHeader {
+  font-size: 18px;
+  align-content: center;
+}
 

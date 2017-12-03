@@ -4,21 +4,25 @@
         <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
     </div>
     <!-- <form layout="column" ng-submit="lc.login()"> -->
-    <div layout="column" layout-align="center">
-    <md-input-container id="logIns"> 
-        <label for="username">Username</label>
-        <br>
-        <input id="username" ng-model="lc.user.username" type="text">
-    </md-input-container>
-    <md-input-container id="logIns"> 
-        <label for="password">Password</label>
-        <br>
-        <input id="password" ng-model="lc.user.password" type="text">
-    </md-input-container>
-    <!-- <md-button ng-click="aic.addNewItemToPantry(aic.searchText, aic.userPantryList.allpantries, aic.minimumQty)">Add Item to Pantry</md-button> -->
-    <md-button class="md-raised" ng-click="lc.login()">
-        Login
-    </md-button>
-    <a href="#register">Register</a>
+    <div layout="row" layout-align="center">
+    <div  class="loginBox">
+        <md-input-container id="logIns"> 
+            <label for="username">Username</label>
+            <br>
+            <input id="username" ng-model="lc.user.username" type="text">
+        </md-input-container>
+        <md-input-container id="logIns"> 
+            <label for="password">Password</label>
+            <br>
+            <input id="password" ng-model="lc.user.password" type="text">
+        </md-input-container>
+        <!-- <md-button ng-click="aic.addNewItemToPantry(aic.searchText, aic.userPantryList.allpantries, aic.minimumQty)">Add Item to Pantry</md-button> -->
+        <div layout="column" layout-align="center center">
+        <md-button class="md-raised" ng-click="lc.login()">
+            Login
+        </md-button>
+            <a class="registerLink" href="#register">Register</a>
+        </div>
+    </div>
     </div>
 </div>

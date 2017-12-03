@@ -1,7 +1,7 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <!-- Navigation Above -->
 
-<div ng-cloak layout-xs="column">
+<div ng-cloak layout-xs="column" layout-align="center center">
         <div layout="row"> <!-- Puts autocomplete and clear in same row -->
             <md-autocomplete 
                 id="autocomplete"
@@ -63,7 +63,7 @@
 <!-- <md-button ng-click="aic.showConfirm($event)">Click this.</md-button> -->
 
 <div ng-show="aic.addItemForm"> 
-        <div layout="row" ng-repeat="pantry in aic.userPantryList.allpantries track by $index">
+        <div layout="row" layout-align="center center" ng-repeat="pantry in aic.userPantryList.allpantries track by $index">
             <div layout-align="start end" id="pantryLabel">{{pantry.label}}</div>
             <md-input-container layout-align="start end" id="itemInputs">
                 <label for="pantryQty">Quantity:</label>
@@ -71,6 +71,7 @@
             </md-input-container>
         </div>
         <!-- add a hide show here for when the stock totals run -->
+        <div  layout="column" layout-align="center center">
         <md-input-container id="reminderQty">
             <label for="reminderQty">Reminder Quantity:</label>
             <br>
@@ -80,8 +81,11 @@
         <md-button  ng-click="aic.pickImage()" class="md-icon-button" aria-label="Add Photo">
             <md-icon md-svg-icon="../images/addaphoto.svg"></md-icon>
         </md-button>
+        <div layout="row">
         <md-button class="md-raised" 
             ng-click="aic.addNewItemToPantry(aic.searchText, aic.userPantryList.allpantries, aic.minimumQty)">
             Add Item
         </md-button>
+        </div>
+        </div>
 </div>
