@@ -166,4 +166,15 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
     }
 
     vm.getItemForEdit = AddItemService.itemForEditing;
+
+    vm.addToShoppingList = function(store, item) {
+        console.log('in the add to shopping list', store, item);
+        var itemId = item.item_id;
+        var storeId = store.store_id;
+        AddItemService.verifyItemShopList(itemId).then(function(response){
+            AddItemService.addItemToShopList(storeId, itemId);
+            vm.selectedStore = '';
+        })
+        
+    }
 });
