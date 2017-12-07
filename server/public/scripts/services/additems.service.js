@@ -18,21 +18,21 @@ myApp.service('AddItemService', function($http, $mdToast, $mdDialog) {
         image: ''
     }
 
-    var client = filestack.init(privateAPIForFileStack());
-    self.pickImage = function () {
-        console.log('pick image service');
-        client.pick({
-            maxFiles: 1,
-            uploadInBackground: false,
-            onOpen: () => console.log('Opened')
-        })
-            .then((res) => {
-                console.log(res);
-                console.log(res.filesUploaded);
-                console.log(res.filesFailed);
-                self.item.image = res.filesUploaded[0].url;
-            });
-    }
+    // var client = filestack.init(privateAPIForFileStack());
+    // self.pickImage = function () {
+    //     console.log('pick image service');
+    //     client.pick({
+    //         maxFiles: 1,
+    //         uploadInBackground: false,
+    //         onOpen: () => console.log('Opened')
+    //     })
+    //         .then((res) => {
+    //             console.log(res);
+    //             console.log(res.filesUploaded);
+    //             console.log(res.filesFailed);
+    //             self.item.image = res.filesUploaded[0].url;
+    //         });
+    // }
     
 
     //retrieves all items for the logged in user
