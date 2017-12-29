@@ -6,7 +6,7 @@ CREATE TABLE "Items"
     "default_store_id" integer,
     "default_pantry_id" integer,
     "user_id" integer NOT NULL,
-    "expiration_date" DATE NOT NULL,
+    "expiration_date" DATE,
     "min_quantity" integer,
     CONSTRAINT Items_pk PRIMARY KEY ("item_id")
 )
@@ -17,11 +17,11 @@ WITH (
 CREATE TABLE "users"
 (
     "user_id" serial NOT NULL,
-    "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "authentication_token" TEXT NOT NULL,
+    "authentication_token" TEXT,
     CONSTRAINT users_pk PRIMARY KEY ("user_id")
 )
 WITH (
@@ -98,4 +98,4 @@ AS
     FROM stock
         JOIN "Items" USING (item_id) 
     WHERE stock.quantity IS NOT NULL
-    GROUP BY stock.item_id, "Items".min_quantity;;
+    GROUP BY stock.item_id, "Items".min_quantity;
