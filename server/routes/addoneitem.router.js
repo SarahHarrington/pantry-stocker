@@ -16,7 +16,7 @@ router.post('/', function (req, res) {
         var itemLabel = req.body.itemLabel;
         var addItemtoPantries = req.body.addItemtoPantries;
         var newItemMinimumQty = req.body.newItemMinimumQty;
-        var itemImage = req.body.image;
+        // var itemImage = req.body.image;
         pool.connect(function (errorConnectingtoDB, db, done) {
             if (errorConnectingtoDB) {
                 console.log('Error Connecting to DB', errorConnectingtoDB);
@@ -27,8 +27,8 @@ router.post('/', function (req, res) {
                 if (newItemMinimumQty === '') {
                     newItemMinimumQty = null;
                 }
-                var queryText = 'INSERT INTO "Items" ("item_name", "user_id", "min_quantity", "item_image") VALUES ($1, $2, $3, $4) RETURNING "item_id";'
-                db.query(queryText, [itemLabel, userInfo, newItemMinimumQty, itemImage], function (errorMakingQuery, result) {
+                var queryText = 'INSERT INTO "Items" ("item_name", "user_id", "min_quantity") VALUES ($1, $2, $3) RETURNING "item_id";'
+                db.query(queryText, [itemLabel, userInfo, newItemMinimumQty], function (errorMakingQuery, result) {
                         if (errorMakingQuery) {
                             console.log('Error Making Query - Add Item', errorMakingQuery);
                             res.sendStatus(500);

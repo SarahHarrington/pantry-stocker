@@ -141,8 +141,7 @@ myApp.service('AddItemService', function($http, $mdToast, $mdDialog) {
         var newItemtoAdd = {
             itemLabel: newItemToAdd,
             addItemtoPantries: addItemtoPantries,
-            newItemMinimumQty: newItemMinimumQty, 
-            image: self.item.image
+            newItemMinimumQty: newItemMinimumQty
         }
         console.log('new item to add', newItemtoAdd);
         

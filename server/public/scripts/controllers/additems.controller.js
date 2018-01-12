@@ -130,7 +130,7 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         }
         AddItemService.addNewItemToPantry(newItemToAdd, addItemtoPantries, newItemMinimumQty).then(function(response){
             vm.clearSearch();
-        }).then(function(error){
+        }).catch(function(error){
             console.log('error adding new item to pantry')
         })
     }
