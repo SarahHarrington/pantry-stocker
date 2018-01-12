@@ -76,6 +76,8 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         .then(function(response){
             vm.itemStock = response;
             vm.editAddItem = false;
+        }).catch(function(error){
+            console.log('error on get stock total')
         })
     }
 
@@ -98,6 +100,8 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         AddItemService.pantryUpdate(pantryId, pantryToUpdate).then(function(response){
             vm.verifyItemShopList(pantryToUpdate.itemId);
             AddItemService.openToast(response);
+        }).then(function(error){
+            console.log('error updating pantry')
         })
     }
 
@@ -110,14 +114,14 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         AddItemService.updateMinQty(itemId, newMinQty).then(function(response){
             vm.verifyItemShopList(itemId); 
             AddItemService.openToast(response);
+        }).then(function(error){
+            console.log('error updating minimum quantity')
         })
     }
 
     //adds the new item to the pantries
     //NEED TO ADD THE PICTURE THING
     vm.addNewItemToPantry = function (newItemToAdd, pantry, newItemMinimumQty) {
-        console.log('add item controller');
-        
         var addItemtoPantries = [];
         for (var i = 0; i < pantry.length; i++) {
             if (pantry[i].quantity) {
@@ -126,6 +130,8 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         }
         AddItemService.addNewItemToPantry(newItemToAdd, addItemtoPantries, newItemMinimumQty).then(function(response){
             vm.clearSearch();
+        }).then(function(error){
+            console.log('error adding new item to pantry')
         })
     }
 
@@ -141,6 +147,8 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         var itemId = vm.shoppingListItemId;        
         AddItemService.addItemToShopList(storeId, itemId).then(function(response){
             AddItemService.hide(response);
+        }).catch(function(error){
+            console.log('error adding item to shopping list')
         })
     }
 
@@ -174,6 +182,8 @@ myApp.controller('AddItemController', function (UserService, AddItemService, Use
         AddItemService.verifyItemShopList(itemId).then(function(response){
             AddItemService.addItemToShopList(storeId, itemId);
             vm.selectedStore = '';
+        }).catch(function(error){
+            console.log('error adding item to shopping list')
         })
     }
 

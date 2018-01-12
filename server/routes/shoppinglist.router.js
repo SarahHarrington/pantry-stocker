@@ -217,20 +217,24 @@ router.get('/getstore/purchaseditems/:id', function (req, res) {
 //deletes the item from the shopping list by shopping_list_id
 router.put('/purchaseditmes/addtopantries/:id', function (req, res) {
     if (req.isAuthenticated) {
+        console.log('req.boduy', req.body)
+        console.log('req.params', req.params.id)
         var userInfo = req.user.id;
         var itemId = req.params.id;
         var addItemtoPantries = req.body.addItemtoPantries;
         var shopping_list_id = req.body.shopping_list_id;
+        console.log('in adding purchased items')
         pool.connect(function (errorConnectingtoDB, db, done) {
             var queryText =
-                'INSERT INTO "stock" ("item_id", "pantry_location", "quantity") VALUES ($1, $2, $3)' +
-                'ON CONFLICT ("item_id", "pantry_location")' +
+                'INSERT INTO "stock" ("item_id", "pantry_location", "quantity") VALUES ($1, $2, $3) ' +
+                'ON CONFLICT ("item_id", "pantry_location") ' +
                 'DO UPDATE SET "quantity" = "stock"."quantity" + EXCLUDED.quantity;';
             for (var i = 0; i < addItemtoPantries.length; i++) {
                 db.query(queryText, [itemId, addItemtoPantries[i].pantry_id, addItemtoPantries[i].quantity,], function (errorMakingQuery, result) {
                     done();
                     if (errorMakingQuery) {
-                        console.log('Error making query');
+                        console.log('Error making query on item add in pantry');
+                        console.log(errorMakingQuery)
                         res.sendStatus(500);
                         return
                     }
@@ -239,7 +243,8 @@ router.put('/purchaseditmes/addtopantries/:id', function (req, res) {
             db.query('DELETE from "shopping_list" WHERE "shopping_list_id" = $1;', [shopping_list_id], function (errorMakingQuery, result) {
                 done();
                 if (errorMakingQuery) {
-                    console.log('error making query');
+                    console.log('error making query on delete from shopping list');
+                    console.log(errorMakingQuery)
                     res.sendStatus(500);
                     return
                 }

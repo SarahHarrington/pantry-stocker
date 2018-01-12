@@ -5,6 +5,7 @@ var path = require('path');
 var pool = require('../modules/pool.js');
 var pg = require('pg');
 
+//adds item to database and pantries
 router.post('/', function (req, res) {
     console.log('add item post');
     console.log('userid', req.user.id)
@@ -22,6 +23,10 @@ router.post('/', function (req, res) {
                 res.sendStatus(500);
             }
             else {
+                console.log('in the router new item', newItemMinimumQty)
+                if (newItemMinimumQty === '') {
+                    newItemMinimumQty = null;
+                }
                 var queryText = 'INSERT INTO "Items" ("item_name", "user_id", "min_quantity", "item_image") VALUES ($1, $2, $3, $4) RETURNING "item_id";'
                 db.query(queryText, [itemLabel, userInfo, newItemMinimumQty, itemImage], function (errorMakingQuery, result) {
                         if (errorMakingQuery) {
@@ -51,6 +56,7 @@ router.post('/', function (req, res) {
         res.send(false);
     }//is authenticated
 });//router.post for add item
+
 
 router.put('/:id', function (req, res) {
     console.log('req.params.id', req.params.id);
@@ -82,10 +88,10 @@ router.put('/:id', function (req, res) {
     }//end authenticated else
 })
 
+//
 router.get('/itemstockmin/:id', function(req, res){
         if (req.isAuthenticated) {
             var itemId = req.params.id;
-
             pool.connect(function (errorConnectingtoDB, db, done) {
                 var queryText =
                     'SELECT "total_quantity", "min_quantity"' +

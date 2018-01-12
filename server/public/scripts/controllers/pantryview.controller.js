@@ -23,16 +23,20 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         var pantryId = item.pantry_location;
         AddItemService.deleteItemFromPantry(item).then(function(response){
             vm.getPantryItems({ pantry_id: pantryId }); 
+        }).catch(function(error){
+            console.log('error deleting item from pantry')
         })
     }
 
-    //removes one item fromt he pantry
+    //removes one item from the pantry
     vm.removeOneItem = function(item) {
         var itemId = item.item_id;
         var pantryId = item.pantry_location;
         AddItemService.removeOneItem(item).then(function(response){
             vm.getPantryItems({ pantry_id: pantryId })
             vm.verifyItemShopList(itemId);
+        }).catch(function(error){
+            console.log('error in removing one item from the pantry')
         })
     }
 
@@ -43,6 +47,8 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         AddItemService.addOneItem(item).then(function (response) {
             vm.getPantryItems({ pantry_id: pantryId });
             vm.verifyItemShopList(itemId);
+        }).catch(function(error){
+            console.log('error adding one item to the pantry')
         })
     }
 
@@ -52,7 +58,7 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
         AddItemService.verifyItemReminder(itemId);
     }
 
-    
+    //verifies if item is on shopping list
     vm.verifyItemShopList = function (itemId) {
         var itemId = itemId;
         AddItemService.verifyItemShopList(itemId).then(function (response) {
@@ -60,6 +66,8 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
             if (checkItemOnShopList === 0) {
                 vm.verifyItemReminder(itemId);
             }
+        }).catch(function(error){
+            console.log('verifies if item is on shopping list')
         })
     }
 
@@ -76,7 +84,9 @@ myApp.controller('PantryViewController', function (UserService, UserSetupService
                 clickOutsideToClose: true,
                 fullscreen: vm.customFullscreen
             })
-        });
+        }).catch(function(error){
+            console.log('error in editing item individual')
+        })
     }
 
     // vm.getItemForEdit = function (itemId) {

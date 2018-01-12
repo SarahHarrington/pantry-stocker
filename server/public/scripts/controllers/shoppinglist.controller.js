@@ -25,6 +25,8 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
             vm.doneShoppingData.store_id = store;
             // console.log('array for done in get shopping lists', arrayForDone);
             vm.checkForDone(arrayForDone);
+        }).catch(function(error){
+            console.log('error getting shopping list')
         })
     }
 
@@ -43,6 +45,8 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         var store = item.store_id;
         ShoppingListService.deleteItemFromList(item).then(function (response) {
             vm.getShoppingLists(store); 
+        }).catch(function(error){
+            console.log('error deleting item from list')
         })
     }
 
@@ -67,6 +71,8 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         vm.doneShoppingUpdate(vm.doneShoppingData);
         ShoppingListService.removeNotPurchasedItems(storeId).then(function(response){
             vm.getShoppingLists(storeId);
+        }).catch(function(error){
+            console.log('error in item removed not purchased')
         })
     }
     
@@ -95,6 +101,8 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
         ShoppingListService.getPurchasedItemsForPantry(storeId).then(function(response){
             vm.checkforViewChange();
             vm.getPantries();
+        }).catch(function(error){
+            console.log('error getting purchased items for pantry')
         })
     }
 
@@ -132,6 +140,8 @@ myApp.controller('ShoppingListController', function (UserService, AddItemService
             ShoppingListService.addItemtoPantries(item[0], addItemtoPantries).then(function(response){
                 var storeId = item[0].store_id;
                 vm.getPurchasedItemsForPantry(storeId);
+            }).catch(function(error){
+                console.log('error getting pantries in add item to pantries')
             })
         }
         else {

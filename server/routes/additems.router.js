@@ -25,7 +25,6 @@ router.get('/mypantries/:id', function(req, res){
                 } else {
                     res.send(result.rows);
                     console.log(result.rows);
-                    
                 }
             })
         })
@@ -55,7 +54,6 @@ router.get('/allitems', function (req, res) {
                 } else {
                     res.send(result.rows);
                     console.log(result.rows);
-
                 }
             })
         })
@@ -113,7 +111,6 @@ router.get('/itemstock/:id', function (req, res) {
                 } else {
                     res.send(result.rows);
                     console.log(result.rows);
-
                 }
             })
         })
