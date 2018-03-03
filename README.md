@@ -2,9 +2,9 @@
 
 Built to be a solution for tracking the items in your pantry and other food storage spots in your home. This allows you to keep track of item locations, total quantities on hand, and automate the creation of shopping lists.
 
-https://pantry-stocker.herokuapp.com/#/home
+[Live Demo](https://pantry-stocker.herokuapp.com/#/home)
 
-Demo it with:
+**Demo it:**
 Username: sample
 Password: user
 
